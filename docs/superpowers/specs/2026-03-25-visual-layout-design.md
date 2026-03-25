@@ -47,20 +47,20 @@ layout(in: container) {
 | View hierarchy (`subviews {}`) | Not added | Keeps Anchorage lightweight and focused |
 | Calling style | Top-level function `layout(in: view) { }` | Consistent with Anchorage's non-UIView-extension style |
 | Platform support | All Apple platforms (iOS, macOS, tvOS, watchOS, visionOS) | Uses `public View` typealias with `#if os(macOS)` |
-| Minimum Swift version | 5.4 | Required for `@resultBuilder` (stable API) |
+| Minimum Swift version | 5.9 | Required for `@resultBuilder` (stable API) |
 
 ---
 
 ## Swift Version Requirement
 
-`@resultBuilder` was stabilized in **Swift 5.4**. This feature requires bumping the minimum supported Swift version:
+`@resultBuilder` was stabilized in Swift 5.4, and the minimum is set to **Swift 5.9** to align with modern toolchain support and enable future use of Swift 5.9+ language features (e.g., parameter packs, macros) if needed.
 
-- **`Anchorage.podspec`**: update `swift_versions` from `['4.0', '4.2', '5.0']` to `['5.4']`
-- **`Package.swift`**: update `swift-tools-version` from `5.1` to `5.4`
+Required changes:
+
+- **`Anchorage.podspec`**: update `swift_versions` from `['4.0', '4.2', '5.0']` to `['5.9']`
+- **`Package.swift`**: update `swift-tools-version` from `5.1` to `5.9`
 
 This is a breaking change from the library's current 4.x/5.0 support. It should be released as a minor or major version bump depending on Anchorage's semver policy.
-
-**Alternative — conditional compilation:** If keeping Swift 4/5.0 support is a priority, `VisualLayout.swift` and `VisualLayoutOperators.swift` can be wrapped in `#if swift(>=5.4) ... #endif` while keeping the overall `swift-tools-version` at `5.1`. This avoids the hard minimum bump but means the Visual Layout feature is silently unavailable on older toolchains. The recommended approach is the hard bump (option a) since mixing availability this way is error-prone; document it as requiring Swift 5.4+ in the migration guide.
 
 ---
 
