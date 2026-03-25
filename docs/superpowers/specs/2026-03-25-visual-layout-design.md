@@ -300,8 +300,8 @@ Source/
 
 ### Required changes to existing files
 
-- **`Anchorage.podspec`**: update `swift_versions` to `['5.4']`
-- **`Package.swift`**: update `swift-tools-version` to `5.4`, add `watchOS` and `visionOS` to `platforms`
+- **`Anchorage.podspec`**: update `swift_versions` to `['5.9']`
+- **`Package.swift`**: update `swift-tools-version` to `5.9`, add `watchOS` and `visionOS` to `platforms`
 - **`Internal.swift`** (or `Compatability.swift`): promote `View` typealias to `public`, OR define a separate `public VisualLayoutView` alias in `VisualLayout.swift`
 
 ---
