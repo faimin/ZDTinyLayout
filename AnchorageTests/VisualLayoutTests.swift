@@ -200,7 +200,15 @@ class VisualLayoutTests: XCTestCase {
         let constraints = layout(in: container) {
             |-[view1, view2]-| /=/ 44
         }
-        XCTAssertEqual(constraints.count, 7)
+        XCTAssertEqual(constraints.count, 8)
+
+        let alignedTop = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .top &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .top
+        }
+        XCTAssertNotNil(alignedTop)
 
         let leading = constraints.first {
             ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
@@ -246,7 +254,7 @@ class VisualLayoutTests: XCTestCase {
         let constraints = layout(in: container) {
             |-[view1, view2, view3]-|
         }
-        XCTAssertEqual(constraints.count, 7)
+        XCTAssertEqual(constraints.count, 9)
 
         let widthEquality = constraints.first {
             $0.firstAttribute == .width && $0.secondAttribute == .width
