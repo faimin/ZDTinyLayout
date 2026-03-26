@@ -27,65 +27,79 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if os(macOS)
-    import Cocoa
+import Cocoa
 #else
-    import UIKit
+import UIKit
 #endif
 
 extension NSLayoutXAxisAnchor {
-    func constraint(equalTo anchor: NSLayoutXAxisAnchor,
-                    multiplier m: CGFloat,
-                    constant c: CGFloat = 0.0) -> NSLayoutConstraint {
-        let constraint = self.constraint(equalTo: anchor, constant: c)
-        return constraint.with(multiplier: m)
-    }
-
-    func constraint(greaterThanOrEqualTo anchor: NSLayoutXAxisAnchor,
-                    multiplier m: CGFloat,
-                    constant c: CGFloat = 0.0) -> NSLayoutConstraint {
-        let constraint = self.constraint(greaterThanOrEqualTo: anchor, constant: c)
-        return constraint.with(multiplier: m)
-    }
-
-    func constraint(lessThanOrEqualTo anchor: NSLayoutXAxisAnchor,
-                    multiplier m: CGFloat,
-                    constant c: CGFloat = 0.0) -> NSLayoutConstraint {
-        let constraint = self.constraint(lessThanOrEqualTo: anchor, constant: c)
-        return constraint.with(multiplier: m)
-    }
+	func constraint(
+		equalTo anchor: NSLayoutXAxisAnchor,
+		multiplier m: CGFloat,
+		constant c: CGFloat = 0.0
+	) -> NSLayoutConstraint {
+		let constraint = self.constraint(equalTo: anchor, constant: c)
+		return constraint.with(multiplier: m)
+	}
+	
+	func constraint(
+		greaterThanOrEqualTo anchor: NSLayoutXAxisAnchor,
+		multiplier m: CGFloat,
+		constant c: CGFloat = 0.0
+	) -> NSLayoutConstraint {
+		let constraint = self.constraint(greaterThanOrEqualTo: anchor, constant: c)
+		return constraint.with(multiplier: m)
+	}
+	
+	func constraint(
+		lessThanOrEqualTo anchor: NSLayoutXAxisAnchor,
+		multiplier m: CGFloat,
+		constant c: CGFloat = 0.0
+	) -> NSLayoutConstraint {
+		let constraint = self.constraint(lessThanOrEqualTo: anchor, constant: c)
+		return constraint.with(multiplier: m)
+	}
 }
 
 extension NSLayoutYAxisAnchor {
-    func constraint(equalTo anchor: NSLayoutYAxisAnchor,
-                    multiplier m: CGFloat,
-                    constant c: CGFloat = 0.0) -> NSLayoutConstraint {
-        let constraint = self.constraint(equalTo: anchor, constant: c)
-        return constraint.with(multiplier: m)
-    }
-
-    func constraint(greaterThanOrEqualTo anchor: NSLayoutYAxisAnchor,
-                    multiplier m: CGFloat,
-                    constant c: CGFloat = 0.0) -> NSLayoutConstraint {
-        let constraint = self.constraint(greaterThanOrEqualTo: anchor, constant: c)
-        return constraint.with(multiplier: m)
-    }
-
-    func constraint(lessThanOrEqualTo anchor: NSLayoutYAxisAnchor,
-                    multiplier m: CGFloat,
-                    constant c: CGFloat = 0.0) -> NSLayoutConstraint {
-        let constraint = self.constraint(lessThanOrEqualTo: anchor, constant: c)
-        return constraint.with(multiplier: m)
-    }
+	func constraint(
+		equalTo anchor: NSLayoutYAxisAnchor,
+		multiplier m: CGFloat,
+		constant c: CGFloat = 0.0
+	) -> NSLayoutConstraint {
+		let constraint = self.constraint(equalTo: anchor, constant: c)
+		return constraint.with(multiplier: m)
+	}
+	
+	func constraint(
+		greaterThanOrEqualTo anchor: NSLayoutYAxisAnchor,
+		multiplier m: CGFloat,
+		constant c: CGFloat = 0.0
+	) -> NSLayoutConstraint {
+		let constraint = self.constraint(greaterThanOrEqualTo: anchor, constant: c)
+		return constraint.with(multiplier: m)
+	}
+	
+	func constraint(
+		lessThanOrEqualTo anchor: NSLayoutYAxisAnchor,
+		multiplier m: CGFloat,
+		constant c: CGFloat = 0.0
+	) -> NSLayoutConstraint {
+		let constraint = self.constraint(lessThanOrEqualTo: anchor, constant: c)
+		return constraint.with(multiplier: m)
+	}
 }
 
 private extension NSLayoutConstraint {
-    func with(multiplier: CGFloat) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: firstItem!,
-                                  attribute: firstAttribute,
-                                  relatedBy: relation,
-                                  toItem: secondItem,
-                                  attribute: secondAttribute,
-                                  multiplier: multiplier,
-                                  constant: constant)
-    }
+	func with(multiplier: CGFloat) -> NSLayoutConstraint {
+		return NSLayoutConstraint(
+			item: firstItem!,
+			attribute: firstAttribute,
+			relatedBy: relation,
+			toItem: secondItem,
+			attribute: secondAttribute,
+			multiplier: multiplier,
+			constant: constant
+		)
+	}
 }

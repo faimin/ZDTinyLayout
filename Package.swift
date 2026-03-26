@@ -15,16 +15,19 @@ let package = Package(
     products: [
         .library(
             name: "Anchorage",
-            targets: ["Anchorage"]),
+            targets: ["Anchorage"]
+		),
     ],
     targets: [
         .target(
             name: "Anchorage",
             dependencies: [],
-            path: "Source"),
+            path: "Source"
+		),
         .testTarget(
             name: "AnchorageTests",
             dependencies: ["Anchorage"],
-            path: "AnchorageTests"),
+            path: "AnchorageTests"
+		),
     ]
 )
