@@ -381,6 +381,37 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(trailing?.constant, 0, "trailing margin 0 → constraint constant should be 0")
     }
 
+    // MARK: - layout(in:) Spacing edge cases
+
+    func testConsecutiveSpacingsLastOneWins() {
+        // Two spacing literals in a row — the second silently overwrites the first.
+        // This is the specified behavior: only the most recent pending spacing is applied.
+        let constraints = layout(in: container) {
+            8
+            16
+            |--view1--|
+        }
+        let topC = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .top
+        }
+        XCTAssertEqual(topC?.constant, 16, "last spacing wins when two appear consecutively")
+    }
+
+    func testAdjacentRowsWithoutSpacingDefaultsToZero() {
+        // No spacing between two rows → top of second view is flush to bottom of first.
+        let constraints = layout(in: container) {
+            |--view1--| /=/ 44
+            |--view2--| /=/ 44
+        }
+        let view2Top = constraints.first {
+            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .top
+        }
+        XCTAssertNotNil(view2Top)
+        XCTAssertTrue(view2Top?.secondItem === view1)
+        XCTAssertEqual(view2Top?.secondAttribute, .bottom)
+        XCTAssertEqual(view2Top?.constant, 0)
+    }
+
     // MARK: - layout(in:) Flexible Spacing
 
     func testAtLeastSpacingBeforeView() {

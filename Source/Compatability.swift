@@ -27,49 +27,49 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if os(macOS)
-    import Cocoa
+import Cocoa
 
-    public typealias LayoutPriority = NSLayoutConstraint.Priority
-    public typealias EdgeInsets = NSEdgeInsets
+public typealias LayoutPriority = NSLayoutConstraint.Priority
+public typealias EdgeInsets = NSEdgeInsets
 #else
-    import UIKit
+import UIKit
 
-    public typealias LayoutPriority = UILayoutPriority
-    public typealias EdgeInsets = UIEdgeInsets
+public typealias LayoutPriority = UILayoutPriority
+public typealias EdgeInsets = UIEdgeInsets
 #endif
 
 public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
 
 extension CGFloat {
-
-    init<T: BinaryFloatingPoint>(_ value: T) {
-        switch value {
-        case is Double:
-            self.init(value as! Double)
-        case is Float:
-            self.init(value as! Float)
-        case is CGFloat:
-            self.init(value as! CGFloat)
-        default:
-            fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
-        }
-    }
-
+	
+	init<T: BinaryFloatingPoint>(_ value: T) {
+		switch value {
+		case is Double:
+			self.init(value as! Double)
+		case is Float:
+			self.init(value as! Float)
+		case is CGFloat:
+			self.init(value as! CGFloat)
+		default:
+			fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
+		}
+	}
+	
 }
 
 extension Float {
-
-    init<T: BinaryFloatingPoint>(_ value: T) {
-        switch value {
-        case is Double:
-            self.init(value as! Double)
-        case is Float:
-            self.init(value as! Float)
-        case is CGFloat:
-            self.init(value as! CGFloat)
-        default:
-            fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
-        }
-    }
-
+	
+	init<T: BinaryFloatingPoint>(_ value: T) {
+		switch value {
+		case is Double:
+			self.init(value as! Double)
+		case is Float:
+			self.init(value as! Float)
+		case is CGFloat:
+			self.init(value as! CGFloat)
+		default:
+			fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
+		}
+	}
+	
 }

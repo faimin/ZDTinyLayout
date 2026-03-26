@@ -68,7 +68,7 @@ private extension VisualLayoutCell {
         container.horizontalAnchors == contentView.horizontalAnchors
         container.bottomAnchor == contentView.bottomAnchor
 
-		Anchorage.layout(in: container) {
+        Anchorage.layout(in: container) {
             8
             |--topView--| /=/ 30
             8
@@ -77,6 +77,6 @@ private extension VisualLayoutCell {
             |bottomView|
             8
         }
-		bottomView.heightAnchor /==/ 50
+        bottomView.heightAnchor /==/ 50
     }
 }

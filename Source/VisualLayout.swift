@@ -43,12 +43,12 @@ public typealias VisualLayoutGuide = UILayoutGuide
 /// A type that can participate in a visual layout row — either a view or a layout guide.
 /// Exposes the layout anchors needed to build horizontal and vertical constraints.
 public protocol VisualLayoutAnchorable: AnyObject {
-    var leadingAnchor: NSLayoutXAxisAnchor { get }
-    var trailingAnchor: NSLayoutXAxisAnchor { get }
-    var topAnchor: NSLayoutYAxisAnchor { get }
-    var bottomAnchor: NSLayoutYAxisAnchor { get }
-    var widthAnchor: NSLayoutDimension { get }
-    var heightAnchor: NSLayoutDimension { get }
+	var leadingAnchor: NSLayoutXAxisAnchor { get }
+	var trailingAnchor: NSLayoutXAxisAnchor { get }
+	var topAnchor: NSLayoutYAxisAnchor { get }
+	var bottomAnchor: NSLayoutYAxisAnchor { get }
+	var widthAnchor: NSLayoutDimension { get }
+	var heightAnchor: NSLayoutDimension { get }
 }
 
 extension VisualLayoutView: VisualLayoutAnchorable {}
@@ -56,8 +56,13 @@ extension VisualLayoutGuide: VisualLayoutAnchorable {}
 
 // MARK: - Default Margin
 
-/// The default spacing (in points) applied by `|--` and `--|` operators.
-/// Defaults to 8. Can be changed globally.
+/// The default inter-view spacing (in points) used when no explicit gap is provided
+/// in a `--` chain (e.g. `|--a--b--|`). Defaults to 8.
+///
+/// - Important: This value is read at operator-evaluation time, not at
+///   constraint-activation time. It is **not thread-safe**: mutations must
+///   occur on the main thread, before any layout operators that reference
+///   it are evaluated.
 public var visualLayoutDefaultMargin: CGFloat = 8
 
 // MARK: - VisualLayoutItem
@@ -76,13 +81,13 @@ public protocol VisualLayoutItem {}
 ///   3. `chain -- 20`              → `VisualRowChain([a], pending: 20)`
 ///   4. `chain -- VisualRow(b)`    → `VisualRow([a,b], leading: 0, trailing: 0, spacings:[20])`
 public struct VisualRowChain {
-    internal var views: [any VisualLayoutAnchorable]
-    /// Collected spacings; `spacings[i]` is the gap between `views[i]` and `views[i+1]`.
-    internal var spacings: [CGFloat]
-    /// A spacing value set by `chain -- number` that will be consumed when the next view is appended.
-    internal var pendingSpacing: CGFloat?
-    /// Leading margin set by the opening `|--` or `|` prefix operator.
-    internal var leadingMargin: CGFloat?
+	internal var views: [any VisualLayoutAnchorable]
+	/// Collected spacings; `spacings[i]` is the gap between `views[i]` and `views[i+1]`.
+	internal var spacings: [CGFloat]
+	/// A spacing value set by `chain -- number` that will be consumed when the next view is appended.
+	internal var pendingSpacing: CGFloat?
+	/// Leading margin set by the opening `|--` or `|` prefix operator.
+	internal var leadingMargin: CGFloat?
 }
 
 // MARK: - VisualRow
@@ -90,50 +95,50 @@ public struct VisualRowChain {
 /// Represents one horizontal row in a visual layout block.
 /// Built incrementally by the `|`, `|--`, `--|` operators.
 public struct VisualRow: VisualLayoutItem {
-
-    internal var views: [any VisualLayoutAnchorable]
-    /// Spacing between adjacent elements. `interViewSpacings[i]` is the gap between
-    /// `views[i]` and `views[i+1]`. Always has `max(0, views.count - 1)` elements.
-    internal var interViewSpacings: [CGFloat]
-
-    /// Distance from the container's leading edge. `nil` means no leading constraint.
-    /// `0` pins to edge; positive value adds margin.
-    internal var leadingMargin: CGFloat?
-
-    /// Distance from the container's trailing edge. `nil` means no trailing constraint.
-    internal var trailingMargin: CGFloat?
-
-    internal var height: CGFloat?
-    internal var heightRelation: NSLayoutConstraint.Relation = .equal
-    internal var heightPriority: Priority = .required
-
-    /// Creates a row from an array of anchorables, using `visualLayoutDefaultMargin` for all gaps.
-    internal init(
-        views: [any VisualLayoutAnchorable],
-        leadingMargin: CGFloat? = nil,
-        trailingMargin: CGFloat? = nil
-    ) {
-        self.views = views
-        self.interViewSpacings = Array(repeating: visualLayoutDefaultMargin, count: max(0, views.count - 1))
-        self.leadingMargin = leadingMargin
-        self.trailingMargin = trailingMargin
-    }
-
-    /// Creates a row from a `VisualRowChain`, preserving custom per-gap spacings.
-    internal init(
-        chain: VisualRowChain,
-        leadingMargin: CGFloat? = nil,
-        trailingMargin: CGFloat? = nil
-    ) {
-        self.views = chain.views
-        var spacings = chain.spacings
-        while spacings.count < max(0, chain.views.count - 1) {
-            spacings.append(visualLayoutDefaultMargin)
-        }
-        self.interViewSpacings = spacings
-        self.leadingMargin = leadingMargin
-        self.trailingMargin = trailingMargin
-    }
+	
+	internal var views: [any VisualLayoutAnchorable]
+	/// Spacing between adjacent elements. `interViewSpacings[i]` is the gap between
+	/// `views[i]` and `views[i+1]`. Always has `max(0, views.count - 1)` elements.
+	internal var interViewSpacings: [CGFloat]
+	
+	/// Distance from the container's leading edge. `nil` means no leading constraint.
+	/// `0` pins to edge; positive value adds margin.
+	internal var leadingMargin: CGFloat?
+	
+	/// Distance from the container's trailing edge. `nil` means no trailing constraint.
+	internal var trailingMargin: CGFloat?
+	
+	internal var height: CGFloat?
+	internal var heightRelation: NSLayoutConstraint.Relation = .equal
+	internal var heightPriority: Priority = .required
+	
+	/// Creates a row from an array of anchorables, using `visualLayoutDefaultMargin` for all gaps.
+	internal init(
+		views: [any VisualLayoutAnchorable],
+		leadingMargin: CGFloat? = nil,
+		trailingMargin: CGFloat? = nil
+	) {
+		self.views = views
+		self.interViewSpacings = Array(repeating: visualLayoutDefaultMargin, count: max(0, views.count - 1))
+		self.leadingMargin = leadingMargin
+		self.trailingMargin = trailingMargin
+	}
+	
+	/// Creates a row from a `VisualRowChain`, preserving custom per-gap spacings.
+	internal init(
+		chain: VisualRowChain,
+		leadingMargin: CGFloat? = nil,
+		trailingMargin: CGFloat? = nil
+	) {
+		self.views = chain.views
+		var spacings = chain.spacings
+		while spacings.count < max(0, chain.views.count - 1) {
+			spacings.append(visualLayoutDefaultMargin)
+		}
+		self.interViewSpacings = spacings
+		self.leadingMargin = leadingMargin
+		self.trailingMargin = trailingMargin
+	}
 }
 
 // MARK: - VisualSpacing
@@ -243,26 +248,26 @@ public func layout(
 					if g.owningView == nil { view.addLayoutGuide(g) }
 				}
 			}
-
+			
 			// 1. Vertical (top) constraint
 			let topC = topConstraint(from: first.topAnchor, to: prevAnchor, spacing: pendingSpacing)
 			topC.isActive = true
 			constraints.append(topC)
-
+			
 			// 2. Leading constraint
 			if let margin = row.leadingMargin {
 				let c = first.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin)
 				c.isActive = true
 				constraints.append(c)
 			}
-
+			
 			// 3. Trailing constraint
 			if let margin = row.trailingMargin, let last = row.views.last {
 				let c = last.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin)
 				c.isActive = true
 				constraints.append(c)
 			}
-
+			
 			// 4. Multi-element: equal widths, adjacent spacing, aligned tops
 			let elementCount = row.views.count
 			if elementCount > 1 {
@@ -284,7 +289,7 @@ public func layout(
 					constraints.append(spacingC)
 				}
 			}
-
+			
 			// 5. Height constraints (one per element in the row)
 			if let height = row.height {
 				for element in row.views {
@@ -293,7 +298,7 @@ public func layout(
 					constraints.append(c)
 				}
 			}
-
+			
 			prevAnchor = row.views.last!.bottomAnchor
 			pendingSpacing = nil
 			
