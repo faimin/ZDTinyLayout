@@ -82,10 +82,10 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(row.trailingMargin, 0)
     }
 
-    func testPrefixDashPipeDefaultMargin() {
+    func testPrefixDashPipeZeroMargin() {
         let row = |-view1-|  // postfix -| then prefix |-
-        XCTAssertEqual(row.leadingMargin, visualLayoutDefaultMargin)
-        XCTAssertEqual(row.trailingMargin, visualLayoutDefaultMargin)
+        XCTAssertEqual(row.leadingMargin, 0)
+        XCTAssertEqual(row.trailingMargin, 0)
     }
 
     func testColonEqualsAssignsHeight() {
@@ -99,8 +99,8 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(row.views.count, 2)
         XCTAssertTrue(row.views[0] === view1)
         XCTAssertTrue(row.views[1] === view2)
-        XCTAssertEqual(row.leadingMargin, visualLayoutDefaultMargin)
-        XCTAssertEqual(row.trailingMargin, visualLayoutDefaultMargin)
+        XCTAssertEqual(row.leadingMargin, 0)
+        XCTAssertEqual(row.trailingMargin, 0)
     }
 
     // MARK: - layout(in:) Single View
@@ -127,14 +127,14 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(leading.firstAttribute, .leading)
         XCTAssertTrue(leading.secondItem === container)
         XCTAssertEqual(leading.secondAttribute, .leading)
-        XCTAssertEqual(leading.constant, 8)
+        XCTAssertEqual(leading.constant, 0)
 
         let trailing = constraints[2]
         XCTAssertTrue(trailing.firstItem === view1)
         XCTAssertEqual(trailing.firstAttribute, .trailing)
         XCTAssertTrue(trailing.secondItem === container)
         XCTAssertEqual(trailing.secondAttribute, .trailing)
-        XCTAssertEqual(trailing.constant, -8)
+        XCTAssertEqual(trailing.constant, 0)
 
         let height = constraints[3]
         XCTAssertTrue(height.firstItem === view1)
@@ -214,13 +214,13 @@ class VisualLayoutTests: XCTestCase {
             ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
         }
         XCTAssertNotNil(leading)
-        XCTAssertEqual(leading?.constant, 8)
+        XCTAssertEqual(leading?.constant, 0)
 
         let trailing = constraints.first {
             ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
         }
         XCTAssertNotNil(trailing)
-        XCTAssertEqual(trailing?.constant, -8)
+        XCTAssertEqual(trailing?.constant, 0)
 
         let widthC = constraints.first {
             $0.firstAttribute == .width && $0.secondAttribute == .width
@@ -454,5 +454,63 @@ class VisualLayoutTests: XCTestCase {
             |-view1-|
         }
         XCTAssertFalse(view1.translatesAutoresizingMaskIntoConstraints)
+    }
+
+    // MARK: - Explicit margin syntax (|-- / --)
+
+    func testPipeExplicitMargins() {
+        // |16 -- view -- 16| — leading=16, trailing=16
+        let constraints = layout(in: container) {
+            |16 -- view1 -- 16| /=/ 44
+        }
+        let leading = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
+        }
+        XCTAssertEqual(leading?.constant, 16)
+
+        let trailing = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .trailing
+        }
+        XCTAssertEqual(trailing?.constant, -16)
+    }
+
+    func testDoubleDashPipeExplicitMargins() {
+        // |--16 -- view -- 16--| — leading=16, trailing=16
+        let constraints = layout(in: container) {
+            |--16 -- view1 -- 16--| /=/ 44
+        }
+        let leading = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
+        }
+        XCTAssertEqual(leading?.constant, 16)
+
+        let trailing = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .trailing
+        }
+        XCTAssertEqual(trailing?.constant, -16)
+    }
+
+    func testDoubleDashMultiViewExplicitMargins() {
+        // |8 -- view1 -- 12 -- view2 -- 8| — leading=8, inter=12, trailing=8
+        let constraints = layout(in: container) {
+            |8 -- view1 -- 12 -- view2 -- 8|
+        }
+        let leading = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
+        }
+        XCTAssertEqual(leading?.constant, 8)
+
+        let spacing = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(spacing?.constant, 12)
+
+        let trailing = constraints.first {
+            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
+        }
+        XCTAssertEqual(trailing?.constant, -8)
     }
 }

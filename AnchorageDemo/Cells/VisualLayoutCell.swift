@@ -72,7 +72,7 @@ private extension VisualLayoutCell {
             8
             |-topView-| /=/ 30
             8
-            |-middleLeft-50-middleRight-| /=/ 30
+            |-middleLeft--50--middleRight-| /=/ 30
             8
             |bottomView| /=/ 30
             8

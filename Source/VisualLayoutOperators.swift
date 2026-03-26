@@ -34,8 +34,10 @@ import UIKit
 
 postfix operator |
 postfix operator -|
+postfix operator --|
 prefix operator |
 prefix operator |-
+prefix operator |--
 
 precedencegroup VisualLayoutHeightPrecedence {
     lowerThan: AdditionPrecedence
@@ -59,21 +61,27 @@ public postfix func | (views: [VisualLayoutView]) -> VisualRow {
     VisualRow(views: views, trailingMargin: 0)
 }
 
-// MARK: - Postfix -| — trailing, default margin
+// MARK: - Postfix -| — trailing, zero margin
 
-/// Pins the view's trailing edge to the container with `visualLayoutDefaultMargin`.
+/// Pins the view's trailing edge to the container with zero margin.
+/// Use explicit spacing (e.g. `view -- 8 |`) to set a custom trailing margin.
 @discardableResult
 public postfix func -| (view: VisualLayoutView) -> VisualRow {
-    VisualRow(views: [view], trailingMargin: visualLayoutDefaultMargin)
+    VisualRow(views: [view], trailingMargin: 0)
 }
 
-/// Pins the last view's trailing edge to the container with `visualLayoutDefaultMargin`.
+/// Pins the last view's trailing edge to the container with zero margin.
+/// Use explicit spacing to set a custom trailing margin.
 @discardableResult
 public postfix func -| (views: [VisualLayoutView]) -> VisualRow {
-    VisualRow(views: views, trailingMargin: visualLayoutDefaultMargin)
+    VisualRow(views: views, trailingMargin: 0)
 }
 
 // MARK: - Prefix | — leading, no margin
+
+/// Passthrough for the explicit-margin syntax: `|16 -- view -- 16|`.
+/// The value is forwarded to the existing `CGFloat -- VisualLayoutView` chain starter.
+public prefix func | (margin: CGFloat) -> CGFloat { margin }
 
 /// Pins the row's first view's leading edge to the container with zero margin.
 @discardableResult
@@ -89,20 +97,26 @@ public prefix func | (view: VisualLayoutView) -> VisualRowChain {
     VisualRowChain(views: [view], spacings: [], pendingSpacing: nil, leadingMargin: 0)
 }
 
-// MARK: - Prefix |- — leading, default margin
+// MARK: - Prefix |- — leading, zero margin
 
-/// Pins the row's first view's leading edge to the container with `visualLayoutDefaultMargin`.
+/// Passthrough for the explicit-margin syntax: `|--16 -- view -- 16--|`.
+/// The value is forwarded to the existing `CGFloat -- VisualLayoutView` chain starter.
+public prefix func |-- (margin: CGFloat) -> CGFloat { margin }
+
+/// Pins the row's first view's leading edge to the container with zero margin.
+/// Use explicit spacing (e.g. `8 -- view`) to set a custom leading margin.
 @discardableResult
 public prefix func |- (row: VisualRow) -> VisualRow {
     var r = row
-    r.leadingMargin = visualLayoutDefaultMargin
+    r.leadingMargin = 0
     return r
 }
 
-/// Opens a `--` chain with `visualLayoutDefaultMargin` leading margin: `|-view -- spacing -- view`.
+/// Opens a `--` chain with zero leading margin: `|-view -- spacing -- view`.
+/// Use explicit spacing (e.g. `8 -- view`) to set a custom leading margin.
 @discardableResult
 public prefix func |- (view: VisualLayoutView) -> VisualRowChain {
-    VisualRowChain(views: [view], spacings: [], pendingSpacing: nil, leadingMargin: visualLayoutDefaultMargin)
+    VisualRowChain(views: [view], spacings: [], pendingSpacing: nil, leadingMargin: 0)
 }
 
 // MARK: - Infix /=/ — height
@@ -118,11 +132,19 @@ public func /=/ (lhs: VisualRow, rhs: CGFloat) -> VisualRow {
 
 // MARK: - Infix -- (VisualRowChain builder)
 //
-// Syntax A — custom inter-view spacing with prefix leading margin:
+// Syntax A — zero-margin fences with custom inter-view spacing:
 //   |-a--20--b--30--c-|
-//   Parse: b-| (postfix) → VisualRow(trailing:8)
-//          |- a (prefix on View) → VisualRowChain([a], leading:8)
+//   Parse: b-| (postfix) → VisualRow(trailing:0)
+//          |- a (prefix on View) → VisualRowChain([a], leading:0)
 //          chain--20 / chain--VisualRow → final VisualRow
+//
+// Syntax B — explicit-margin fences:
+//   |--16--a--8--b--16--|  or  |16--a--8--b--16|
+//   Parse: |--16 (prefix) → CGFloat(16)
+//          16 -- a → VisualRowChain([a], leading:16)
+//          chain--8 / chain--b → appends b with gap 8
+//          chain--16 → pendingSpacing=16
+//          chain--| (postfix) → VisualRow(leading:16, trailing:16)
 //
 // Syntax B — custom leading margin via leading number:
 //   20--a--3--b|
@@ -165,8 +187,8 @@ public func -- (lhs: VisualRowChain, rhs: VisualLayoutView) -> VisualRowChain {
 /// Closes a chain when the last view already had its trailing margin set by a postfix operator.
 ///
 /// This overload handles the parse order in `|-a--20--b-|`:
-/// - `b -|` fires first (postfix) → `VisualRow(b, trailing: 8)`
-/// - `|- a` fires next (prefix on View) → `VisualRowChain([a], leading: 8)`
+/// - `b -|` fires first (postfix) → `VisualRow(b, trailing: 0)`
+/// - `|- a` fires next (prefix on View) → `VisualRowChain([a], leading: 0)`
 /// - `chain -- 20` → sets pending spacing
 /// - `chain -- VisualRow(b)` → this overload: merges chain + row into final `VisualRow`
 public func -- (lhs: VisualRowChain, rhs: VisualRow) -> VisualRow {
@@ -187,10 +209,24 @@ public postfix func | (chain: VisualRowChain) -> VisualRow {
     VisualRow(chain: chain, leadingMargin: chain.leadingMargin, trailingMargin: chain.pendingSpacing ?? 0)
 }
 
-// MARK: - Postfix -| for VisualRowChain — trailing, default margin
+// MARK: - Postfix -| for VisualRowChain — trailing from pending spacing
 
-/// Closes a `VisualRowChain` with a trailing edge pin of `visualLayoutDefaultMargin`.
+/// Closes a `VisualRowChain` with a trailing edge pin.
+/// - If the chain ends with a pending spacing (`chain -- number -|`), that value becomes
+///   the trailing margin: e.g. `|-a--20--b--8-|` → trailing=8.
+/// - Otherwise trailing margin is 0.
 @discardableResult
 public postfix func -| (chain: VisualRowChain) -> VisualRow {
-    VisualRow(chain: chain, leadingMargin: chain.leadingMargin, trailingMargin: visualLayoutDefaultMargin)
+    VisualRow(chain: chain, leadingMargin: chain.leadingMargin, trailingMargin: chain.pendingSpacing ?? 0)
+}
+
+// MARK: - Postfix --| for VisualRowChain — explicit-margin closing fence
+
+/// Closes a chain started with `|--` or `|` with a trailing edge pin.
+/// - If the chain ends with a pending spacing (`chain -- number --|`), that value becomes
+///   the trailing margin: e.g. `|--16 -- a -- 16--|` → leading=16, trailing=16.
+/// - Otherwise trailing margin is 0.
+@discardableResult
+public postfix func --| (chain: VisualRowChain) -> VisualRow {
+    VisualRow(chain: chain, leadingMargin: chain.leadingMargin, trailingMargin: chain.pendingSpacing ?? 0)
 }

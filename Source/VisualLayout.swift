@@ -51,10 +51,10 @@ public protocol VisualLayoutItem {}
 /// with custom inter-view spacing. Converted to `VisualRow` by the postfix `|` or `-|` operators.
 ///
 /// Parse flow for `|-a--20--b-|`:
-///   1. `b -|` (postfix)           → `VisualRow(trailing: 8)`
-///   2. `|- a` (prefix on View)    → `VisualRowChain([a], leading: 8)`
+///   1. `b -|` (postfix)           → `VisualRow(trailing: 0)`
+///   2. `|- a` (prefix on View)    → `VisualRowChain([a], leading: 0)`
 ///   3. `chain -- 20`              → `VisualRowChain([a], pending: 20)`
-///   4. `chain -- VisualRow(b)`    → `VisualRow([a,b], leading: 8, trailing: 8, spacings:[20])`
+///   4. `chain -- VisualRow(b)`    → `VisualRow([a,b], leading: 0, trailing: 0, spacings:[20])`
 public struct VisualRowChain {
     internal var views: [VisualLayoutView]
     /// Collected spacings; `spacings[i]` is the gap between `views[i]` and `views[i+1]`.
