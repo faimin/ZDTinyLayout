@@ -317,6 +317,30 @@ public func layout(
 	return constraints
 }
 
+// MARK: - layout(in:) — view-returning overload
+
+public extension VisualLayoutView {
+	/// Describes the vertical layout of subviews using an ASCII-style DSL,
+	/// returning the receiver for declarative chaining.
+	///
+	/// ```swift
+	/// let card = UIView().layout {
+	///     16
+	///     |-titleLabel-| ^^ 20
+	///     8
+	///     |-bodyLabel-|
+	///     16
+	/// }
+	/// ```
+	@discardableResult
+	func layout(
+		@VisualLayoutBuilder _ items: () -> [VisualLayoutItem]
+	) -> Self {
+		_ = Anchorage.layout(in: self, items)
+		return self
+	}
+}
+
 // MARK: - Private Constraint Helpers
 
 private func topConstraint(
