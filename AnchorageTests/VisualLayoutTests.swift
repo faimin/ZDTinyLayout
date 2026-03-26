@@ -202,28 +202,44 @@ class VisualLayoutTests: XCTestCase {
         }
         XCTAssertEqual(constraints.count, 7)
 
-        XCTAssertTrue(constraints[1].firstItem === view1)
-        XCTAssertEqual(constraints[1].firstAttribute, .leading)
-        XCTAssertEqual(constraints[1].constant, 8)
+        let leading = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
+        }
+        XCTAssertNotNil(leading)
+        XCTAssertEqual(leading?.constant, 8)
 
-        XCTAssertTrue(constraints[2].firstItem === view2)
-        XCTAssertEqual(constraints[2].firstAttribute, .trailing)
-        XCTAssertEqual(constraints[2].constant, -8)
+        let trailing = constraints.first {
+            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
+        }
+        XCTAssertNotNil(trailing)
+        XCTAssertEqual(trailing?.constant, -8)
 
-        let widthC = constraints[3]
-        XCTAssertEqual(widthC.firstAttribute, .width)
-        XCTAssertEqual(widthC.secondAttribute, .width)
-        XCTAssertEqual(widthC.multiplier, 1)
+        let widthC = constraints.first {
+            $0.firstAttribute == .width && $0.secondAttribute == .width
+        }
+        XCTAssertNotNil(widthC)
+        XCTAssertEqual(widthC?.multiplier, 1)
 
-        let spacingC = constraints[4]
-        XCTAssertTrue(spacingC.firstItem === view2)
-        XCTAssertEqual(spacingC.firstAttribute, .leading)
-        XCTAssertTrue(spacingC.secondItem === view1)
-        XCTAssertEqual(spacingC.secondAttribute, .trailing)
-        XCTAssertEqual(spacingC.constant, 8)
+        let spacingC = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertNotNil(spacingC)
+        XCTAssertEqual(spacingC?.constant, 8)
 
-        XCTAssertEqual(constraints[5].constant, 44)
-        XCTAssertEqual(constraints[6].constant, 44)
+        let view1Height = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .height
+        }
+        XCTAssertNotNil(view1Height)
+        XCTAssertEqual(view1Height?.constant, 44)
+
+        let view2Height = constraints.first {
+            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .height
+        }
+        XCTAssertNotNil(view2Height)
+        XCTAssertEqual(view2Height?.constant, 44)
     }
 
     func testThreeViewMultiRow() {
@@ -231,6 +247,16 @@ class VisualLayoutTests: XCTestCase {
             |-[view1, view2, view3]-|
         }
         XCTAssertEqual(constraints.count, 7)
+
+        let widthEquality = constraints.first {
+            $0.firstAttribute == .width && $0.secondAttribute == .width
+        }
+        XCTAssertNotNil(widthEquality)
+
+        let interViewSpacing = constraints.first {
+            $0.firstAttribute == .leading && $0.secondAttribute == .trailing
+        }
+        XCTAssertNotNil(interViewSpacing)
     }
 
     // MARK: - layout(in:) Flexible Spacing
