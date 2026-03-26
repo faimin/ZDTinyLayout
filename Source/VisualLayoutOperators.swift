@@ -42,7 +42,7 @@ precedencegroup VisualLayoutHeightPrecedence {
     higherThan: AssignmentPrecedence
     associativity: left
 }
-infix operator .= : VisualLayoutHeightPrecedence
+infix operator /=/ : VisualLayoutHeightPrecedence
 
 // MARK: - Postfix | — trailing, no margin
 
@@ -92,11 +92,11 @@ public prefix func |- (row: VisualRow) -> VisualRow {
     return r
 }
 
-// MARK: - Infix := — height
+// MARK: - Infix /=/ — height
 
 /// Sets the height of all views in the row to `rhs` points.
 @discardableResult
-public func .= (lhs: VisualRow, rhs: CGFloat) -> VisualRow {
+public func /=/ (lhs: VisualRow, rhs: CGFloat) -> VisualRow {
     var r = lhs
     r.height = rhs
     r.heightRelation = .equal

@@ -89,7 +89,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testColonEqualsAssignsHeight() {
-        let row = |-view1-| .= 44
+        let row = |-view1-| /=/ 44
         XCTAssertEqual(row.height, 44)
         XCTAssertEqual(row.heightRelation, .equal)
     }
@@ -108,7 +108,7 @@ class VisualLayoutTests: XCTestCase {
     func testSingleViewWithMarginsAndHeight() {
         let constraints = layout(in: container) {
             100
-            |-view1-| .= 44
+            |-view1-| /=/ 44
             0
         }
         XCTAssertEqual(constraints.count, 5)
@@ -171,7 +171,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testNoTrailingNumberLeavesBottomUnconstrained() {
         let constraints = layout(in: container) {
-            |-view1-| .= 44
+            |-view1-| /=/ 44
         }
         XCTAssertEqual(constraints.count, 4)
         XCTAssertFalse(constraints.contains { $0.firstItem === container && $0.firstAttribute == .bottom })
@@ -179,9 +179,9 @@ class VisualLayoutTests: XCTestCase {
 
     func testTwoViewsVerticalSpacing() {
         let constraints = layout(in: container) {
-            |-view1-| .= 44
+            |-view1-| /=/ 44
             8
-            |-view2-| .= 50
+            |-view2-| /=/ 50
         }
         XCTAssertEqual(constraints.count, 8)
 
@@ -198,7 +198,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testMultiViewRowEqualWidthsAndSpacing() {
         let constraints = layout(in: container) {
-            |-[view1, view2]-| .= 44
+            |-[view1, view2]-| /=/ 44
         }
         XCTAssertEqual(constraints.count, 7)
 
