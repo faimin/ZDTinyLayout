@@ -15,42 +15,20 @@
 @testable import Anchorage
 import XCTest
 
-#if swift(>=4.0)
-    public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
-#else
-    public typealias ConstraintAttribute = NSLayoutAttribute
-    func XCTAssertEqual<T>(_ expression1: @autoclosure () throws -> T, _ expression2: @autoclosure () throws -> T, accuracy: T, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) where T : FloatingPoint {
-        XCTAssertEqualWithAccuracy(expression1, expression2, accuracy: accuracy, message, file: file, line: line)
-    }
-#endif
-
 #if os(macOS)
     typealias TestView = NSView
     typealias TestWindow = NSWindow
 
-    #if swift(>=4.0)
-        let TestPriorityRequired = NSLayoutConstraint.Priority.required
-        let TestPriorityHigh = NSLayoutConstraint.Priority.defaultHigh
-        let TestPriorityLow = NSLayoutConstraint.Priority.defaultLow
-    #else
-        let TestPriorityRequired = NSLayoutPriorityRequired
-        let TestPriorityHigh = NSLayoutPriorityDefaultHigh
-        let TestPriorityLow = NSLayoutPriorityDefaultLow
-    #endif
-
+    let TestPriorityRequired = NSLayoutConstraint.Priority.required
+    let TestPriorityHigh = NSLayoutConstraint.Priority.defaultHigh
+    let TestPriorityLow = NSLayoutConstraint.Priority.defaultLow
 #else
     typealias TestView = UIView
     typealias TestWindow = UIWindow
 
-    #if swift(>=4.0)
-        let TestPriorityRequired = UILayoutPriority.required
-        let TestPriorityHigh = UILayoutPriority.defaultHigh
-        let TestPriorityLow = UILayoutPriority.defaultLow
-    #else
-        let TestPriorityRequired = UILayoutPriorityRequired
-        let TestPriorityHigh = UILayoutPriorityDefaultHigh
-        let TestPriorityLow = UILayoutPriorityDefaultLow
-    #endif
+    let TestPriorityRequired = UILayoutPriority.required
+    let TestPriorityHigh = UILayoutPriority.defaultHigh
+    let TestPriorityLow = UILayoutPriority.defaultLow
 #endif
 
 let cgEpsilon: CGFloat = 0.00001
@@ -1307,9 +1285,7 @@ extension ConstraintAttribute: CustomDebugStringConvertible {
         case .lastBaseline: return "lastBaseline"
         case .firstBaseline: return "firstBaseline"
         case .notAnAttribute: return "notAnAttribute"
-        #if swift(>=5.0)
         @unknown default: return "unknown case \(self): \(self.rawValue)"
-        #endif
         }
 #else
         switch self {
@@ -1334,9 +1310,7 @@ extension ConstraintAttribute: CustomDebugStringConvertible {
         case .centerXWithinMargins: return "centerXWithinMargins"
         case .centerYWithinMargins: return "centerYWithinMargins"
         case .notAnAttribute: return "notAnAttribute"
-        #if swift(>=5.0)
         @unknown default: return "unknown case \(self): \(self.rawValue)"
-        #endif
         }
 #endif
     }
