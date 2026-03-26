@@ -314,7 +314,7 @@ class VisualLayoutTests: XCTestCase {
             ($0.secondItem as? TestView) === view1 &&
             $0.secondAttribute == .trailing
         }
-        XCTAssertEqual(spacingC?.constant, visualLayoutDefaultMargin)
+        XCTAssertEqual(spacingC?.constant, visualLayoutDefaultSpacing)
     }
 
     func testChainOperatorAlignedTops() {

@@ -63,7 +63,7 @@ extension VisualLayoutGuide: VisualLayoutAnchorable {}
 ///   constraint-activation time. It is **not thread-safe**: mutations must
 ///   occur on the main thread, before any layout operators that reference
 ///   it are evaluated.
-public var visualLayoutDefaultMargin: CGFloat = 8
+public var visualLayoutDefaultSpacing: CGFloat = 8
 
 // MARK: - VisualLayoutItem
 
@@ -112,14 +112,14 @@ public struct VisualRow: VisualLayoutItem {
 	internal var heightRelation: NSLayoutConstraint.Relation = .equal
 	internal var heightPriority: Priority = .required
 	
-	/// Creates a row from an array of anchorables, using `visualLayoutDefaultMargin` for all gaps.
+	/// Creates a row from an array of anchorables, using `visualLayoutDefaultSpacing` for all gaps.
 	internal init(
 		views: [any VisualLayoutAnchorable],
 		leadingMargin: CGFloat? = nil,
 		trailingMargin: CGFloat? = nil
 	) {
 		self.views = views
-		self.interViewSpacings = Array(repeating: visualLayoutDefaultMargin, count: max(0, views.count - 1))
+		self.interViewSpacings = Array(repeating: visualLayoutDefaultSpacing, count: max(0, views.count - 1))
 		self.leadingMargin = leadingMargin
 		self.trailingMargin = trailingMargin
 	}
@@ -133,7 +133,7 @@ public struct VisualRow: VisualLayoutItem {
 		self.views = chain.views
 		var spacings = chain.spacings
 		while spacings.count < max(0, chain.views.count - 1) {
-			spacings.append(visualLayoutDefaultMargin)
+			spacings.append(visualLayoutDefaultSpacing)
 		}
 		self.interViewSpacings = spacings
 		self.leadingMargin = leadingMargin

@@ -169,9 +169,9 @@ public func -- (lhs: any VisualLayoutAnchorable, rhs: CGFloat) -> VisualRowChain
 	VisualRowChain(views: [lhs], spacings: [], pendingSpacing: rhs)
 }
 
-/// Starts a chain: `element -- element` uses `visualLayoutDefaultMargin` as the gap.
+/// Starts a chain: `element -- element` uses `visualLayoutDefaultSpacing` as the gap.
 public func -- (lhs: any VisualLayoutAnchorable, rhs: any VisualLayoutAnchorable) -> VisualRowChain {
-	VisualRowChain(views: [lhs, rhs], spacings: [visualLayoutDefaultMargin], pendingSpacing: nil)
+	VisualRowChain(views: [lhs, rhs], spacings: [visualLayoutDefaultSpacing], pendingSpacing: nil)
 }
 
 /// Sets a new pending spacing on an existing chain: `chain -- spacing`.
@@ -181,10 +181,10 @@ public func -- (lhs: VisualRowChain, rhs: CGFloat) -> VisualRowChain {
 	return chain
 }
 
-/// Appends an element to a chain, consuming the pending spacing (or `visualLayoutDefaultMargin`).
+/// Appends an element to a chain, consuming the pending spacing (or `visualLayoutDefaultSpacing`).
 public func -- (lhs: VisualRowChain, rhs: any VisualLayoutAnchorable) -> VisualRowChain {
 	var chain = lhs
-	chain.spacings.append(lhs.pendingSpacing ?? visualLayoutDefaultMargin)
+	chain.spacings.append(lhs.pendingSpacing ?? visualLayoutDefaultSpacing)
 	chain.views.append(rhs)
 	chain.pendingSpacing = nil
 	return chain
@@ -204,7 +204,7 @@ public func -- (lhs: VisualRowChain, rhs: VisualRow) -> VisualRow {
 		return VisualRow(chain: lhs, leadingMargin: lhs.leadingMargin, trailingMargin: rhs.trailingMargin)
 	}
 	var chain = lhs
-	chain.spacings.append(lhs.pendingSpacing ?? visualLayoutDefaultMargin)
+	chain.spacings.append(lhs.pendingSpacing ?? visualLayoutDefaultSpacing)
 	chain.views.append(contentsOf: rhs.views)
 	return VisualRow(chain: chain, leadingMargin: chain.leadingMargin, trailingMargin: rhs.trailingMargin)
 }
