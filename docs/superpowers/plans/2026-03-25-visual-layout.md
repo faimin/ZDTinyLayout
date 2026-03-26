@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a `layout(in:)` Visual Layout DSL to Anchorage that lets developers describe Auto Layout using ASCII-style vertical structure with `|-view-| := height` syntax.
+**Goal:** Add a `layout(in:)` Visual Layout DSL to Anchorage that lets developers describe Auto Layout using ASCII-style vertical structure with `|-view-| .= height` syntax.
 
 **Architecture:** Two new source files — `VisualLayout.swift` (types + `layout(in:)` function) and `VisualLayoutOperators.swift` (operator declarations and overloads). Tests go in a new `VisualLayoutTests.swift` file following the existing XCTest pattern. Existing source files are not modified except `Package.swift` and `Anchorage.podspec` for the Swift 5.9 version bump.
 
@@ -17,7 +17,7 @@
 | Action | Path | Responsibility |
 |--------|------|----------------|
 | Create | `Source/VisualLayout.swift` | `VisualLayoutView` public typealias, `VisualLayoutItem` protocol, `VisualRow`/`VisualSpacing`/`VisualFlexibleSpacing` structs, `VisualLayoutBuilder` @resultBuilder, `atLeast`/`atMost` functions, `visualLayoutDefaultMargin` global, `layout(in:)` function + private constraint helpers |
-| Create | `Source/VisualLayoutOperators.swift` | All `operator` declarations + public overloads for postfix `\|`/`-\|`, prefix `\|`/`\|-`, infix `:=` |
+| Create | `Source/VisualLayoutOperators.swift` | All `operator` declarations + public overloads for postfix `\|`/`-\|`, prefix `\|`/`\|-`, infix `.=` |
 | Create | `AnchorageTests/VisualLayoutTests.swift` | XCTest suite — operator tests, constraint-attribute tests for `layout(in:)` |
 | Modify | `Package.swift` | `swift-tools-version:5.9`, add `.visionOS(.v1)` |
 | Modify | `Anchorage.podspec` | `swift_versions = ['5.9']`, add visionOS deployment target |
@@ -310,11 +310,11 @@ public enum VisualLayoutBuilder {
 /// ```swift
 /// layout(in: container) {
 ///     100
-///     |-emailField-| := 44
+///     |-emailField-| .= 44
 ///     8
-///     |-[nameField, phoneField]-| := 44
+///     |-[nameField, phoneField]-| .= 44
 ///     atLeast(20)
-///     |loginButton| := 50
+///     |loginButton| .= 50
 ///     0
 /// }
 /// ```
@@ -523,7 +523,7 @@ func testPrefixDashPipeDefaultMargin() {
 }
 
 func testColonEqualsAssignsHeight() {
-    let row = |-view1-| := 44
+    let row = |-view1-| .= 44
     XCTAssertEqual(row.height, 44)
     XCTAssertEqual(row.heightRelation, .equal)
 }
@@ -544,7 +544,7 @@ Run:
 ```bash
 swift test --filter VisualLayoutTests
 ```
-Expected: Compile errors — operators `|`, `-|`, `|-`, `:=` not declared.
+Expected: Compile errors — operators `|`, `-|`, `|-`, `.=` not declared.
 
 ### Step 3 — Create `Source/VisualLayoutOperators.swift`
 
@@ -589,7 +589,7 @@ precedencegroup VisualLayoutHeightPrecedence {
     higherThan: AssignmentPrecedence
     associativity: left
 }
-infix operator := : VisualLayoutHeightPrecedence
+infix operator .= : VisualLayoutHeightPrecedence
 
 // MARK: - Postfix | — trailing, no margin
 
@@ -639,11 +639,11 @@ public prefix func |- (row: VisualRow) -> VisualRow {
     return r
 }
 
-// MARK: - Infix := — height
+// MARK: - Infix .= — height
 
 /// Sets the height of all views in the row to `rhs` points.
 @discardableResult
-public func := (lhs: VisualRow, rhs: CGFloat) -> VisualRow {
+public func .= (lhs: VisualRow, rhs: CGFloat) -> VisualRow {
     var r = lhs
     r.height = rhs
     r.heightRelation = .equal
@@ -663,7 +663,7 @@ Expected: All 9 tests PASS.
 
 ```bash
 git add Source/VisualLayoutOperators.swift AnchorageTests/VisualLayoutTests.swift
-git commit -m "feat: add VisualLayout operators (|, -|, |-) and := height operator"
+git commit -m "feat: add VisualLayout operators (|, -|, |-) and .= height operator"
 ```
 
 ---
@@ -683,7 +683,7 @@ The `layout(in:)` function was already implemented in Task 2. This task adds tes
 // MARK: - layout(in:) Single View
 
 func testSingleViewWithMarginsAndHeight() {
-    // layout(in: container) { 100; |-view1-| := 44; 0 }
+    // layout(in: container) { 100; |-view1-| .= 44; 0 }
     // Expected constraints (in order):
     //   [0] view1.top == container.top + 100
     //   [1] view1.leading == container.leading + 8
@@ -692,7 +692,7 @@ func testSingleViewWithMarginsAndHeight() {
     //   [4] container.bottom == view1.bottom + 0
     let constraints = layout(in: container) {
         100
-        |-view1-| := 44
+        |-view1-| .= 44
         0
     }
     XCTAssertEqual(constraints.count, 5)
@@ -750,7 +750,7 @@ func testEdgePinnedViewNoMargin() {
 }
 
 func testViewWithNoHeightHasNoHeightConstraint() {
-    // |-view1-| without := produces no height constraint
+    // |-view1-| without .= produces no height constraint
     let constraints = layout(in: container) {
         |-view1-|
     }
@@ -765,7 +765,7 @@ func testViewWithNoHeightHasNoHeightConstraint() {
 func testNoTrailingNumberLeavesBottomUnconstrained() {
     // Layout ending with a VisualRow should not add a bottom constraint
     let constraints = layout(in: container) {
-        |-view1-| := 44
+        |-view1-| .= 44
     }
     // [0] top, [1] leading, [2] trailing, [3] height — no bottom
     XCTAssertEqual(constraints.count, 4)
@@ -774,9 +774,9 @@ func testNoTrailingNumberLeavesBottomUnconstrained() {
 
 func testTwoViewsVerticalSpacing() {
     let constraints = layout(in: container) {
-        |-view1-| := 44
+        |-view1-| .= 44
         8
-        |-view2-| := 50
+        |-view2-| .= 50
     }
     // view1: top(0)+leading+trailing+height = 4
     // view2: top(8)+leading+trailing+height = 4
@@ -797,7 +797,7 @@ func testTwoViewsVerticalSpacing() {
 // MARK: - layout(in:) Multi-View Row
 
 func testMultiViewRowEqualWidthsAndSpacing() {
-    // |-[view1, view2]-| := 44
+    // |-[view1, view2]-| .= 44
     // Expected:
     //   [0] view1.top == container.top + 0
     //   [1] view1.leading == container.leading + 8
@@ -807,7 +807,7 @@ func testMultiViewRowEqualWidthsAndSpacing() {
     //   [5] view1.height == 44
     //   [6] view2.height == 44
     let constraints = layout(in: container) {
-        |-[view1, view2]-| := 44
+        |-[view1, view2]-| .= 44
     }
     XCTAssertEqual(constraints.count, 7)
 
@@ -956,15 +956,15 @@ Auto Layout in an ASCII-style vertical structure:
 
     layout(in: container) {
         100
-        |-emailField-| := 44
+        |-emailField-| .= 44
         8
-        |-[nameField, phoneField]-| := 44
+        |-[nameField, phoneField]-| .= 44
         atLeast(20)
-        |loginButton| := 50
+        |loginButton| .= 50
         0
     }
 
-New operators: postfix |, -|, prefix |, |-; infix :=
+New operators: postfix |, -|, prefix |, |-; infix .=
 New functions: atLeast(_:), atMost(_:)
 New files: Source/VisualLayout.swift, Source/VisualLayoutOperators.swift
 Bumps minimum Swift to 5.9, adds visionOS platform support"
@@ -990,4 +990,4 @@ Trailing bottom constraint (from final spacing/`atLeast`/`atMost`) is appended l
 - `if`/`else` and `for` inside `layout { }` blocks are not supported (v1 non-goal).
 - Inter-view spacing in multi-view rows is always `visualLayoutDefaultMargin` (non-configurable in v1).
 - A layout block ending with a `VisualRow` (no trailing number) leaves the container's bottom unconstrained — add `0` as the last item to pin the bottom edge.
-- `VisualRow.heightRelation` can only be `.equal` in v1. There is no DSL syntax for `>= height` or `<= height` (no `VisualFlexibleSpacing` overload for `:=`). The field exists for forward compatibility.
+- `VisualRow.heightRelation` can only be `.equal` in v1. There is no DSL syntax for `>= height` or `<= height` (no `VisualFlexibleSpacing` overload for `.=`). The field exists for forward compatibility.

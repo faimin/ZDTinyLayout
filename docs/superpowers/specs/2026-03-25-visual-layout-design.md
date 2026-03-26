@@ -25,11 +25,11 @@ public func layout(
 ```swift
 layout(in: container) {
     100
-    |-emailField-| := 44
+    |-emailField-| .= 44
     8
-    |-[nameField, phoneField]-| := 44
+    |-[nameField, phoneField]-| .= 44
     atLeast(20)
-    |loginButton| := 50
+    |loginButton| .= 50
     0
 }
 ```
@@ -41,8 +41,8 @@ layout(in: container) {
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
 | Syntax style | Fusion with Anchorage style | Avoid divergence from existing API |
-| Height operator | `:=` (e.g. `\|-email-\| := 44`) | Avoids conflict with Anchorage's `~` priority operator |
-| Horizontal multi-view | Supported (`\|-[a, b, c]-\| := 44`) | Needed for common side-by-side layouts |
+| Height operator | `.=` (e.g. `\|-email-\| .= 44`) | Avoids conflict with Anchorage's `~` priority operator |
+| Horizontal multi-view | Supported (`\|-[a, b, c]-\| .= 44`) | Needed for common side-by-side layouts |
 | Flexible spacing | Named functions `atLeast(n)` / `atMost(n)` | `prefix >=` / `<=` cannot be declared; conflicts with stdlib infix comparison operators |
 | View hierarchy (`subviews {}`) | Not added | Keeps Anchorage lightweight and focused |
 | Calling style | Top-level function `layout(in: view) { }` | Consistent with Anchorage's non-UIView-extension style |
@@ -86,7 +86,7 @@ public struct VisualRow: VisualLayoutItem {
                                    // 8   = default margin (visualLayoutDefaultMargin)
     var trailingMargin: CGFloat?   // same semantics as leadingMargin
     var height: CGFloat?
-    var heightRelation: NSLayoutConstraint.Relation = .equal  // defaults to equal; only changed via := overloads
+    var heightRelation: NSLayoutConstraint.Relation = .equal  // defaults to equal; only changed via .= overloads
 }
 ```
 
@@ -196,13 +196,13 @@ precedencegroup VisualLayoutHeightPrecedence {
     higherThan: AssignmentPrecedence
     associativity: left
 }
-infix operator := : VisualLayoutHeightPrecedence
+infix operator .= : VisualLayoutHeightPrecedence
 
 @discardableResult
-public func := (lhs: VisualRow, rhs: CGFloat) -> VisualRow
+public func .= (lhs: VisualRow, rhs: CGFloat) -> VisualRow
 ```
 
-The precedence group places `:=` below arithmetic (`AdditionPrecedence`) but above assignment (`AssignmentPrecedence`). This matches conventional assignment-style operator positioning: the right-hand side arithmetic is fully evaluated before `:=` binds it to the `VisualRow`. Since `|-view-|` is also fully evaluated before `:=` (postfix/prefix have higher precedence than any infix), the expression `|-view-| := 44` always parses as intended.
+The precedence group places `.=` below arithmetic (`AdditionPrecedence`) but above assignment (`AssignmentPrecedence`). This matches conventional assignment-style operator positioning: the right-hand side arithmetic is fully evaluated before `.=` binds it to the `VisualRow`. Since `|-view-|` is also fully evaluated before `.=` (postfix/prefix have higher precedence than any infix), the expression `|-view-| .= 44` always parses as intended.
 
 ### Flexible Spacing Functions
 
