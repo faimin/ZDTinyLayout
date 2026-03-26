@@ -70,7 +70,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testPostfixDashPipeZeroMargin() {
-        let row = view1-|
+        let row = view1--|
         XCTAssertEqual(row.views.count, 1)
         XCTAssertEqual(row.trailingMargin, 0)
         XCTAssertNil(row.leadingMargin)
@@ -83,19 +83,19 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testPrefixDashPipeZeroMargin() {
-        let row = |-view1-|  // postfix -| then prefix |-
+        let row = |--view1--|  // postfix --| then prefix |--
         XCTAssertEqual(row.leadingMargin, 0)
         XCTAssertEqual(row.trailingMargin, 0)
     }
 
     func testColonEqualsAssignsHeight() {
-        let row = |-view1-| /=/ 44
+        let row = |--view1--| /=/ 44
         XCTAssertEqual(row.height, 44)
         XCTAssertEqual(row.heightRelation, .equal)
     }
 
     func testMultiViewArrayPostfixOperator() {
-        let row = |-[view1, view2]-|
+        let row = |--[view1, view2]--|
         XCTAssertEqual(row.views.count, 2)
         XCTAssertTrue(row.views[0] === view1)
         XCTAssertTrue(row.views[1] === view2)
@@ -108,7 +108,7 @@ class VisualLayoutTests: XCTestCase {
     func testSingleViewWithMarginsAndHeight() {
         let constraints = layout(in: container) {
             100
-            |-view1-| /=/ 44
+            |--view1--| /=/ 44
             0
         }
         XCTAssertEqual(constraints.count, 5)
@@ -163,7 +163,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testViewWithNoHeightHasNoHeightConstraint() {
         let constraints = layout(in: container) {
-            |-view1-|
+            |--view1--|
         }
         XCTAssertEqual(constraints.count, 3)
         XCTAssertFalse(constraints.contains { $0.firstAttribute == .height })
@@ -171,7 +171,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testNoTrailingNumberLeavesBottomUnconstrained() {
         let constraints = layout(in: container) {
-            |-view1-| /=/ 44
+            |--view1--| /=/ 44
         }
         XCTAssertEqual(constraints.count, 4)
         XCTAssertFalse(constraints.contains { $0.firstItem === container && $0.firstAttribute == .bottom })
@@ -179,9 +179,9 @@ class VisualLayoutTests: XCTestCase {
 
     func testTwoViewsVerticalSpacing() {
         let constraints = layout(in: container) {
-            |-view1-| /=/ 44
+            |--view1--| /=/ 44
             8
-            |-view2-| /=/ 50
+            |--view2--| /=/ 50
         }
         XCTAssertEqual(constraints.count, 8)
 
@@ -198,7 +198,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testMultiViewRowEqualWidthsAndSpacing() {
         let constraints = layout(in: container) {
-            |-[view1, view2]-| /=/ 44
+            |--[view1, view2]--| /=/ 44
         }
         XCTAssertEqual(constraints.count, 8)
 
@@ -252,7 +252,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testThreeViewMultiRow() {
         let constraints = layout(in: container) {
-            |-[view1, view2, view3]-|
+            |--[view1, view2, view3]--|
         }
         XCTAssertEqual(constraints.count, 9)
 
@@ -271,7 +271,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testChainOperatorCustomSpacing() {
         let constraints = layout(in: container) {
-            |-view1--20--view2-|
+            |--view1--20--view2--|
         }
         let spacingC = constraints.first {
             ($0.firstItem as? TestView) === view2 &&
@@ -285,7 +285,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testChainOperatorThreeViewsCustomSpacing() {
         let constraints = layout(in: container) {
-            |-view1--20--view2--30--view3-|
+            |--view1--20--view2--30--view3--|
         }
         let gap12 = constraints.first {
             ($0.firstItem as? TestView) === view2 &&
@@ -306,7 +306,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testChainOperatorDefaultSpacingWhenOmitted() {
         let constraints = layout(in: container) {
-            |-view1--view2-|
+            |--view1--view2--|
         }
         let spacingC = constraints.first {
             ($0.firstItem as? TestView) === view2 &&
@@ -319,7 +319,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testChainOperatorAlignedTops() {
         let constraints = layout(in: container) {
-            |-view1--20--view2-|
+            |--view1--20--view2--|
         }
         let topAlign = constraints.first {
             ($0.firstItem as? TestView) === view2 &&
@@ -395,7 +395,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testAtMostTrailingSpacing() {
         let constraints = layout(in: container) {
-            |-view1-|
+            |--view1--|
             atMost(30)
         }
         XCTAssertEqual(constraints.count, 4)
@@ -408,7 +408,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testAtLeastTrailingSpacing() {
         let constraints = layout(in: container) {
-            |-view1-|
+            |--view1--|
             atLeast(16)
         }
         XCTAssertEqual(constraints.count, 4)
@@ -421,7 +421,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testTranslatesAutoresizingMaskIsDisabled() {
         _ = layout(in: container) {
-            |-view1-|
+            |--view1--|
         }
         XCTAssertFalse(view1.translatesAutoresizingMaskIntoConstraints)
     }
@@ -435,9 +435,9 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertNil(orphan2.superview)
 
         _ = layout(in: container) {
-            |-orphan1-| /=/ 30
+            |--orphan1--| /=/ 30
             8
-            |-orphan2-| /=/ 30
+            |--orphan2--| /=/ 30
         }
 
         XCTAssertTrue(orphan1.superview === container)
@@ -449,7 +449,7 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertNil(guide.owningView)
 
         _ = layout(in: container) {
-            |-guide-| /=/ 30
+            |--guide--| /=/ 30
         }
 
         XCTAssertTrue(guide.owningView === container)
@@ -458,7 +458,7 @@ class VisualLayoutTests: XCTestCase {
     func testGuideConstraintsAreGenerated() {
         let guide = VisualLayoutGuide()
         let constraints = layout(in: container) {
-            |-guide-| /=/ 44
+            |--guide--| /=/ 44
         }
 
         let leading = constraints.first {
@@ -484,7 +484,7 @@ class VisualLayoutTests: XCTestCase {
         // view1 is already added to container in setUp — should stay there
         XCTAssertTrue(view1.superview === container)
         _ = layout(in: container) {
-            |-view1-| /=/ 30
+            |--view1--| /=/ 30
         }
         XCTAssertTrue(view1.superview === container)
     }
@@ -550,14 +550,14 @@ class VisualLayoutTests: XCTestCase {
     // MARK: - Height priority
 
     func testHeightPriorityOperator() {
-        let row = |-view1-| /=/ 44 ~ .high
+        let row = |--view1--| /=/ 44 ~ .high
         XCTAssertEqual(row.height, 44)
         XCTAssertEqual(row.heightPriority, .high)
     }
 
     func testHeightPriorityAppliedToConstraint() {
         let constraints = layout(in: container) {
-            |-view1-| /=/ 44 ~ .high
+            |--view1--| /=/ 44 ~ .high
         }
         let heightC = constraints.first {
             ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .height
@@ -568,7 +568,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testDefaultHeightPriorityIsRequired() {
         let constraints = layout(in: container) {
-            |-view1-| /=/ 44
+            |--view1--| /=/ 44
         }
         let heightC = constraints.first {
             ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .height

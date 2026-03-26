@@ -56,7 +56,7 @@ extension VisualLayoutGuide: VisualLayoutAnchorable {}
 
 // MARK: - Default Margin
 
-/// The default spacing (in points) applied by `|-` and `-|` operators.
+/// The default spacing (in points) applied by `|--` and `--|` operators.
 /// Defaults to 8. Can be changed globally.
 public var visualLayoutDefaultMargin: CGFloat = 8
 
@@ -68,11 +68,11 @@ public protocol VisualLayoutItem {}
 // MARK: - VisualRowChain
 
 /// An intermediate value produced by the `--` operator while building a multi-view row
-/// with custom inter-view spacing. Converted to `VisualRow` by the postfix `|` or `-|` operators.
+/// with custom inter-view spacing. Converted to `VisualRow` by the postfix `|` or `--|` operators.
 ///
-/// Parse flow for `|-a--20--b-|`:
-///   1. `b -|` (postfix)           → `VisualRow(trailing: 0)`
-///   2. `|- a` (prefix on View)    → `VisualRowChain([a], leading: 0)`
+/// Parse flow for `|--a--20--b--|`:
+///   1. `b--|` (postfix)           → `VisualRow(trailing: 0)`
+///   2. `|-- a` (prefix on View)   → `VisualRowChain([a], leading: 0)`
 ///   3. `chain -- 20`              → `VisualRowChain([a], pending: 20)`
 ///   4. `chain -- VisualRow(b)`    → `VisualRow([a,b], leading: 0, trailing: 0, spacings:[20])`
 public struct VisualRowChain {
@@ -81,14 +81,14 @@ public struct VisualRowChain {
     internal var spacings: [CGFloat]
     /// A spacing value set by `chain -- number` that will be consumed when the next view is appended.
     internal var pendingSpacing: CGFloat?
-    /// Leading margin set by the opening `|-` or `|` prefix operator.
+    /// Leading margin set by the opening `|--` or `|` prefix operator.
     internal var leadingMargin: CGFloat?
 }
 
 // MARK: - VisualRow
 
 /// Represents one horizontal row in a visual layout block.
-/// Built incrementally by the `|`, `|-`, `-|` operators.
+/// Built incrementally by the `|`, `|--`, `--|` operators.
 public struct VisualRow: VisualLayoutItem {
 
     internal var views: [any VisualLayoutAnchorable]
@@ -170,7 +170,7 @@ public func atMost(_ value: CGFloat) -> VisualFlexibleSpacing {
 /// Converts numeric literals, `VisualRow`, and `VisualFlexibleSpacing`
 /// expressions into a flat `[VisualLayoutItem]` array.
 ///
-/// Rows must be closed with a fence operator (`|`, `-|`, or `--|`) to produce a `VisualRow`.
+/// Rows must be closed with a fence operator (`|` or `--|`) to produce a `VisualRow`.
 /// Use the explicit-margin syntax to set both edges:
 /// ```
 /// |--20--emailField--8--nameField--20--|   // leading=20, gap=8, trailing=20
@@ -205,11 +205,11 @@ public enum VisualLayoutBuilder {
 /// ```swift
 /// layout(in: container) {
 ///     100
-///     |-emailField-| := 44
+///     |--emailField--| /=/ 44
 ///     8
-///     |-[nameField, phoneField]-| := 44
+///     |--[nameField, phoneField]--| /=/ 44
 ///     atLeast(20)
-///     |loginButton| := 50
+///     |loginButton| /=/ 50
 ///     0
 /// }
 /// ```
@@ -321,9 +321,9 @@ public extension VisualLayoutView {
 	/// ```swift
 	/// let card = UIView().layout {
 	///     16
-	///     |-titleLabel-| ^^ 20
+	///     |--titleLabel--| /=/ 20
 	///     8
-	///     |-bodyLabel-|
+	///     |--bodyLabel--|
 	///     16
 	/// }
 	/// ```
