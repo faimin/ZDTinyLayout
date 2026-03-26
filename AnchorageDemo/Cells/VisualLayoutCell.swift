@@ -52,31 +52,22 @@ class VisualLayoutCell: BaseCell {
 
 private extension VisualLayoutCell {
     func configureView() {
-        contentView.addSubview(bodyLabel)
-        for v in [topView, middleLeft, middleRight, bottomView] {
-            contentView.addSubview(v)
-        }
-    }
+		
+	}
 
     func configureLayout() {
-        bodyLabel.topAnchor == contentView.topAnchor + 8
-        bodyLabel.horizontalAnchors == contentView.horizontalAnchors + 8
-
-        let container = UIView()
-        contentView.addSubview(container)
-        container.topAnchor == bodyLabel.bottomAnchor + 8
-        container.horizontalAnchors == contentView.horizontalAnchors
-        container.bottomAnchor == contentView.bottomAnchor
-
-        Anchorage.layout(in: container) {
-            8
-            |--topView--| /=/ 30
-            8
-            |--15--middleLeft--50--middleRight--20--| /=/ 50
-            8
-            |bottomView|
-            8
-        }
-        bottomView.heightAnchor /==/ 50
-    }
+			contentView.layout {
+				8
+				|--8--bodyLabel--8--|
+				8
+				|--8--UIView().layout({
+					|--topView--| /=/ 30
+					8
+					|--15--[middleLeft,middleRight]--20--| /=/ 50
+					8
+					|bottomView| /=/ 50
+				})--|
+				8
+			}
+	    }
 }

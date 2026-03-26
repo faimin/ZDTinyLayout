@@ -189,6 +189,9 @@ public enum VisualLayoutBuilder {
 	public static func buildExpression(_ value: Double) -> VisualLayoutItem {
 		VisualSpacing(value: CGFloat(value))
 	}
+	public static func buildExpression(_ value: Float) -> VisualLayoutItem {
+		VisualSpacing(value: CGFloat(value))
+	}
 	public static func buildExpression(_ value: Int) -> VisualLayoutItem {
 		VisualSpacing(value: CGFloat(value))
 	}
@@ -229,6 +232,7 @@ public func layout(
 	var constraints: [NSLayoutConstraint] = []
 	var prevAnchor: NSLayoutYAxisAnchor = view.topAnchor
 	var pendingSpacing: VisualLayoutItem?
+	var laidOutAtLeastOneRow = false
 	
 	for item in layoutItems {
 		switch item {
@@ -240,6 +244,7 @@ public func layout(
 			
 		case let row as VisualRow:
 			guard let first = row.views.first else { continue }
+			laidOutAtLeastOneRow = true
 			row.views.forEach { element in
 				if let v = element as? VisualLayoutView {
 					if v.superview == nil { view.addSubview(v) }
@@ -307,9 +312,15 @@ public func layout(
 		}
 	}
 	
-	// Trailing bottom constraint (last number or flexible spacing)
+	// Trailing bottom constraint:
+	// - if the block ends with a spacing item, honor it
+	// - otherwise, when at least one row exists, close the chain with zero spacing
 	if let spacing = pendingSpacing {
 		let bottomC = bottomConstraint(from: view.bottomAnchor, to: prevAnchor, spacing: spacing)
+		bottomC.isActive = true
+		constraints.append(bottomC)
+	} else if laidOutAtLeastOneRow {
+		let bottomC = view.bottomAnchor.constraint(equalTo: prevAnchor, constant: 0)
 		bottomC.isActive = true
 		constraints.append(bottomC)
 	}
