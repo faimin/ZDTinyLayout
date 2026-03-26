@@ -45,33 +45,74 @@ public var visualLayoutDefaultMargin: CGFloat = 8
 /// A type that can appear as a line in a `layout(in:)` block.
 public protocol VisualLayoutItem {}
 
+// MARK: - VisualRowChain
+
+/// An intermediate value produced by the `--` operator while building a multi-view row
+/// with custom inter-view spacing. Converted to `VisualRow` by the postfix `|` or `-|` operators.
+///
+/// Parse flow for `|-a--20--b-|`:
+///   1. `b -|` (postfix)           → `VisualRow(trailing: 8)`
+///   2. `|- a` (prefix on View)    → `VisualRowChain([a], leading: 8)`
+///   3. `chain -- 20`              → `VisualRowChain([a], pending: 20)`
+///   4. `chain -- VisualRow(b)`    → `VisualRow([a,b], leading: 8, trailing: 8, spacings:[20])`
+public struct VisualRowChain {
+    internal var views: [VisualLayoutView]
+    /// Collected spacings; `spacings[i]` is the gap between `views[i]` and `views[i+1]`.
+    internal var spacings: [CGFloat]
+    /// A spacing value set by `chain -- number` that will be consumed when the next view is appended.
+    internal var pendingSpacing: CGFloat?
+    /// Leading margin set by the opening `|-` or `|` prefix operator.
+    internal var leadingMargin: CGFloat?
+}
+
 // MARK: - VisualRow
 
 /// Represents one horizontal row in a visual layout block.
 /// Built incrementally by the `|`, `|-`, `-|` operators.
 public struct VisualRow: VisualLayoutItem {
-	
-	internal var views: [VisualLayoutView]
-	
-	/// Distance from the container's leading edge. `nil` means no leading constraint.
-	/// `0` pins to edge; positive value adds margin.
-	internal var leadingMargin: CGFloat?
-	
-	/// Distance from the container's trailing edge. `nil` means no trailing constraint.
-	internal var trailingMargin: CGFloat?
-	
-	internal var height: CGFloat?
-	internal var heightRelation: NSLayoutConstraint.Relation = .equal
-	
-	internal init(
-		views: [VisualLayoutView],
-		leadingMargin: CGFloat? = nil,
-		trailingMargin: CGFloat? = nil
-	) {
-		self.views = views
-		self.leadingMargin = leadingMargin
-		self.trailingMargin = trailingMargin
-	}
+
+    internal var views: [VisualLayoutView]
+    /// Spacing between adjacent views. `interViewSpacings[i]` is the gap between
+    /// `views[i]` and `views[i+1]`. Always has `max(0, views.count - 1)` elements.
+    internal var interViewSpacings: [CGFloat]
+
+    /// Distance from the container's leading edge. `nil` means no leading constraint.
+    /// `0` pins to edge; positive value adds margin.
+    internal var leadingMargin: CGFloat?
+
+    /// Distance from the container's trailing edge. `nil` means no trailing constraint.
+    internal var trailingMargin: CGFloat?
+
+    internal var height: CGFloat?
+    internal var heightRelation: NSLayoutConstraint.Relation = .equal
+
+    /// Creates a row from an array of views, using `visualLayoutDefaultMargin` for all gaps.
+    internal init(
+        views: [VisualLayoutView],
+        leadingMargin: CGFloat? = nil,
+        trailingMargin: CGFloat? = nil
+    ) {
+        self.views = views
+        self.interViewSpacings = Array(repeating: visualLayoutDefaultMargin, count: max(0, views.count - 1))
+        self.leadingMargin = leadingMargin
+        self.trailingMargin = trailingMargin
+    }
+
+    /// Creates a row from a `VisualRowChain`, preserving custom per-gap spacings.
+    internal init(
+        chain: VisualRowChain,
+        leadingMargin: CGFloat? = nil,
+        trailingMargin: CGFloat? = nil
+    ) {
+        self.views = chain.views
+        var spacings = chain.spacings
+        while spacings.count < max(0, chain.views.count - 1) {
+            spacings.append(visualLayoutDefaultMargin)
+        }
+        self.interViewSpacings = spacings
+        self.leadingMargin = leadingMargin
+        self.trailingMargin = trailingMargin
+    }
 }
 
 // MARK: - VisualSpacing
@@ -105,8 +146,16 @@ public func atMost(_ value: CGFloat) -> VisualFlexibleSpacing {
 // MARK: - VisualLayoutBuilder
 
 /// Result builder that powers the `layout(in:) { }` DSL.
-/// Converts numeric literals, `VisualRow`, and `VisualFlexibleSpacing` expressions
-/// into a flat `[VisualLayoutItem]` array without retroactive conformances.
+/// Converts numeric literals, `VisualRow`, `VisualRowChain`, and `VisualFlexibleSpacing`
+/// expressions into a flat `[VisualLayoutItem]` array without retroactive conformances.
+///
+/// `VisualRowChain` support enables fully explicit leading + trailing syntax:
+/// ```
+/// 20--emailField--8--nameField--20   // leading=20, gap=8, trailing=20
+///  8--loginButton--8                 // leading=8,  no gap, trailing=8
+/// ```
+/// The first number becomes the leading margin; the last number (if after the final view)
+/// becomes the trailing margin. Omit either to leave that edge unconstrained.
 @resultBuilder
 public enum VisualLayoutBuilder {
 	public static func buildExpression(_ value: CGFloat) -> VisualLayoutItem {
@@ -120,6 +169,11 @@ public enum VisualLayoutBuilder {
 	}
 	public static func buildExpression(_ row: VisualRow) -> VisualLayoutItem {
 		row
+	}
+	/// Converts a `VisualRowChain` directly — no closing postfix needed.
+	/// `chain.leadingMargin` → leading constraint; `chain.pendingSpacing` → trailing constraint.
+	public static func buildExpression(_ chain: VisualRowChain) -> VisualLayoutItem {
+		VisualRow(chain: chain, leadingMargin: chain.leadingMargin, trailingMargin: chain.pendingSpacing)
 	}
 	public static func buildExpression(_ flex: VisualFlexibleSpacing) -> VisualLayoutItem {
 		flex
@@ -199,9 +253,10 @@ public func layout(
 					let widthC = cur.widthAnchor.constraint(equalTo: prev.widthAnchor)
 					widthC.isActive = true
 					constraints.append(widthC)
+					let gap = row.interViewSpacings[i - 1]
 					let spacingC = cur.leadingAnchor.constraint(
 						equalTo: prev.trailingAnchor,
-						constant: visualLayoutDefaultMargin
+						constant: gap
 					)
 					spacingC.isActive = true
 					constraints.append(spacingC)

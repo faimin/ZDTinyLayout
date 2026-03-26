@@ -267,6 +267,150 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertNotNil(interViewSpacing)
     }
 
+    // MARK: - -- custom inter-view spacing
+
+    func testChainOperatorCustomSpacing() {
+        let constraints = layout(in: container) {
+            |-view1--20--view2-|
+        }
+        let spacingC = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertNotNil(spacingC)
+        XCTAssertEqual(spacingC?.constant, 20)
+    }
+
+    func testChainOperatorThreeViewsCustomSpacing() {
+        let constraints = layout(in: container) {
+            |-view1--20--view2--30--view3-|
+        }
+        let gap12 = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(gap12?.constant, 20)
+
+        let gap23 = constraints.first {
+            ($0.firstItem as? TestView) === view3 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view2 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(gap23?.constant, 30)
+    }
+
+    func testChainOperatorDefaultSpacingWhenOmitted() {
+        let constraints = layout(in: container) {
+            |-view1--view2-|
+        }
+        let spacingC = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(spacingC?.constant, visualLayoutDefaultMargin)
+    }
+
+    func testChainOperatorAlignedTops() {
+        let constraints = layout(in: container) {
+            |-view1--20--view2-|
+        }
+        let topAlign = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .top &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .top
+        }
+        XCTAssertNotNil(topAlign)
+    }
+
+    // MARK: - -- explicit leading + trailing (no postfix needed)
+
+    func testChainBothMarginsExplicit() {
+        // 20--a--3--b--10  → leading=20, spacing=3, trailing=10 (via buildExpression)
+        let constraints = layout(in: container) {
+            20--view1--3--view2--10
+        }
+        let leading = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
+        }
+        XCTAssertEqual(leading?.constant, 20)
+        let spacing = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading && $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(spacing?.constant, 3)
+        let trailing = constraints.first {
+            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
+        }
+        XCTAssertEqual(trailing?.constant, -10)
+    }
+
+    func testChainLeadingOnlyNoTrailing() {
+        // 20--a--3--b  → leading=20, spacing=3, trailing unconstrained
+        let constraints = layout(in: container) {
+            20--view1--3--view2
+        }
+        let leading = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
+        }
+        XCTAssertEqual(leading?.constant, 20)
+        let trailing = constraints.first {
+            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
+        }
+        XCTAssertNil(trailing, "no trailing number → no trailing constraint")
+    }
+
+    func testChainTrailingOnlyNoLeading() {
+        // a--3--b--10  → leading unconstrained, spacing=3, trailing=10
+        let constraints = layout(in: container) {
+            view1--3--view2--10
+        }
+        let leading = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
+        }
+        XCTAssertNil(leading, "no leading number → no leading constraint")
+        let trailing = constraints.first {
+            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
+        }
+        XCTAssertEqual(trailing?.constant, -10)
+    }
+
+    // MARK: - -- custom leading margin via leading number (postfix style)
+
+    func testLeadingNumberSetsLeadingMargin() {
+        // 20--a--3--b| → leading=20, spacing=3, trailing=0
+        let constraints = layout(in: container) {
+            20--view1--3--view2|
+        }
+        let leading = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
+        }
+        XCTAssertNotNil(leading)
+        XCTAssertEqual(leading?.constant, 20)
+
+        let spacing = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(spacing?.constant, 3)
+
+        // trailing=0 → constant = -0 = 0
+        let trailing = constraints.first {
+            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
+        }
+        XCTAssertNotNil(trailing)
+        XCTAssertEqual(trailing?.constant, 0, "trailing margin 0 → constraint constant should be 0")
+    }
+
     // MARK: - layout(in:) Flexible Spacing
 
     func testAtLeastSpacingBeforeView() {
