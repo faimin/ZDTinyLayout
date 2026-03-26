@@ -1,0 +1,24 @@
+name: Swift Package Manager
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: macos-26
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_26.4.app
+
+      - name: Build
+        run: swift build
+
+      - name: Test
+        run: swift test
