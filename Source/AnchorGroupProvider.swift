@@ -81,7 +81,16 @@ extension ViewController: AnchorGroupProvider {
 #if os(macOS)
 		return view.verticalAnchors
 #else
+		// `topLayoutGuide`/`bottomLayoutGuide` are unavailable on visionOS and deprecated on iOS/tvOS.
+		// Prefer safe area when available, while keeping a fallback for older iOS/tvOS versions.
+		#if os(visionOS)
+		return view.safeAreaLayoutGuide.verticalAnchors
+		#else
+		if #available(iOS 11.0, tvOS 11.0, *) {
+			return view.safeAreaLayoutGuide.verticalAnchors
+		}
 		return AnchorPair(first: topLayoutGuide.bottomAnchor, second: bottomLayoutGuide.topAnchor)
+		#endif
 #endif
 	}
 	
