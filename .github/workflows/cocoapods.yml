@@ -1,0 +1,25 @@
+name: CocoaPods Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  pod-lint:
+    name: pod lib lint (${{ matrix.platform }})
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ios, tvos, osx, visionos]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CocoaPods
+        run: gem install cocoapods --no-document
+
+      - name: Lint podspec (${{ matrix.platform }})
+        run: pod lib lint Anchorage.podspec --allow-warnings --platforms=${{ matrix.platform }}

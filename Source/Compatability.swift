@@ -27,86 +27,49 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if os(macOS)
-    import Cocoa
+import Cocoa
 
-    #if swift(>=4.0)
-        public typealias LayoutPriority = NSLayoutConstraint.Priority
-        public typealias EdgeInsets = NSEdgeInsets
-    #else
-        public typealias LayoutPriority = NSLayoutPriority
-    #endif
+public typealias LayoutPriority = NSLayoutConstraint.Priority
+public typealias EdgeInsets = NSEdgeInsets
 #else
-    import UIKit
+import UIKit
 
-    public typealias LayoutPriority = UILayoutPriority
-    public typealias EdgeInsets = UIEdgeInsets
+public typealias LayoutPriority = UILayoutPriority
+public typealias EdgeInsets = UIEdgeInsets
 #endif
 
-#if swift(>=4.2) || (os(macOS) && swift(>=4.0))
-    public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
-#else
-    public typealias ConstraintAttribute = NSLayoutAttribute
-#endif
-
-#if swift(>=4.0)
-#else
-    extension LayoutPriority {
-
-        var rawValue: Float {
-            return self
-        }
-
-        init(rawValue: Float) {
-            self.init(rawValue)
-        }
-    }
-#endif
-
-#if swift(>=4.2)
-#elseif !os(macOS)
-    extension UITableView {
-        public static let automaticDimension = UITableViewAutomaticDimension
-    }
-
-    extension UITableViewCell {
-        public typealias CellStyle = UITableViewCellStyle
-    }
-
-    extension UIApplication {
-        public typealias LaunchOptionsKey = UIApplicationLaunchOptionsKey
-    }
-#endif
+public typealias ConstraintAttribute = NSLayoutConstraint.Attribute
 
 extension CGFloat {
-
-    init<T: BinaryFloatingPoint>(_ value: T) {
-        switch value {
-        case is Double:
-            self.init(value as! Double)
-        case is Float:
-            self.init(value as! Float)
-        case is CGFloat:
-            self.init(value as! CGFloat)
-        default:
-            fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
-        }
-    }
-
+	
+	init<T: BinaryFloatingPoint>(_ value: T) {
+		switch value {
+		case is Double:
+			self.init(value as! Double)
+		case is Float:
+			self.init(value as! Float)
+		case is CGFloat:
+			self.init(value as! CGFloat)
+		default:
+			fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
+		}
+	}
+	
 }
 
 extension Float {
-
-    init<T: BinaryFloatingPoint>(_ value: T) {
-        switch value {
-        case is Double:
-            self.init(value as! Double)
-        case is Float:
-            self.init(value as! Float)
-        case is CGFloat:
-            self.init(value as! CGFloat)
-        default:
-            fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
-        }
-    }
-
+	
+	init<T: BinaryFloatingPoint>(_ value: T) {
+		switch value {
+		case is Double:
+			self.init(value as! Double)
+		case is Float:
+			self.init(value as! Float)
+		case is CGFloat:
+			self.init(value as! CGFloat)
+		default:
+			fatalError("Unable to initialize CGFloat with value \(value) of type \(type(of: value))")
+		}
+	}
+	
 }

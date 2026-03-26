@@ -27,133 +27,142 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if os(macOS)
-    import Cocoa
+import Cocoa
 #else
-    import UIKit
+import UIKit
 #endif
 
 public protocol AnchorGroupProvider {
-
-    var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> { get }
-    var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> { get }
-    var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> { get }
-    var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> { get }
-
+	
+	var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> { get }
+	var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> { get }
+	var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> { get }
+	var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> { get }
+	
 }
 
 extension AnchorGroupProvider {
-
-    public var edgeAnchors: EdgeAnchors {
-        return EdgeAnchors(horizontal: horizontalAnchors, vertical: verticalAnchors)
-    }
-
+	
+	public var edgeAnchors: EdgeAnchors {
+		return EdgeAnchors(horizontal: horizontalAnchors, vertical: verticalAnchors)
+	}
+	
 }
 
 extension View: AnchorGroupProvider {
-
-    public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
-        return AnchorPair(first: leadingAnchor, second: trailingAnchor)
-    }
-
-    public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
-        return AnchorPair(first: topAnchor, second: bottomAnchor)
-    }
-
-    public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
-        return AnchorPair(first: centerXAnchor, second: centerYAnchor)
-    }
-
-    public var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> {
-        return AnchorPair(first: widthAnchor, second: heightAnchor)
-    }
-
+	
+	public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
+		return AnchorPair(first: leadingAnchor, second: trailingAnchor)
+	}
+	
+	public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
+		return AnchorPair(first: topAnchor, second: bottomAnchor)
+	}
+	
+	public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
+		return AnchorPair(first: centerXAnchor, second: centerYAnchor)
+	}
+	
+	public var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> {
+		return AnchorPair(first: widthAnchor, second: heightAnchor)
+	}
+	
 }
 
 extension ViewController: AnchorGroupProvider {
-
-    @available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
-    public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
-        return view.horizontalAnchors
-    }
-
-    @available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
-    public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
+	
+	@available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
+	public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
+		return view.horizontalAnchors
+	}
+	
+	@available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
+	public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
 #if os(macOS)
-        return view.verticalAnchors
+		return view.verticalAnchors
 #else
-        return AnchorPair(first: topLayoutGuide.bottomAnchor, second: bottomLayoutGuide.topAnchor)
+		// `topLayoutGuide`/`bottomLayoutGuide` are unavailable on visionOS and deprecated on iOS/tvOS.
+		// Prefer safe area when available, while keeping a fallback for older iOS/tvOS versions.
+		#if os(visionOS)
+		return view.safeAreaLayoutGuide.verticalAnchors
+		#else
+		if #available(iOS 11.0, tvOS 11.0, *) {
+			return view.safeAreaLayoutGuide.verticalAnchors
+		}
+		return AnchorPair(first: topLayoutGuide.bottomAnchor, second: bottomLayoutGuide.topAnchor)
+		#endif
 #endif
-    }
-
-    @available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
-    public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
-        return view.centerAnchors
-    }
-
-    @available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
-    public var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> {
-        return view.sizeAnchors
-    }
-
+	}
+	
+	@available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
+	public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
+		return view.centerAnchors
+	}
+	
+	@available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
+	public var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> {
+		return view.sizeAnchors
+	}
+	
 }
 
 extension LayoutGuide: AnchorGroupProvider {
-
-    public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
-        return AnchorPair(first: leadingAnchor, second: trailingAnchor)
-    }
-
-    public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
-        return AnchorPair(first: topAnchor, second: bottomAnchor)
-    }
-
-    public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
-        return AnchorPair(first: centerXAnchor, second: centerYAnchor)
-    }
-
-    public var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> {
-        return AnchorPair(first: widthAnchor, second: heightAnchor)
-    }
-
+	
+	public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
+		return AnchorPair(first: leadingAnchor, second: trailingAnchor)
+	}
+	
+	public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
+		return AnchorPair(first: topAnchor, second: bottomAnchor)
+	}
+	
+	public var centerAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
+		return AnchorPair(first: centerXAnchor, second: centerYAnchor)
+	}
+	
+	public var sizeAnchors: AnchorPair<NSLayoutDimension, NSLayoutDimension> {
+		return AnchorPair(first: widthAnchor, second: heightAnchor)
+	}
+	
 }
 
 // MARK: - EdgeAnchors
 
 public struct EdgeAnchors: LayoutAnchorType {
-
-    public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>
-    public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>
-
+	
+	public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>
+	public var verticalAnchors: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>
+	
 }
 
 // MARK: - Axis Group
 
 public struct ConstraintPair {
-
-    public var first: NSLayoutConstraint
-    public var second: NSLayoutConstraint
-
+	
+	public var first: NSLayoutConstraint
+	public var second: NSLayoutConstraint
+	
 }
 
 // MARK: - ConstraintGroup
 
 public struct ConstraintGroup {
-
-    public var top: NSLayoutConstraint
-    public var leading: NSLayoutConstraint
-    public var bottom: NSLayoutConstraint
-    public var trailing: NSLayoutConstraint
-
-    public var horizontal: [NSLayoutConstraint] {
-        return [leading, trailing]
-    }
-
-    public var vertical: [NSLayoutConstraint] {
-        return [top, bottom]
-    }
-
-    public var all: [NSLayoutConstraint] {
-        return [top, leading, bottom, trailing]
-    }
-
+	
+	public var top: NSLayoutConstraint
+	public var leading: NSLayoutConstraint
+	public var bottom: NSLayoutConstraint
+	public var trailing: NSLayoutConstraint
+	
+	public var horizontal: [NSLayoutConstraint] {
+		return [leading, trailing]
+	}
+	
+	public var vertical: [NSLayoutConstraint] {
+		return [top, bottom]
+	}
+	
+	public var all: [NSLayoutConstraint] {
+		return [top, leading, bottom, trailing]
+	}
+	
 }
