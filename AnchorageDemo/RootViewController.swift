@@ -15,7 +15,8 @@ class RootViewController: UITableViewController {
         MinimumWidthViewCell.self,
         ToggleActiveHeightCell.self,
         EqualSpaceViewCell.self,
-        AnimatableConstraintCell.self
+        AnimatableConstraintCell.self,
+        VisualLayoutCell.self
     ]
     let dataSource = RootViewDataSource()
 
