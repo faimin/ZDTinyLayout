@@ -301,6 +301,7 @@ internal struct ConstraintBuilder {
 // MARK: - Batching
 
 internal var batches: [ConstraintBatch] = []
+internal var updateConstraintBehaviors: [ConstraintUpdateUnmatchedBehavior] = []
 
 internal class ConstraintBatch {
 	
@@ -338,6 +339,15 @@ internal func finalize(constraint: NSLayoutConstraint, withPriority priority: Pr
 	}
 	
 	constraint.priority = priority.value
+
+	if updateConstraintBehaviors.last != nil,
+	   let existingConstraint = matchingInstalledConstraint(for: constraint) {
+		existingConstraint.constant = constraint.constant
+		existingConstraint.priority = constraint.priority
+		return existingConstraint
+	} else if let behavior = updateConstraintBehaviors.last, behavior == .fail {
+		preconditionFailure("No existing constraint matched during update. Use unmatched: .makeNew to create one when missing.")
+	}
 	
 	if let lastBatch = batches.last {
 		lastBatch.add(constraint: constraint)
@@ -347,4 +357,71 @@ internal func finalize(constraint: NSLayoutConstraint, withPriority priority: Pr
 	}
 	
 	return constraint
+}
+
+internal func matchingInstalledConstraint(for constraint: NSLayoutConstraint) -> NSLayoutConstraint? {
+	let containers = constraintContainerViews(for: constraint)
+	var seen = Set<ObjectIdentifier>()
+	var candidates: [NSLayoutConstraint] = []
+	
+	for container in containers {
+		for installed in container.constraints {
+			let id = ObjectIdentifier(installed)
+			if seen.contains(id) {
+				continue
+			}
+			
+			seen.insert(id)
+			candidates.append(installed)
+		}
+	}
+	
+	return candidates.first(where: { $0.matchesForUpdate(with: constraint) })
+}
+
+internal func constraintContainerViews(for constraint: NSLayoutConstraint) -> [View] {
+	var ordered: [View] = []
+	var seen = Set<ObjectIdentifier>()
+	
+	func add(_ view: View) {
+		let id = ObjectIdentifier(view)
+		guard !seen.contains(id) else { return }
+		seen.insert(id)
+		ordered.append(view)
+	}
+	
+	for item in [constraint.firstItem, constraint.secondItem] {
+		guard let startingView = viewForConstraintItem(item) else { continue }
+		var current: View? = startingView
+		while let view = current {
+			add(view)
+			current = view.superview
+		}
+	}
+	
+	return ordered
+}
+
+internal func viewForConstraintItem(_ item: Any?) -> View? {
+	if let view = item as? View {
+		return view
+	}
+	
+	if let guide = item as? LayoutGuide {
+		return guide.owningView
+	}
+	
+	return nil
+}
+
+internal extension NSLayoutConstraint {
+	func matchesForUpdate(with other: NSLayoutConstraint) -> Bool {
+		let multipliersMatch = abs(multiplier - other.multiplier) <= .ulpOfOne
+		return (firstItem as AnyObject?) === (other.firstItem as AnyObject?) &&
+			(secondItem as AnyObject?) === (other.secondItem as AnyObject?) &&
+			firstAttribute == other.firstAttribute &&
+			secondAttribute == other.secondAttribute &&
+			relation == other.relation &&
+			multipliersMatch
+	}
 }

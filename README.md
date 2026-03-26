@@ -130,6 +130,26 @@ NSLayoutConstraint.activate(constraints)
 
 You can also pass `active: true` if you want the constraints in the array to be automatically activated in a batch.
 
+## Updating Existing Constraints
+
+Anchorage can update existing matching constraints in place (constant and priority), similar to SnapKit's `updateConstraints` behavior:
+
+```swift
+view.widthAnchor == other.widthAnchor + 8 ~ .low
+
+Anchorage.updateConstraints {
+    view.widthAnchor == other.widthAnchor + 24 ~ .high
+}
+```
+
+If no matching installed constraint is found, the default behavior is to create a new one. You can switch to strict mode to fail instead:
+
+```swift
+Anchorage.updateConstraints(unmatched: .fail) {
+    view.widthAnchor == other.widthAnchor + 24
+}
+```
+
 ## Autoresizing Mask
 
 Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the expression, so you should never need to set this property manually. This is important to be aware of in case the container view relies on `translatesAutoresizingMaskIntoConstraints` being set to `true`. We tend to keep child views on the left hand side of the expression to avoid this problem, especially when constraining to a system-supplied view.
