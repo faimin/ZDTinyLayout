@@ -69,10 +69,10 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertNil(row.leadingMargin)
     }
 
-    func testPostfixDashPipeDefaultMargin() {
+    func testPostfixDashPipeZeroMargin() {
         let row = view1-|
         XCTAssertEqual(row.views.count, 1)
-        XCTAssertEqual(row.trailingMargin, visualLayoutDefaultMargin)
+        XCTAssertEqual(row.trailingMargin, 0)
         XCTAssertNil(row.leadingMargin)
     }
 
@@ -330,12 +330,12 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertNotNil(topAlign)
     }
 
-    // MARK: - -- explicit leading + trailing (no postfix needed)
+    // MARK: - |-- / --| explicit leading + trailing fences
 
-    func testChainBothMarginsExplicit() {
-        // 20--a--3--b--10  → leading=20, spacing=3, trailing=10 (via buildExpression)
+    func testFencedExplicitMarginsAllEdges() {
+        // |--20--a--3--b--10--| → leading=20, spacing=3, trailing=10
         let constraints = layout(in: container) {
-            20--view1--3--view2--10
+            |--20--view1--3--view2--10--|
         }
         let leading = constraints.first {
             ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
@@ -346,36 +346,6 @@ class VisualLayoutTests: XCTestCase {
             $0.firstAttribute == .leading && $0.secondAttribute == .trailing
         }
         XCTAssertEqual(spacing?.constant, 3)
-        let trailing = constraints.first {
-            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
-        }
-        XCTAssertEqual(trailing?.constant, -10)
-    }
-
-    func testChainLeadingOnlyNoTrailing() {
-        // 20--a--3--b  → leading=20, spacing=3, trailing unconstrained
-        let constraints = layout(in: container) {
-            20--view1--3--view2
-        }
-        let leading = constraints.first {
-            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
-        }
-        XCTAssertEqual(leading?.constant, 20)
-        let trailing = constraints.first {
-            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
-        }
-        XCTAssertNil(trailing, "no trailing number → no trailing constraint")
-    }
-
-    func testChainTrailingOnlyNoLeading() {
-        // a--3--b--10  → leading unconstrained, spacing=3, trailing=10
-        let constraints = layout(in: container) {
-            view1--3--view2--10
-        }
-        let leading = constraints.first {
-            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
-        }
-        XCTAssertNil(leading, "no leading number → no leading constraint")
         let trailing = constraints.first {
             ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
         }
@@ -575,5 +545,34 @@ class VisualLayoutTests: XCTestCase {
             ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
         }
         XCTAssertEqual(trailing?.constant, -8)
+    }
+
+    // MARK: - Height priority
+
+    func testHeightPriorityOperator() {
+        let row = |-view1-| /=/ 44 ~ .high
+        XCTAssertEqual(row.height, 44)
+        XCTAssertEqual(row.heightPriority, .high)
+    }
+
+    func testHeightPriorityAppliedToConstraint() {
+        let constraints = layout(in: container) {
+            |-view1-| /=/ 44 ~ .high
+        }
+        let heightC = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .height
+        }
+        XCTAssertNotNil(heightC)
+        XCTAssertEqual(heightC?.priority, Priority.high.value)
+    }
+
+    func testDefaultHeightPriorityIsRequired() {
+        let constraints = layout(in: container) {
+            |-view1-| /=/ 44
+        }
+        let heightC = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .height
+        }
+        XCTAssertEqual(heightC?.priority, Priority.required.value)
     }
 }

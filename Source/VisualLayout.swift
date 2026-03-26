@@ -105,6 +105,7 @@ public struct VisualRow: VisualLayoutItem {
 
     internal var height: CGFloat?
     internal var heightRelation: NSLayoutConstraint.Relation = .equal
+    internal var heightPriority: Priority = .required
 
     /// Creates a row from an array of anchorables, using `visualLayoutDefaultMargin` for all gaps.
     internal init(
@@ -166,16 +167,15 @@ public func atMost(_ value: CGFloat) -> VisualFlexibleSpacing {
 // MARK: - VisualLayoutBuilder
 
 /// Result builder that powers the `layout(in:) { }` DSL.
-/// Converts numeric literals, `VisualRow`, `VisualRowChain`, and `VisualFlexibleSpacing`
-/// expressions into a flat `[VisualLayoutItem]` array without retroactive conformances.
+/// Converts numeric literals, `VisualRow`, and `VisualFlexibleSpacing`
+/// expressions into a flat `[VisualLayoutItem]` array.
 ///
-/// `VisualRowChain` support enables fully explicit leading + trailing syntax:
+/// Rows must be closed with a fence operator (`|`, `-|`, or `--|`) to produce a `VisualRow`.
+/// Use the explicit-margin syntax to set both edges:
 /// ```
-/// 20--emailField--8--nameField--20   // leading=20, gap=8, trailing=20
-///  8--loginButton--8                 // leading=8,  no gap, trailing=8
+/// |--20--emailField--8--nameField--20--|   // leading=20, gap=8, trailing=20
+/// |--8--loginButton--8--|                  // leading=8, trailing=8
 /// ```
-/// The first number becomes the leading margin; the last number (if after the final view)
-/// becomes the trailing margin. Omit either to leave that edge unconstrained.
 @resultBuilder
 public enum VisualLayoutBuilder {
 	public static func buildExpression(_ value: CGFloat) -> VisualLayoutItem {
@@ -189,11 +189,6 @@ public enum VisualLayoutBuilder {
 	}
 	public static func buildExpression(_ row: VisualRow) -> VisualLayoutItem {
 		row
-	}
-	/// Converts a `VisualRowChain` directly — no closing postfix needed.
-	/// `chain.leadingMargin` → leading constraint; `chain.pendingSpacing` → trailing constraint.
-	public static func buildExpression(_ chain: VisualRowChain) -> VisualLayoutItem {
-		VisualRow(chain: chain, leadingMargin: chain.leadingMargin, trailingMargin: chain.pendingSpacing)
 	}
 	public static func buildExpression(_ flex: VisualFlexibleSpacing) -> VisualLayoutItem {
 		flex
@@ -293,7 +288,7 @@ public func layout(
 			// 5. Height constraints (one per element in the row)
 			if let height = row.height {
 				for element in row.views {
-					let c = heightConstraint(for: element, value: height, relation: row.heightRelation)
+					let c = heightConstraint(for: element, value: height, relation: row.heightRelation, priority: row.heightPriority)
 					c.isActive = true
 					constraints.append(c)
 				}
@@ -388,14 +383,18 @@ private func bottomConstraint(
 private func heightConstraint(
 	for element: any VisualLayoutAnchorable,
 	value: CGFloat,
-	relation: NSLayoutConstraint.Relation
+	relation: NSLayoutConstraint.Relation,
+	priority: Priority
 ) -> NSLayoutConstraint {
+	let c: NSLayoutConstraint
 	switch relation {
 	case .greaterThanOrEqual:
-		return element.heightAnchor.constraint(greaterThanOrEqualToConstant: value)
+		c = element.heightAnchor.constraint(greaterThanOrEqualToConstant: value)
 	case .lessThanOrEqual:
-		return element.heightAnchor.constraint(lessThanOrEqualToConstant: value)
+		c = element.heightAnchor.constraint(lessThanOrEqualToConstant: value)
 	default:
-		return element.heightAnchor.constraint(equalToConstant: value)
+		c = element.heightAnchor.constraint(equalToConstant: value)
 	}
+	c.priority = priority.value
+	return c
 }

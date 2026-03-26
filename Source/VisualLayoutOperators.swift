@@ -41,7 +41,7 @@ prefix operator |--
 
 precedencegroup VisualLayoutHeightPrecedence {
     lowerThan: AdditionPrecedence
-    higherThan: AssignmentPrecedence
+    higherThan: PriorityPrecedence
     associativity: left
 }
 infix operator /=/ : VisualLayoutHeightPrecedence
@@ -140,6 +140,17 @@ public func /=/ (lhs: VisualRow, rhs: CGFloat) -> VisualRow {
     return r
 }
 
+// MARK: - Infix ~ — height priority
+
+/// Sets the constraint priority for the height set by `/=/`.
+/// Syntax: `|-view-| /=/ 44 ~ .high`
+@discardableResult
+public func ~ (lhs: VisualRow, rhs: Priority) -> VisualRow {
+    var r = lhs
+    r.heightPriority = rhs
+    return r
+}
+
 // MARK: - Infix -- (VisualRowChain builder)
 //
 // Syntax A — zero-margin fences with custom inter-view spacing:
@@ -156,7 +167,7 @@ public func /=/ (lhs: VisualRow, rhs: CGFloat) -> VisualRow {
 //          chain--16 → pendingSpacing=16
 //          chain--| (postfix) → VisualRow(leading:16, trailing:16)
 //
-// Syntax B — custom leading margin via leading number:
+// Syntax C — custom leading margin via leading number + postfix fence:
 //   20--a--3--b|
 //   Parse: b| (postfix) → VisualRow(trailing:0)
 //          20--a (CGFloat--View) → VisualRowChain([a], leading:20)
