@@ -58,4 +58,48 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertNil(row.leadingMargin)
         XCTAssertNil(row.trailingMargin)
     }
+
+    // MARK: - Operator Tests
+
+    func testPostfixPipeNoMargin() {
+        let row = view1|
+        XCTAssertEqual(row.views.count, 1)
+        XCTAssertTrue(row.views[0] === view1)
+        XCTAssertEqual(row.trailingMargin, 0)
+        XCTAssertNil(row.leadingMargin)
+    }
+
+    func testPostfixDashPipeDefaultMargin() {
+        let row = view1-|
+        XCTAssertEqual(row.views.count, 1)
+        XCTAssertEqual(row.trailingMargin, visualLayoutDefaultMargin)
+        XCTAssertNil(row.leadingMargin)
+    }
+
+    func testPrefixPipeNoMargin() {
+        let row = |view1|    // postfix | then prefix |
+        XCTAssertEqual(row.leadingMargin, 0)
+        XCTAssertEqual(row.trailingMargin, 0)
+    }
+
+    func testPrefixDashPipeDefaultMargin() {
+        let row = |-view1-|  // postfix -| then prefix |-
+        XCTAssertEqual(row.leadingMargin, visualLayoutDefaultMargin)
+        XCTAssertEqual(row.trailingMargin, visualLayoutDefaultMargin)
+    }
+
+    func testColonEqualsAssignsHeight() {
+        let row = |-view1-| .= 44
+        XCTAssertEqual(row.height, 44)
+        XCTAssertEqual(row.heightRelation, .equal)
+    }
+
+    func testMultiViewArrayPostfixOperator() {
+        let row = |-[view1, view2]-|
+        XCTAssertEqual(row.views.count, 2)
+        XCTAssertTrue(row.views[0] === view1)
+        XCTAssertTrue(row.views[1] === view2)
+        XCTAssertEqual(row.leadingMargin, visualLayoutDefaultMargin)
+        XCTAssertEqual(row.trailingMargin, visualLayoutDefaultMargin)
+    }
 }
