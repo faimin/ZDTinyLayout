@@ -456,6 +456,69 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertFalse(view1.translatesAutoresizingMaskIntoConstraints)
     }
 
+    // MARK: - Auto-addSubview
+
+    func testLayoutAutoAddsViewsWithoutSuperview() {
+        let orphan1 = TestView()
+        let orphan2 = TestView()
+        XCTAssertNil(orphan1.superview)
+        XCTAssertNil(orphan2.superview)
+
+        _ = layout(in: container) {
+            |-orphan1-| /=/ 30
+            8
+            |-orphan2-| /=/ 30
+        }
+
+        XCTAssertTrue(orphan1.superview === container)
+        XCTAssertTrue(orphan2.superview === container)
+    }
+
+    func testLayoutAutoAddsGuideWithoutOwningView() {
+        let guide = VisualLayoutGuide()
+        XCTAssertNil(guide.owningView)
+
+        _ = layout(in: container) {
+            |-guide-| /=/ 30
+        }
+
+        XCTAssertTrue(guide.owningView === container)
+    }
+
+    func testGuideConstraintsAreGenerated() {
+        let guide = VisualLayoutGuide()
+        let constraints = layout(in: container) {
+            |-guide-| /=/ 44
+        }
+
+        let leading = constraints.first {
+            $0.firstItem === guide && $0.firstAttribute == .leading
+        }
+        XCTAssertNotNil(leading)
+        XCTAssertEqual(leading?.constant, 0)
+
+        let trailing = constraints.first {
+            $0.firstItem === guide && $0.firstAttribute == .trailing
+        }
+        XCTAssertNotNil(trailing)
+        XCTAssertEqual(trailing?.constant, 0)
+
+        let height = constraints.first {
+            $0.firstItem === guide && $0.firstAttribute == .height
+        }
+        XCTAssertNotNil(height)
+        XCTAssertEqual(height?.constant, 44)
+    }
+
+    func testLayoutDoesNotReparentAlreadyAddedViews() {
+        // view1 is already added to container in setUp — should stay there
+        XCTAssertTrue(view1.superview === container)
+        _ = layout(in: container) {
+            |-view1-| /=/ 30
+        }
+        XCTAssertTrue(view1.superview === container)
+    }
+
     // MARK: - Explicit margin syntax (|-- / --)
 
     func testPipeExplicitMargins() {

@@ -28,11 +28,31 @@
 import Cocoa
 /// The platform-specific view type used in Visual Layout APIs.
 public typealias VisualLayoutView = NSView
+/// The platform-specific layout guide type used in Visual Layout APIs.
+public typealias VisualLayoutGuide = NSLayoutGuide
 #else
 import UIKit
 /// The platform-specific view type used in Visual Layout APIs.
 public typealias VisualLayoutView = UIView
+/// The platform-specific layout guide type used in Visual Layout APIs.
+public typealias VisualLayoutGuide = UILayoutGuide
 #endif
+
+// MARK: - VisualLayoutAnchorable
+
+/// A type that can participate in a visual layout row — either a view or a layout guide.
+/// Exposes the layout anchors needed to build horizontal and vertical constraints.
+public protocol VisualLayoutAnchorable: AnyObject {
+    var leadingAnchor: NSLayoutXAxisAnchor { get }
+    var trailingAnchor: NSLayoutXAxisAnchor { get }
+    var topAnchor: NSLayoutYAxisAnchor { get }
+    var bottomAnchor: NSLayoutYAxisAnchor { get }
+    var widthAnchor: NSLayoutDimension { get }
+    var heightAnchor: NSLayoutDimension { get }
+}
+
+extension VisualLayoutView: VisualLayoutAnchorable {}
+extension VisualLayoutGuide: VisualLayoutAnchorable {}
 
 // MARK: - Default Margin
 
@@ -56,7 +76,7 @@ public protocol VisualLayoutItem {}
 ///   3. `chain -- 20`              → `VisualRowChain([a], pending: 20)`
 ///   4. `chain -- VisualRow(b)`    → `VisualRow([a,b], leading: 0, trailing: 0, spacings:[20])`
 public struct VisualRowChain {
-    internal var views: [VisualLayoutView]
+    internal var views: [any VisualLayoutAnchorable]
     /// Collected spacings; `spacings[i]` is the gap between `views[i]` and `views[i+1]`.
     internal var spacings: [CGFloat]
     /// A spacing value set by `chain -- number` that will be consumed when the next view is appended.
@@ -71,8 +91,8 @@ public struct VisualRowChain {
 /// Built incrementally by the `|`, `|-`, `-|` operators.
 public struct VisualRow: VisualLayoutItem {
 
-    internal var views: [VisualLayoutView]
-    /// Spacing between adjacent views. `interViewSpacings[i]` is the gap between
+    internal var views: [any VisualLayoutAnchorable]
+    /// Spacing between adjacent elements. `interViewSpacings[i]` is the gap between
     /// `views[i]` and `views[i+1]`. Always has `max(0, views.count - 1)` elements.
     internal var interViewSpacings: [CGFloat]
 
@@ -86,9 +106,9 @@ public struct VisualRow: VisualLayoutItem {
     internal var height: CGFloat?
     internal var heightRelation: NSLayoutConstraint.Relation = .equal
 
-    /// Creates a row from an array of views, using `visualLayoutDefaultMargin` for all gaps.
+    /// Creates a row from an array of anchorables, using `visualLayoutDefaultMargin` for all gaps.
     internal init(
-        views: [VisualLayoutView],
+        views: [any VisualLayoutAnchorable],
         leadingMargin: CGFloat? = nil,
         trailingMargin: CGFloat? = nil
     ) {
@@ -219,35 +239,42 @@ public func layout(
 			pendingSpacing = flex
 			
 		case let row as VisualRow:
-			guard let firstView = row.views.first else { continue }
-			row.views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-			
+			guard let first = row.views.first else { continue }
+			row.views.forEach { element in
+				if let v = element as? VisualLayoutView {
+					if v.superview == nil { view.addSubview(v) }
+					v.translatesAutoresizingMaskIntoConstraints = false
+				} else if let g = element as? VisualLayoutGuide {
+					if g.owningView == nil { view.addLayoutGuide(g) }
+				}
+			}
+
 			// 1. Vertical (top) constraint
-			let topC = topConstraint(from: firstView.topAnchor, to: prevAnchor, spacing: pendingSpacing)
+			let topC = topConstraint(from: first.topAnchor, to: prevAnchor, spacing: pendingSpacing)
 			topC.isActive = true
 			constraints.append(topC)
-			
+
 			// 2. Leading constraint
 			if let margin = row.leadingMargin {
-				let c = firstView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin)
+				let c = first.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin)
 				c.isActive = true
 				constraints.append(c)
 			}
-			
+
 			// 3. Trailing constraint
-			if let margin = row.trailingMargin, let lastView = row.views.last {
-				let c = lastView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin)
+			if let margin = row.trailingMargin, let last = row.views.last {
+				let c = last.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin)
 				c.isActive = true
 				constraints.append(c)
 			}
-			
-			// 4. Multi-view: equal widths, adjacent spacing, aligned tops
-			let viewCount = row.views.count
-			if viewCount > 1 {
-				for i in 1..<viewCount {
+
+			// 4. Multi-element: equal widths, adjacent spacing, aligned tops
+			let elementCount = row.views.count
+			if elementCount > 1 {
+				for i in 1..<elementCount {
 					let prev = row.views[i - 1]
 					let cur = row.views[i]
-					let topC = cur.topAnchor.constraint(equalTo: firstView.topAnchor)
+					let topC = cur.topAnchor.constraint(equalTo: first.topAnchor)
 					topC.isActive = true
 					constraints.append(topC)
 					let widthC = cur.widthAnchor.constraint(equalTo: prev.widthAnchor)
@@ -262,16 +289,16 @@ public func layout(
 					constraints.append(spacingC)
 				}
 			}
-			
-			// 5. Height constraints (one per view in the row)
+
+			// 5. Height constraints (one per element in the row)
 			if let height = row.height {
-				for v in row.views {
-					let c = heightConstraint(for: v, value: height, relation: row.heightRelation)
+				for element in row.views {
+					let c = heightConstraint(for: element, value: height, relation: row.heightRelation)
 					c.isActive = true
 					constraints.append(c)
 				}
 			}
-			
+
 			prevAnchor = row.views.last!.bottomAnchor
 			pendingSpacing = nil
 			
@@ -335,16 +362,16 @@ private func bottomConstraint(
 }
 
 private func heightConstraint(
-	for view: VisualLayoutView,
+	for element: any VisualLayoutAnchorable,
 	value: CGFloat,
 	relation: NSLayoutConstraint.Relation
 ) -> NSLayoutConstraint {
 	switch relation {
 	case .greaterThanOrEqual:
-		return view.heightAnchor.constraint(greaterThanOrEqualToConstant: value)
+		return element.heightAnchor.constraint(greaterThanOrEqualToConstant: value)
 	case .lessThanOrEqual:
-		return view.heightAnchor.constraint(lessThanOrEqualToConstant: value)
+		return element.heightAnchor.constraint(lessThanOrEqualToConstant: value)
 	default:
-		return view.heightAnchor.constraint(equalToConstant: value)
+		return element.heightAnchor.constraint(equalToConstant: value)
 	}
 }
