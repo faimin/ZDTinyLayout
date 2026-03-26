@@ -102,4 +102,179 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(row.leadingMargin, visualLayoutDefaultMargin)
         XCTAssertEqual(row.trailingMargin, visualLayoutDefaultMargin)
     }
+
+    // MARK: - layout(in:) Single View
+
+    func testSingleViewWithMarginsAndHeight() {
+        let constraints = layout(in: container) {
+            100
+            |-view1-| .= 44
+            0
+        }
+        XCTAssertEqual(constraints.count, 5)
+
+        let top = constraints[0]
+        XCTAssertTrue(top.firstItem === view1)
+        XCTAssertEqual(top.firstAttribute, .top)
+        XCTAssertTrue(top.secondItem === container)
+        XCTAssertEqual(top.secondAttribute, .top)
+        XCTAssertEqual(top.constant, 100)
+        XCTAssertEqual(top.relation, .equal)
+        XCTAssertTrue(top.isActive)
+
+        let leading = constraints[1]
+        XCTAssertTrue(leading.firstItem === view1)
+        XCTAssertEqual(leading.firstAttribute, .leading)
+        XCTAssertTrue(leading.secondItem === container)
+        XCTAssertEqual(leading.secondAttribute, .leading)
+        XCTAssertEqual(leading.constant, 8)
+
+        let trailing = constraints[2]
+        XCTAssertTrue(trailing.firstItem === view1)
+        XCTAssertEqual(trailing.firstAttribute, .trailing)
+        XCTAssertTrue(trailing.secondItem === container)
+        XCTAssertEqual(trailing.secondAttribute, .trailing)
+        XCTAssertEqual(trailing.constant, -8)
+
+        let height = constraints[3]
+        XCTAssertTrue(height.firstItem === view1)
+        XCTAssertEqual(height.firstAttribute, .height)
+        XCTAssertNil(height.secondItem)
+        XCTAssertEqual(height.secondAttribute, .notAnAttribute)
+        XCTAssertEqual(height.constant, 44)
+        XCTAssertEqual(height.relation, .equal)
+
+        let bottom = constraints[4]
+        XCTAssertTrue(bottom.firstItem === container)
+        XCTAssertEqual(bottom.firstAttribute, .bottom)
+        XCTAssertTrue(bottom.secondItem === view1)
+        XCTAssertEqual(bottom.secondAttribute, .bottom)
+        XCTAssertEqual(bottom.constant, 0)
+    }
+
+    func testEdgePinnedViewNoMargin() {
+        let constraints = layout(in: container) {
+            |view1|
+        }
+        XCTAssertEqual(constraints.count, 3)
+        XCTAssertEqual(constraints[1].constant, 0)
+        XCTAssertEqual(constraints[2].constant, 0)
+    }
+
+    func testViewWithNoHeightHasNoHeightConstraint() {
+        let constraints = layout(in: container) {
+            |-view1-|
+        }
+        XCTAssertEqual(constraints.count, 3)
+        XCTAssertFalse(constraints.contains { $0.firstAttribute == .height })
+    }
+
+    func testNoTrailingNumberLeavesBottomUnconstrained() {
+        let constraints = layout(in: container) {
+            |-view1-| .= 44
+        }
+        XCTAssertEqual(constraints.count, 4)
+        XCTAssertFalse(constraints.contains { $0.firstItem === container && $0.firstAttribute == .bottom })
+    }
+
+    func testTwoViewsVerticalSpacing() {
+        let constraints = layout(in: container) {
+            |-view1-| .= 44
+            8
+            |-view2-| .= 50
+        }
+        XCTAssertEqual(constraints.count, 8)
+
+        let view2Top = constraints.first {
+            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .top
+        }
+        XCTAssertNotNil(view2Top)
+        XCTAssertTrue(view2Top?.secondItem === view1)
+        XCTAssertEqual(view2Top?.secondAttribute, .bottom)
+        XCTAssertEqual(view2Top?.constant, 8)
+    }
+
+    // MARK: - layout(in:) Multi-View Row
+
+    func testMultiViewRowEqualWidthsAndSpacing() {
+        let constraints = layout(in: container) {
+            |-[view1, view2]-| .= 44
+        }
+        XCTAssertEqual(constraints.count, 7)
+
+        XCTAssertTrue(constraints[1].firstItem === view1)
+        XCTAssertEqual(constraints[1].firstAttribute, .leading)
+        XCTAssertEqual(constraints[1].constant, 8)
+
+        XCTAssertTrue(constraints[2].firstItem === view2)
+        XCTAssertEqual(constraints[2].firstAttribute, .trailing)
+        XCTAssertEqual(constraints[2].constant, -8)
+
+        let widthC = constraints[3]
+        XCTAssertEqual(widthC.firstAttribute, .width)
+        XCTAssertEqual(widthC.secondAttribute, .width)
+        XCTAssertEqual(widthC.multiplier, 1)
+
+        let spacingC = constraints[4]
+        XCTAssertTrue(spacingC.firstItem === view2)
+        XCTAssertEqual(spacingC.firstAttribute, .leading)
+        XCTAssertTrue(spacingC.secondItem === view1)
+        XCTAssertEqual(spacingC.secondAttribute, .trailing)
+        XCTAssertEqual(spacingC.constant, 8)
+
+        XCTAssertEqual(constraints[5].constant, 44)
+        XCTAssertEqual(constraints[6].constant, 44)
+    }
+
+    func testThreeViewMultiRow() {
+        let constraints = layout(in: container) {
+            |-[view1, view2, view3]-|
+        }
+        XCTAssertEqual(constraints.count, 7)
+    }
+
+    // MARK: - layout(in:) Flexible Spacing
+
+    func testAtLeastSpacingBeforeView() {
+        let constraints = layout(in: container) {
+            atLeast(20)
+            |view1|
+        }
+        XCTAssertEqual(constraints.count, 3)
+        XCTAssertEqual(constraints[0].relation, .greaterThanOrEqual)
+        XCTAssertEqual(constraints[0].constant, 20)
+    }
+
+    func testAtMostTrailingSpacing() {
+        let constraints = layout(in: container) {
+            |-view1-|
+            atMost(30)
+        }
+        XCTAssertEqual(constraints.count, 4)
+        let bottom = constraints[3]
+        XCTAssertTrue(bottom.firstItem === container)
+        XCTAssertEqual(bottom.firstAttribute, .bottom)
+        XCTAssertEqual(bottom.relation, .lessThanOrEqual)
+        XCTAssertEqual(bottom.constant, 30)
+    }
+
+    func testAtLeastTrailingSpacing() {
+        let constraints = layout(in: container) {
+            |-view1-|
+            atLeast(16)
+        }
+        XCTAssertEqual(constraints.count, 4)
+        let bottom = constraints[3]
+        XCTAssertTrue(bottom.firstItem === container)
+        XCTAssertEqual(bottom.firstAttribute, .bottom)
+        XCTAssertEqual(bottom.relation, .greaterThanOrEqual)
+        XCTAssertEqual(bottom.constant, 16)
+    }
+
+    func testTranslatesAutoresizingMaskIsDisabled() {
+        _ = layout(in: container) {
+            |-view1-|
+        }
+        XCTAssertFalse(view1.translatesAutoresizingMaskIntoConstraints)
+    }
 }
