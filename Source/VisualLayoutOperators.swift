@@ -164,6 +164,18 @@ public func -- (lhs: CGFloat, rhs: any VisualLayoutAnchorable) -> VisualRowChain
 	VisualRowChain(views: [rhs], spacings: [], pendingSpacing: nil, leadingMargin: lhs)
 }
 
+/// Starts a chain with a **custom leading margin** and an array of views: `spacing -- [view, view]`.
+public func -- (lhs: CGFloat, rhs: [VisualLayoutView]) -> VisualRowChain {
+	let spacings = Array(repeating: visualLayoutDefaultSpacing, count: max(0, rhs.count - 1))
+	return VisualRowChain(views: rhs, spacings: spacings, pendingSpacing: nil, leadingMargin: lhs)
+}
+
+/// Starts a chain with a **custom leading margin** and an array of guides: `spacing -- [guide, guide]`.
+public func -- (lhs: CGFloat, rhs: [VisualLayoutGuide]) -> VisualRowChain {
+	let spacings = Array(repeating: visualLayoutDefaultSpacing, count: max(0, rhs.count - 1))
+	return VisualRowChain(views: rhs, spacings: spacings, pendingSpacing: nil, leadingMargin: lhs)
+}
+
 /// Starts a chain: `element -- spacing` stores the element with a pending inter-element gap.
 public func -- (lhs: any VisualLayoutAnchorable, rhs: CGFloat) -> VisualRowChain {
 	VisualRowChain(views: [lhs], spacings: [], pendingSpacing: rhs)
@@ -186,6 +198,30 @@ public func -- (lhs: VisualRowChain, rhs: any VisualLayoutAnchorable) -> VisualR
 	var chain = lhs
 	chain.spacings.append(lhs.pendingSpacing ?? visualLayoutDefaultSpacing)
 	chain.views.append(rhs)
+	chain.pendingSpacing = nil
+	return chain
+}
+
+/// Appends an array of views to a chain. The first view consumes the pending spacing;
+/// subsequent views use `visualLayoutDefaultSpacing`.
+public func -- (lhs: VisualRowChain, rhs: [VisualLayoutView]) -> VisualRowChain {
+	var chain = lhs
+	for (i, view) in rhs.enumerated() {
+		chain.spacings.append(i == 0 ? (lhs.pendingSpacing ?? visualLayoutDefaultSpacing) : visualLayoutDefaultSpacing)
+		chain.views.append(view)
+	}
+	chain.pendingSpacing = nil
+	return chain
+}
+
+/// Appends an array of guides to a chain. The first guide consumes the pending spacing;
+/// subsequent guides use `visualLayoutDefaultSpacing`.
+public func -- (lhs: VisualRowChain, rhs: [VisualLayoutGuide]) -> VisualRowChain {
+	var chain = lhs
+	for (i, guide) in rhs.enumerated() {
+		chain.spacings.append(i == 0 ? (lhs.pendingSpacing ?? visualLayoutDefaultSpacing) : visualLayoutDefaultSpacing)
+		chain.views.append(guide)
+	}
 	chain.pendingSpacing = nil
 	return chain
 }
