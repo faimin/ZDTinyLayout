@@ -8,17 +8,18 @@ on:
 
 jobs:
   pod-lint:
-    name: pod lib lint
-    runs-on: macos-26
+    name: pod lib lint (${{ matrix.platform }})
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ios, tvos, osx, visionos]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_26.4.app
-
       - name: Install CocoaPods
         run: gem install cocoapods --no-document
 
-      - name: Lint podspec
-        run: pod lib lint Anchorage.podspec --allow-warnings
+      - name: Lint podspec (${{ matrix.platform }})
+        run: pod lib lint Anchorage.podspec --allow-warnings --platforms=${{ matrix.platform }}
