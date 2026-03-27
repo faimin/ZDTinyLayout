@@ -1,10 +1,10 @@
 //
 //  VisualLayoutCell.swift
-//  AnchorageDemo
+//  ZDTinyLayoutDemo
 //
 
 import UIKit
-import Anchorage
+import ZDTinyLayout
 
 class VisualLayoutCell: BaseCell {
     override class func reuseId() -> String {

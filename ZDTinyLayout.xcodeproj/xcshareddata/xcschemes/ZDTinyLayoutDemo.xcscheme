@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2DD242671D95C2CE001D6725"
-               BuildableName = "AnchorageDemo.app"
-               BlueprintName = "AnchorageDemo"
-               ReferencedContainer = "container:Anchorage.xcodeproj">
+               BuildableName = "ZDTinyLayoutDemo.app"
+               BlueprintName = "ZDTinyLayoutDemo"
+               ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7A39D62D1EB53E1100BDE9C0"
-               BuildableName = "AnchorageTests-iOS.xctest"
-               BlueprintName = "AnchorageTests-iOS"
-               ReferencedContainer = "container:Anchorage.xcodeproj">
+               BuildableName = "ZDTinyLayoutTests-iOS.xctest"
+               BlueprintName = "ZDTinyLayoutTests-iOS"
+               ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2DD242671D95C2CE001D6725"
-            BuildableName = "AnchorageDemo.app"
-            BlueprintName = "AnchorageDemo"
-            ReferencedContainer = "container:Anchorage.xcodeproj">
+            BuildableName = "ZDTinyLayoutDemo.app"
+            BlueprintName = "ZDTinyLayoutDemo"
+            ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,9 +66,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2DD242671D95C2CE001D6725"
-            BuildableName = "AnchorageDemo.app"
-            BlueprintName = "AnchorageDemo"
-            ReferencedContainer = "container:Anchorage.xcodeproj">
+            BuildableName = "ZDTinyLayoutDemo.app"
+            BlueprintName = "ZDTinyLayoutDemo"
+            ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -85,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2DD242671D95C2CE001D6725"
-            BuildableName = "AnchorageDemo.app"
-            BlueprintName = "AnchorageDemo"
-            ReferencedContainer = "container:Anchorage.xcodeproj">
+            BuildableName = "ZDTinyLayoutDemo.app"
+            BlueprintName = "ZDTinyLayoutDemo"
+            ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

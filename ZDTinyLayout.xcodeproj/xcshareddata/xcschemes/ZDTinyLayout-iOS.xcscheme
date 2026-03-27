@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CD6A0E9B1EB7D36400FFF5DB"
-               BuildableName = "RunAllTests"
-               BlueprintName = "RunAllTests"
-               ReferencedContainer = "container:Anchorage.xcodeproj">
+               BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
+               BuildableName = "ZDTinyLayout.framework"
+               BlueprintName = "ZDTinyLayout-iOS"
+               ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,9 +26,29 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7A39D62D1EB53E1100BDE9C0"
+               BuildableName = "ZDTinyLayoutTests-iOS.xctest"
+               BlueprintName = "ZDTinyLayoutTests-iOS"
+               ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
+            BuildableName = "ZDTinyLayout.framework"
+            BlueprintName = "ZDTinyLayout-iOS"
+            ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -45,10 +65,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CD6A0E9B1EB7D36400FFF5DB"
-            BuildableName = "RunAllTests"
-            BlueprintName = "RunAllTests"
-            ReferencedContainer = "container:Anchorage.xcodeproj">
+            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
+            BuildableName = "ZDTinyLayout.framework"
+            BlueprintName = "ZDTinyLayout-iOS"
+            ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +83,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CD6A0E9B1EB7D36400FFF5DB"
-            BuildableName = "RunAllTests"
-            BlueprintName = "RunAllTests"
-            ReferencedContainer = "container:Anchorage.xcodeproj">
+            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
+            BuildableName = "ZDTinyLayout.framework"
+            BlueprintName = "ZDTinyLayout-iOS"
+            ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

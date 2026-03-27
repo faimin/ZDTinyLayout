@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Anchorage",
+    name: "ZDTinyLayout",
     platforms: [
         .iOS(.v9),
         .macOS(.v10_11),
@@ -14,20 +14,20 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Anchorage",
-            targets: ["Anchorage"]
+            name: "ZDTinyLayout",
+            targets: ["ZDTinyLayout"]
 		),
     ],
     targets: [
         .target(
-            name: "Anchorage",
+            name: "ZDTinyLayout",
             dependencies: [],
             path: "Source"
 		),
         .testTarget(
-            name: "AnchorageTests",
-            dependencies: ["Anchorage"],
-            path: "AnchorageTests"
+            name: "ZDTinyLayoutTests",
+            dependencies: ["ZDTinyLayout"],
+            path: "ZDTinyLayoutTests"
 		),
     ]
 )

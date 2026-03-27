@@ -4,8 +4,8 @@
 
 set -o pipefail && \
   xcodebuild clean build test \
-  -project Anchorage.xcodeproj \
-  -scheme Anchorage-tvOS \
+  -project ZDTinyLayout.xcodeproj \
+  -scheme ZDTinyLayout-tvOS \
   -sdk appletvsimulator \
   -destination "platform=tvOS Simulator,name=Apple TV,OS=$1" \
   SWIFT_VERSION=$2 \

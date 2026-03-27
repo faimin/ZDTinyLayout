@@ -1,6 +1,6 @@
 //
 //  AnchorGroupProvider.swift
-//  Anchorage
+//  ZDTinyLayout
 //
 //  Created by Rob Visentin on 5/1/17.
 //

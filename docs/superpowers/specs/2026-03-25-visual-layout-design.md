@@ -8,7 +8,7 @@
 
 ## Overview
 
-Add a Visual Layout DSL to Anchorage that lets developers describe Auto Layout using an ASCII-style vertical structure. Inspired by Stevia's Visual Layout, but adapted to Anchorage's existing operator-based style and conventions.
+Add a Visual Layout DSL to ZDTinyLayout that lets developers describe Auto Layout using an ASCII-style vertical structure. Inspired by Stevia's Visual Layout, but adapted to ZDTinyLayout's existing operator-based style and conventions.
 
 **Entry point:**
 
@@ -40,12 +40,12 @@ layout(in: container) {
 
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
-| Syntax style | Fusion with Anchorage style | Avoid divergence from existing API |
-| Height operator | `/=/` (e.g. `\|-email-\| /=/ 44`) | Avoids conflict with Anchorage's `~` priority operator |
+| Syntax style | Fusion with ZDTinyLayout style | Avoid divergence from existing API |
+| Height operator | `/=/` (e.g. `\|-email-\| /=/ 44`) | Avoids conflict with ZDTinyLayout's `~` priority operator |
 | Horizontal multi-view | Supported (`\|-[a, b, c]-\| /=/ 44`) | Needed for common side-by-side layouts |
 | Flexible spacing | Named functions `atLeast(n)` / `atMost(n)` | `prefix >=` / `<=` cannot be declared; conflicts with stdlib infix comparison operators |
-| View hierarchy (`subviews {}`) | Not added | Keeps Anchorage lightweight and focused |
-| Calling style | Top-level function `layout(in: view) { }` | Consistent with Anchorage's non-UIView-extension style |
+| View hierarchy (`subviews {}`) | Not added | Keeps ZDTinyLayout lightweight and focused |
+| Calling style | Top-level function `layout(in: view) { }` | Consistent with ZDTinyLayout's non-UIView-extension style |
 | Platform support | All Apple platforms (iOS, macOS, tvOS, watchOS, visionOS) | Uses `public View` typealias with `#if os(macOS)` |
 | Minimum Swift version | 5.9 | Required for `@resultBuilder` (stable API) |
 
@@ -57,10 +57,10 @@ layout(in: container) {
 
 Required changes:
 
-- **`Anchorage.podspec`**: update `swift_versions` from `['4.0', '4.2', '5.0']` to `['5.9']`
+- **`ZDTinyLayout.podspec`**: update `swift_versions` from `['4.0', '4.2', '5.0']` to `['5.9']`
 - **`Package.swift`**: update `swift-tools-version` from `5.1` to `5.9`
 
-This is a breaking change from the library's current 4.x/5.0 support. It should be released as a minor or major version bump depending on Anchorage's semver policy.
+This is a breaking change from the library's current 4.x/5.0 support. It should be released as a minor or major version bump depending on ZDTinyLayout's semver policy.
 
 ---
 
@@ -278,7 +278,7 @@ c.trailing == container.trailing - margin
 a.width == b.width == c.width  (equal widths)
 ```
 
-**Non-goal:** Per-row inter-view spacing override is not supported in v1. The spacing between adjacent views in a multi-view row is always `visualLayoutDefaultMargin`. Custom inter-view spacing requires using Anchorage's existing operators directly.
+**Non-goal:** Per-row inter-view spacing override is not supported in v1. The spacing between adjacent views in a multi-view row is always `visualLayoutDefaultMargin`. Custom inter-view spacing requires using ZDTinyLayout's existing operators directly.
 
 ---
 
@@ -288,7 +288,7 @@ Two new files added to `Source/`:
 
 ```
 Source/
-├── Anchorage.swift                          (unchanged)
+├── ZDTinyLayout.swift                          (unchanged)
 ├── AnchorGroupProvider.swift                (unchanged)
 ├── NSLayoutAnchor+MultiplierConstraints.swift (unchanged)
 ├── Priority.swift                           (unchanged)
@@ -300,7 +300,7 @@ Source/
 
 ### Required changes to existing files
 
-- **`Anchorage.podspec`**: update `swift_versions` to `['5.9']`
+- **`ZDTinyLayout.podspec`**: update `swift_versions` to `['5.9']`
 - **`Package.swift`**: update `swift-tools-version` to `5.9`, add `watchOS` and `visionOS` to `platforms`
 - **`Internal.swift`** (or `Compatability.swift`): promote `View` typealias to `public`, OR define a separate `public VisualLayoutView` alias in `VisualLayout.swift`
 
@@ -318,4 +318,4 @@ Visual Layout targets all Apple platforms. The `View` typealias maps to `NSView`
 - `if`/`else` and `for` inside `layout { }` blocks — deferred to v2 (`buildOptional`/`buildArray`)
 - Per-row inter-view spacing for multi-view rows — always uses `visualLayoutDefaultMargin`
 - Styling DSL — out of scope
-- Horizontal-axis `layout` — Anchorage's existing operators handle this
+- Horizontal-axis `layout` — ZDTinyLayout's existing operators handle this

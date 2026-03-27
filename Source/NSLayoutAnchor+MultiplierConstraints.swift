@@ -1,6 +1,6 @@
 //
 //  NSLayoutAnchor+MultiplierConstraints.swift
-//  Anchorage
+//  ZDTinyLayout
 //
 //  Created by Aleksandr Gusev on 7/21/17.
 //

@@ -1,6 +1,6 @@
 //
-//  AnchorageTests.swift
-//  AnchorageTests
+//  ZDTinyLayoutTests.swift
+//  ZDTinyLayoutTests
 //
 //  Created by Zev Eisenberg on 4/29/17.
 //  Copyright © 2017 Rightpoint. All rights reserved.
@@ -12,7 +12,7 @@
     import UIKit
 #endif
 
-@testable import Anchorage
+@testable import ZDTinyLayout
 import XCTest
 
 #if os(macOS)
@@ -35,7 +35,7 @@ let cgEpsilon: CGFloat = 0.00001
 let fEpsilon: Float = 0.00001
 let dEpsilon: Double = 0.00001
 
-class AnchorageTests: XCTestCase {
+class ZDTinyLayoutTests: XCTestCase {
 
     let view1 = TestView()
     let view2 = TestView()
@@ -61,7 +61,7 @@ class AnchorageTests: XCTestCase {
 
 // MARK: - Overloaded operators
 
-extension AnchorageTests {
+extension ZDTinyLayoutTests {
 
     func testBasicEquality() {
         let constraint = view1.widthAnchor == view2.widthAnchor
@@ -517,7 +517,7 @@ extension AnchorageTests {
     }
 
     func testInactiveBatchConstraints() {
-        let constraints = Anchorage.batch(active: false) {
+        let constraints = ZDTinyLayout.batch(active: false) {
             view1.widthAnchor == view2.widthAnchor
             view1.heightAnchor == view2.heightAnchor / 2 ~ .low
         }
@@ -547,7 +547,7 @@ extension AnchorageTests {
     }
 
     func testActiveBatchConstraints() {
-        let constraints = Anchorage.batch {
+        let constraints = ZDTinyLayout.batch {
             view1.widthAnchor == view2.widthAnchor
             view1.heightAnchor == view2.heightAnchor / 2 ~ .low
         }
@@ -578,9 +578,9 @@ extension AnchorageTests {
 
     func testNestedBatchConstraints() {
         var nestedConstraints: [NSLayoutConstraint] = []
-        let constraints = Anchorage.batch {
+        let constraints = ZDTinyLayout.batch {
             view1.widthAnchor == view2.widthAnchor
-            nestedConstraints = Anchorage.batch(active: false) {
+            nestedConstraints = ZDTinyLayout.batch(active: false) {
                 view1.heightAnchor == view2.heightAnchor / 2 ~ .low
             }
             view1.leadingAnchor == view2.leadingAnchor
@@ -627,7 +627,7 @@ extension AnchorageTests {
 
 // MARK: - Custom operators
 
-extension AnchorageTests {
+extension ZDTinyLayoutTests {
 
     func testBasicEquality_WithCustomOperators() {
         let constraint = view1.widthAnchor /==/ view2.widthAnchor
@@ -1083,7 +1083,7 @@ extension AnchorageTests {
     }
 
     func testInactiveBatchConstraints_WithCustomOperators() {
-        let constraints = Anchorage.batch(active: false) {
+        let constraints = ZDTinyLayout.batch(active: false) {
             view1.widthAnchor /==/ view2.widthAnchor
             view1.heightAnchor /==/ view2.heightAnchor / 2 ~ .low
         }
@@ -1113,7 +1113,7 @@ extension AnchorageTests {
     }
 
     func testActiveBatchConstraints_WithCustomOperators() {
-        let constraints = Anchorage.batch {
+        let constraints = ZDTinyLayout.batch {
             view1.widthAnchor /==/ view2.widthAnchor
             view1.heightAnchor /==/ view2.heightAnchor / 2 ~ .low
         }
@@ -1144,9 +1144,9 @@ extension AnchorageTests {
 
     func testNestedBatchConstraints_WithCustomOperators() {
         var nestedConstraints: [NSLayoutConstraint] = []
-        let constraints = Anchorage.batch {
+        let constraints = ZDTinyLayout.batch {
             view1.widthAnchor /==/ view2.widthAnchor
-            nestedConstraints = Anchorage.batch(active: false) {
+            nestedConstraints = ZDTinyLayout.batch(active: false) {
                 view1.heightAnchor /==/ view2.heightAnchor / 2 ~ .low
             }
             view1.leadingAnchor /==/ view2.leadingAnchor
@@ -1258,7 +1258,7 @@ extension AnchorageTests {
     func testUpdateConstraints_UpdatesExistingConstraint() {
         let original = (view1.widthAnchor == view2.widthAnchor + 10 ~ .low)
 
-        Anchorage.updateConstraints {
+        ZDTinyLayout.updateConstraints {
             view1.widthAnchor == view2.widthAnchor + 24 ~ .high
         }
 
@@ -1277,7 +1277,7 @@ extension AnchorageTests {
     }
 
     func testUpdateConstraints_DefaultBehaviorCreatesWhenNoMatch() {
-        Anchorage.updateConstraints {
+        ZDTinyLayout.updateConstraints {
             view1.heightAnchor == view2.heightAnchor + 33
         }
 
@@ -1300,7 +1300,7 @@ extension AnchorageTests {
     func testUpdateConstraints_StrictBehaviorStillUpdatesWhenMatched() {
         let original = (view1.leadingAnchor == view2.leadingAnchor + 5)
 
-        Anchorage.updateConstraints(unmatched: .fail) {
+        ZDTinyLayout.updateConstraints(unmatched: .fail) {
             view1.leadingAnchor == view2.leadingAnchor + 12
         }
 
@@ -1343,7 +1343,7 @@ extension AnchorageTests {
 
 // MARK: - Performance Tests
 
-extension AnchorageTests {
+extension ZDTinyLayoutTests {
 
     private func runRepeatedEdgeConstraintAssignments(numTests: Int = 10000, assignment: () -> ConstraintGroup) {
         var constraintGroup: ConstraintGroup?
@@ -1412,7 +1412,7 @@ extension AnchorageTests {
 
 // MARK: - Utility Functions and Extensions
 
-extension AnchorageTests {
+extension ZDTinyLayoutTests {
 
     func assertIdentical(_ expression1: @autoclosure () -> AnyObject?, _ expression2: @autoclosure () -> AnyObject?, _ message: @autoclosure () -> String = "Objects were not identical", file: StaticString = #file, line: UInt = #line) {
         XCTAssertTrue(expression1() === expression2(), message(), file: file, line: line)

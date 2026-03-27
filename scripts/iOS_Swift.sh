@@ -4,8 +4,8 @@
 
 set -o pipefail && \
   xcodebuild clean build test \
-  -project Anchorage.xcodeproj \
-  -scheme Anchorage-iOS \
+  -project ZDTinyLayout.xcodeproj \
+  -scheme ZDTinyLayout-iOS \
   -sdk iphonesimulator \
   -destination "platform=iOS Simulator,name=iPhone 8,OS=$1" \
   SWIFT_VERSION=$2 \

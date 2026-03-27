@@ -1,6 +1,6 @@
 //
 //  BaseCell.swift
-//  AnchorageDemo
+//  ZDTinyLayoutDemo
 //
 //  Created by Connor Neville on 9/21/16.
 //  Copyright © 2016 Connor Neville. All rights reserved.

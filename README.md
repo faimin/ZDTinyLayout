@@ -1,14 +1,19 @@
-# Anchorage
+# ZDTinyLayout
 
-[![Swift 4.2 + 5.0](https://img.shields.io/badge/Swift-4.2%20+%205.0-orange.svg?style=flat)](https://swift.org)
-[![CircleCI](https://img.shields.io/circleci/project/github/Rightpoint/Anchorage/master.svg)](https://circleci.com/gh/Rightpoint/Anchorage)
-[![Version](https://img.shields.io/cocoapods/v/Anchorage.svg?style=flat)](https://cocoadocs.org/docsets/Anchorage)
-[![Platform](https://img.shields.io/cocoapods/p/Anchorage.svg?style=flat)](http://cocoapods.org/pods/Anchorage)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Swift 5.9](https://img.shields.io/badge/Swift-5.9-orange.svg?style=flat)](https://swift.org)
+[![CircleCI](https://img.shields.io/circleci/project/github/faimin/ZDTinyLayout/master.svg)](https://circleci.com/gh/faimin/ZDTinyLayout)
+[![Version](https://img.shields.io/cocoapods/v/ZDTinyLayout.svg?style=flat)](https://cocoadocs.org/docsets/ZDTinyLayout)
+[![Platform](https://img.shields.io/cocoapods/p/ZDTinyLayout.svg?style=flat)](http://cocoapods.org/pods/ZDTinyLayout)
 
-A lightweight collection of intuitive operators and utilities that simplify Auto Layout code. Anchorage is built directly on top of the `NSLayoutAnchor` API.
+A lightweight collection of intuitive operators and utilities that simplify Auto Layout code. ZDTinyLayout is built directly on top of the `NSLayoutAnchor` API.
 
 Each expression acts on one or more `NSLayoutAnchor`s, and returns active `NSLayoutConstraint`s. If you want inactive constraints, [here's how to do that](#batching-constraints).
+
+## Fork & Credits
+
+This repository is forked from [Rightpoint/Anchorage](https://github.com/Rightpoint/Anchorage).
+
+The Visual Layout implementation in this project is inspired by [freshOS/Stevia](https://github.com/freshOS/Stevia).
 
 # Usage
 
@@ -75,11 +80,11 @@ imageView.verticalAnchors >= container.verticalAnchors + 10
 Using `leftAnchor` and `rightAnchor` is rarely the right choice. To encourage this, `horizontalAnchors` and `edgeAnchors` use the `leadingAnchor` and `trailingAnchor` layout anchors.
 
 #### Inset instead of Shift
-When constraining leading/trailing or top/bottom, it is far more common to work in terms of an inset from the edges instead of shifting both edges in the same direction. When building the expression, Anchorage will flip the relationship and invert the constant in the constraint on the far side of the axis. This makes the expressions much more natural to work with.
+When constraining leading/trailing or top/bottom, it is far more common to work in terms of an inset from the edges instead of shifting both edges in the same direction. When building the expression, ZDTinyLayout will flip the relationship and invert the constant in the constraint on the far side of the axis. This makes the expressions much more natural to work with.
 
 ## Visual Layout DSL
 
-Anchorage also includes a visual-layout style DSL for describing rows vertically inside a container:
+ZDTinyLayout also includes a visual-layout style DSL for describing rows vertically inside a container:
 
 ```swift
 let constraints = layout(in: container) {
@@ -154,7 +159,7 @@ layout(in: container) {
 }
 ```
 
-If a view has no superview (or a guide has no owning view), Anchorage automatically adds it to the container passed to `layout(in:)`.
+If a view has no superview (or a guide has no owning view), ZDTinyLayout automatically adds it to the container passed to `layout(in:)`.
 
 ### Default inter-item spacing
 
@@ -180,7 +185,7 @@ layout(in: container) {
 
 ## Priority
 
-The `~` is used to specify priority of the constraint resulting from any Anchorage expression:
+The `~` is used to specify priority of the constraint resulting from any ZDTinyLayout expression:
 
 ```swift
 // Align view 20 points from the center of its superview, with system-defined low priority
@@ -201,7 +206,7 @@ The layout priority is an enum with the following values:
 
 ## Storing Constraints
 
-To store constraints created by Anchorage, simply assign the expression to a variable:
+To store constraints created by ZDTinyLayout, simply assign the expression to a variable:
 
 ```swift
 // A single (active) NSLayoutConstraint
@@ -215,10 +220,10 @@ let edgeConstraints = (button.edgeAnchors == container.edgeAnchors).all
 
 ## Batching Constraints
 
-By default, Anchorage returns active layout constraints. If you'd rather return inactive constraints for use with the [`NSLayoutConstraint.activate(_:)` method](https://developer.apple.com/reference/uikit/nslayoutconstraint/1526955-activate) for performance reasons, you can do it like this:
+By default, ZDTinyLayout returns active layout constraints. If you'd rather return inactive constraints for use with the [`NSLayoutConstraint.activate(_:)` method](https://developer.apple.com/reference/uikit/nslayoutconstraint/1526955-activate) for performance reasons, you can do it like this:
 
 ```swift
-let constraints = Anchorage.batch(active: false) {
+let constraints = ZDTinyLayout.batch(active: false) {
     view1.widthAnchor == view2.widthAnchor
     view1.heightAnchor == view2.heightAnchor / 2 ~ .low
     // ... as many constraints as you want
@@ -232,12 +237,12 @@ You can also pass `active: true` if you want the constraints in the array to be 
 
 ## Updating Existing Constraints
 
-Anchorage can update existing matching constraints in place (constant and priority), similar to SnapKit's `updateConstraints` behavior:
+ZDTinyLayout can update existing matching constraints in place (constant and priority), similar to SnapKit's `updateConstraints` behavior:
 
 ```swift
 view.widthAnchor == other.widthAnchor + 8 ~ .low
 
-Anchorage.updateConstraints {
+ZDTinyLayout.updateConstraints {
     view.widthAnchor == other.widthAnchor + 24 ~ .high
 }
 ```
@@ -247,7 +252,7 @@ Anchorage.updateConstraints {
 If no matching installed constraint is found, the default behavior is to create a new one (`.makeNew`):
 
 ```swift
-Anchorage.updateConstraints(unmatched: .makeNew) {
+ZDTinyLayout.updateConstraints(unmatched: .makeNew) {
     view.widthAnchor == other.widthAnchor + 24
 }
 ```
@@ -255,14 +260,14 @@ Anchorage.updateConstraints(unmatched: .makeNew) {
 You can switch to strict mode to fail instead:
 
 ```swift
-Anchorage.updateConstraints(unmatched: .fail) {
+ZDTinyLayout.updateConstraints(unmatched: .fail) {
     view.widthAnchor == other.widthAnchor + 24
 }
 ```
 
 ### Matching rules
 
-Anchorage treats a constraint as a match when these properties are the same:
+ZDTinyLayout treats a constraint as a match when these properties are the same:
 
 - `firstItem`
 - `secondItem`
@@ -277,17 +282,17 @@ Anchorage treats a constraint as a match when these properties are the same:
 
 To keep updates efficient in deep hierarchies:
 
-- If both sides of a constraint resolve to views, Anchorage starts from their nearest common superview and walks upward.
-- If one side is a `UILayoutGuide`/`NSLayoutGuide`, Anchorage uses its owning view for this search.
+- If both sides of a constraint resolve to views, ZDTinyLayout starts from their nearest common superview and walks upward.
+- If one side is a `UILayoutGuide`/`NSLayoutGuide`, ZDTinyLayout uses its owning view for this search.
 - Single-item constraints search that item's superview chain.
 
 ## Autoresizing Mask
 
-Anchorage sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the expression, so you should never need to set this property manually. This is important to be aware of in case the container view relies on `translatesAutoresizingMaskIntoConstraints` being set to `true`. We tend to keep child views on the left hand side of the expression to avoid this problem, especially when constraining to a system-supplied view.
+ZDTinyLayout sets the `translatesAutoresizingMaskIntoConstraints` property to `false` on the *left* hand side of the expression, so you should never need to set this property manually. This is important to be aware of in case the container view relies on `translatesAutoresizingMaskIntoConstraints` being set to `true`. We tend to keep child views on the left hand side of the expression to avoid this problem, especially when constraining to a system-supplied view.
 
 ## A Note on Compile Times
 
-Anchorage overloads a few Swift operators, which can lead to increased compile times. You can reduce this overhead by surrounding these operators with `/`, like so:
+ZDTinyLayout overloads a few Swift operators, which can lead to increased compile times. You can reduce this overhead by surrounding these operators with `/`, like so:
 
 | Operator | Faster Alternative |
 |------|----------|
@@ -301,24 +306,12 @@ For example, `view1.edgeAnchors == view2.edgeAnchors` would become `view1.edgeAn
 
 ## CocoaPods
 
-To integrate Anchorage into your Xcode project using CocoaPods, specify it in
+To integrate ZDTinyLayout into your Xcode project using CocoaPods, specify it in
 your Podfile:
 
 ```ruby
-pod 'Anchorage'
+pod 'ZDTinyLayout'
 ```
-
-## Carthage
-
-To integrate Anchorage into your Xcode project using Carthage, specify it in
-your Cartfile:
-
-```ogdl
-github "Rightpoint/Anchorage"
-```
-
-Run `carthage update` to build the framework and drag the built
-`Anchorage.framework` into your Xcode project.
 
 # License
 
