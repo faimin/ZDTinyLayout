@@ -54,6 +54,54 @@ public protocol VisualLayoutAnchorable: AnyObject {
 extension VisualLayoutView: VisualLayoutAnchorable {}
 extension VisualLayoutGuide: VisualLayoutAnchorable {}
 
+// MARK: - Mixed Array Items
+
+/// Strongly-typed token for mixed visual-layout array literals.
+public enum VisualLayoutArrayToken {
+	case anchor(any VisualLayoutAnchorable)
+	case spacing(CGFloat)
+}
+
+/// A value that can appear inside visual-layout mixed array literals.
+public protocol VisualLayoutArrayElementConvertible {
+	var visualLayoutArrayToken: VisualLayoutArrayToken { get }
+}
+
+/// Typed array-literal carrier used by visual-layout operators.
+/// Supports entries like `[view1, 10, view2, 50.0, view3]`.
+public struct VisualLayoutArrayItems: ExpressibleByArrayLiteral {
+	public typealias ArrayLiteralElement = any VisualLayoutArrayElementConvertible
+	internal let tokens: [VisualLayoutArrayToken]
+
+	public init(arrayLiteral elements: ArrayLiteralElement...) {
+		self.tokens = elements.map(\.visualLayoutArrayToken)
+	}
+}
+
+extension VisualLayoutView: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
+}
+
+extension VisualLayoutGuide: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
+}
+
+extension CGFloat: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .spacing(self) }
+}
+
+extension Double: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .spacing(CGFloat(self)) }
+}
+
+extension Float: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .spacing(CGFloat(self)) }
+}
+
+extension Int: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .spacing(CGFloat(self)) }
+}
+
 // MARK: - Default Margin
 
 /// The default inter-view spacing (in points) used when no explicit gap is provided

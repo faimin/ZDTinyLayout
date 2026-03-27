@@ -97,7 +97,7 @@ public postfix func | (guides: [VisualLayoutGuide]) -> VisualRow {
 /// Supports arrays containing views/layout guides and numeric spacing values:
 /// `|--[view1, 10, view2, 50.0, view3]--|`
 @discardableResult
-public postfix func | (items: [Any]) -> VisualRow {
+public postfix func | (items: VisualLayoutArrayItems) -> VisualRow {
 	rowFromMixedArray(items, trailingMargin: 0)
 }
 
@@ -295,7 +295,7 @@ public func -- (lhs: CGFloat, rhs: [VisualLayoutGuide]) -> VisualRowChain {
 
 /// Starts a chain with a **custom leading margin** and a mixed array of views/guides and spacings:
 /// `spacing -- [view1, 10, view2, 50.0, view3]`.
-public func -- (lhs: CGFloat, rhs: [Any]) -> VisualRowChain {
+public func -- (lhs: CGFloat, rhs: VisualLayoutArrayItems) -> VisualRowChain {
 	let parsed = parseMixedArrayItems(rhs)
 	return VisualRowChain(views: parsed.views, spacings: parsed.spacings, pendingSpacing: nil, leadingMargin: lhs)
 }
@@ -316,17 +316,17 @@ public func -- (lhs: Float, rhs: [VisualLayoutGuide]) -> VisualRowChain {
 }
 
 /// Integer overload for custom leading margin with mixed arrays.
-public func -- (lhs: Int, rhs: [Any]) -> VisualRowChain {
+public func -- (lhs: Int, rhs: VisualLayoutArrayItems) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Double overload for custom leading margin with mixed arrays.
-public func -- (lhs: Double, rhs: [Any]) -> VisualRowChain {
+public func -- (lhs: Double, rhs: VisualLayoutArrayItems) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Float overload for custom leading margin with mixed arrays.
-public func -- (lhs: Float, rhs: [Any]) -> VisualRowChain {
+public func -- (lhs: Float, rhs: VisualLayoutArrayItems) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
@@ -464,7 +464,7 @@ public postfix func --| (guides: [VisualLayoutGuide]) -> VisualRow {
 /// Supports arrays containing views/layout guides and numeric spacing values:
 /// `|--[view1, 10, view2, 50.0, view3]--|`
 @discardableResult
-public postfix func --| (items: [Any]) -> VisualRow {
+public postfix func --| (items: VisualLayoutArrayItems) -> VisualRow {
 	rowFromMixedArray(items, trailingMargin: 0)
 }
 
@@ -508,54 +508,33 @@ public postfix func --| (chain: VisualRowChain) -> VisualRow {
 
 // MARK: - Mixed Array Parsing
 
-private func rowFromMixedArray(_ items: [Any], trailingMargin: CGFloat) -> VisualRow {
+private func rowFromMixedArray(_ items: VisualLayoutArrayItems, trailingMargin: CGFloat) -> VisualRow {
 	let parsed = parseMixedArrayItems(items)
 	var row = VisualRow(views: parsed.views, trailingMargin: trailingMargin)
 	row.interViewSpacings = parsed.spacings
 	return row
 }
 
-private func parseMixedArrayItems(_ items: [Any]) -> (views: [any VisualLayoutAnchorable], spacings: [CGFloat]) {
+private func parseMixedArrayItems(_ items: VisualLayoutArrayItems) -> (views: [any VisualLayoutAnchorable], spacings: [CGFloat]) {
 	var views: [any VisualLayoutAnchorable] = []
 	var spacings: [CGFloat] = []
 	var pendingSpacing: CGFloat?
 
-	for item in items {
-		if let view = item as? any VisualLayoutAnchorable {
+	for token in items.tokens {
+		switch token {
+		case let .anchor(view):
 			if !views.isEmpty {
 				spacings.append(pendingSpacing ?? visualLayoutDefaultSpacing)
 			}
 			views.append(view)
 			pendingSpacing = nil
-			continue
-		}
-
-		if let spacing = spacingValue(from: item) {
+		case let .spacing(spacing):
 			precondition(!views.isEmpty, "Visual layout mixed arrays must start with a view or layout guide.")
 			// If multiple spacing literals appear in a row, the last one wins.
 			pendingSpacing = spacing
-			continue
 		}
-
-		preconditionFailure("Unsupported item in visual layout mixed array: \(type(of: item)).")
 	}
 
 	precondition(pendingSpacing == nil, "Visual layout mixed arrays cannot end with a spacing value.")
 	return (views, spacings)
-}
-
-private func spacingValue(from item: Any) -> CGFloat? {
-	if let value = item as? CGFloat {
-		return value
-	}
-	if let value = item as? Double {
-		return CGFloat(value)
-	}
-	if let value = item as? Float {
-		return CGFloat(value)
-	}
-	if let value = item as? Int {
-		return CGFloat(value)
-	}
-	return nil
 }
