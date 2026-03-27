@@ -1,10 +1,9 @@
 # ZDTinyLayout
 
-[![Swift 5](https://img.shields.io/badge/Swift-4.2%20+%205.0-orange.svg?style=flat)](https://swift.org)
-[![CircleCI](https://img.shields.io/circleci/project/github/Rightpoint/ZDTinyLayout/master.svg)](https://circleci.com/gh/Rightpoint/ZDTinyLayout)
+[![Swift 5.9](https://img.shields.io/badge/Swift-5.9-orange.svg?style=flat)](https://swift.org)
+[![CircleCI](https://img.shields.io/circleci/project/github/faimin/ZDTinyLayout/master.svg)](https://circleci.com/gh/faimin/ZDTinyLayout)
 [![Version](https://img.shields.io/cocoapods/v/ZDTinyLayout.svg?style=flat)](https://cocoadocs.org/docsets/ZDTinyLayout)
 [![Platform](https://img.shields.io/cocoapods/p/ZDTinyLayout.svg?style=flat)](http://cocoapods.org/pods/ZDTinyLayout)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 A lightweight collection of intuitive operators and utilities that simplify Auto Layout code. ZDTinyLayout is built directly on top of the `NSLayoutAnchor` API.
 
