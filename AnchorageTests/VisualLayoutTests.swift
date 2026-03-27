@@ -365,42 +365,6 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(spacingC?.constant, 0)
     }
 
-    func testChainOperatorIgnoresVisualLayoutDefaultSpacingWhenGapIsOmitted() {
-        let previousDefaultSpacing = visualLayoutDefaultSpacing
-        visualLayoutDefaultSpacing = 123
-        defer { visualLayoutDefaultSpacing = previousDefaultSpacing }
-
-        let constraints = layout(in: container) {
-            |--view1--view2--|
-        }
-
-        let spacingC = constraints.first {
-            ($0.firstItem as? TestView) === view2 &&
-            $0.firstAttribute == .leading &&
-            ($0.secondItem as? TestView) === view1 &&
-            $0.secondAttribute == .trailing
-        }
-        XCTAssertEqual(spacingC?.constant, 0)
-    }
-
-    func testArraySyntaxIgnoresVisualLayoutDefaultSpacingWhenGapIsOmitted() {
-        let previousDefaultSpacing = visualLayoutDefaultSpacing
-        visualLayoutDefaultSpacing = 123
-        defer { visualLayoutDefaultSpacing = previousDefaultSpacing }
-
-        let constraints = layout(in: container) {
-            |--[view1, view2]--|
-        }
-
-        let spacingC = constraints.first {
-            ($0.firstItem as? TestView) === view2 &&
-            $0.firstAttribute == .leading &&
-            ($0.secondItem as? TestView) === view1 &&
-            $0.secondAttribute == .trailing
-        }
-        XCTAssertEqual(spacingC?.constant, 0)
-    }
-
     func testChainOperatorAlignedTops() {
         let constraints = layout(in: container) {
             |--view1--20--view2--|

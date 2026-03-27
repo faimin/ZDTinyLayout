@@ -102,22 +102,6 @@ extension Int: VisualLayoutArrayElementConvertible {
 	public var visualLayoutArrayToken: VisualLayoutArrayToken { .spacing(CGFloat(self)) }
 }
 
-// MARK: - Default Margin
-
-/// Legacy default inter-view spacing value, retained for source compatibility.
-///
-/// The `--` visual-layout DSL no longer reads this value. In that DSL, omitted
-/// inter-item spacing defaults to `0` and spacing must be explicitly provided
-/// when non-zero spacing is desired.
-///
-/// Defaults to 8.
-///
-/// - Important: This value is read at operator-evaluation time, not at
-///   constraint-activation time. It is **not thread-safe**: mutations must
-///   occur on the main thread, before any layout operators that reference
-///   it are evaluated.
-public var visualLayoutDefaultSpacing: CGFloat = 8
-
 // MARK: - VisualLayoutItem
 
 /// A type that can appear as a line in a `layout(in:)` block.

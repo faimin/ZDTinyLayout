@@ -178,8 +178,6 @@ layout(in: container) {
 }
 ```
 
-`visualLayoutDefaultSpacing` is retained for source compatibility and is not used by the Visual Layout `--` DSL.
-
 ## Priority
 
 The `~` is used to specify priority of the constraint resulting from any Anchorage expression:
