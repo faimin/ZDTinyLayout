@@ -1187,6 +1187,74 @@ extension AnchorageTests {
         XCTAssertEqual(leading.secondAttribute, .leading)
     }
 
+    func testConstraintContainerViews_UsesCommonAncestorChainOnly() {
+        let leftContainer = TestView()
+        let rightContainer = TestView()
+
+        #if os(macOS)
+        let rootView = window.contentView!
+        #else
+        let rootView = window
+        #endif
+
+        rootView.addSubview(leftContainer)
+        rootView.addSubview(rightContainer)
+        leftContainer.addSubview(view1)
+        rightContainer.addSubview(view2)
+
+        let constraint = NSLayoutConstraint(
+            item: view1,
+            attribute: .leading,
+            relatedBy: .equal,
+            toItem: view2,
+            attribute: .leading,
+            multiplier: 1.0,
+            constant: 0.0
+        )
+
+        let containers = constraintContainerViews(for: constraint)
+
+        assertIdentical(containers.first, rootView)
+        XCTAssertFalse(containers.contains(where: { $0 === view1 }))
+        XCTAssertFalse(containers.contains(where: { $0 === view2 }))
+        XCTAssertFalse(containers.contains(where: { $0 === leftContainer }))
+        XCTAssertFalse(containers.contains(where: { $0 === rightContainer }))
+    }
+
+    func testConstraintContainerViews_UsesCommonAncestorChainOnly_WithLayoutGuide() {
+        let leftContainer = TestView()
+        let rightContainer = TestView()
+        let guide = NSLayoutGuide()
+
+        #if os(macOS)
+        let rootView = window.contentView!
+        #else
+        let rootView = window
+        #endif
+
+        rootView.addSubview(leftContainer)
+        rootView.addSubview(rightContainer)
+        leftContainer.addLayoutGuide(guide)
+        rightContainer.addSubview(view2)
+
+        let constraint = NSLayoutConstraint(
+            item: guide,
+            attribute: .leading,
+            relatedBy: .equal,
+            toItem: view2,
+            attribute: .leading,
+            multiplier: 1.0,
+            constant: 0.0
+        )
+
+        let containers = constraintContainerViews(for: constraint)
+
+        assertIdentical(containers.first, rootView)
+        XCTAssertFalse(containers.contains(where: { $0 === view2 }))
+        XCTAssertFalse(containers.contains(where: { $0 === leftContainer }))
+        XCTAssertFalse(containers.contains(where: { $0 === rightContainer }))
+    }
+
     func testUpdateConstraints_UpdatesExistingConstraint() {
         let original = (view1.widthAnchor == view2.widthAnchor + 10 ~ .low)
 

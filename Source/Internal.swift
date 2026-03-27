@@ -361,45 +361,60 @@ internal func finalize(constraint: NSLayoutConstraint, withPriority priority: Pr
 
 internal func matchingInstalledConstraint(for constraint: NSLayoutConstraint) -> NSLayoutConstraint? {
 	let containers = constraintContainerViews(for: constraint)
-	var seen = Set<ObjectIdentifier>()
-	var candidates: [NSLayoutConstraint] = []
 	
 	for container in containers {
 		for installed in container.constraints {
-			let id = ObjectIdentifier(installed)
-			if seen.contains(id) {
-				continue
+			if installed.matchesForUpdate(with: constraint) {
+				return installed
 			}
-			
-			seen.insert(id)
-			candidates.append(installed)
 		}
 	}
 	
-	return candidates.first(where: { $0.matchesForUpdate(with: constraint) })
+	return nil
 }
 
 internal func constraintContainerViews(for constraint: NSLayoutConstraint) -> [View] {
-	var ordered: [View] = []
-	var seen = Set<ObjectIdentifier>()
-	
-	func add(_ view: View) {
-		let id = ObjectIdentifier(view)
-		guard !seen.contains(id) else { return }
-		seen.insert(id)
-		ordered.append(view)
-	}
-	
-	for item in [constraint.firstItem, constraint.secondItem] {
-		guard let startingView = viewForConstraintItem(item) else { continue }
-		var current: View? = startingView
-		while let view = current {
-			add(view)
-			current = view.superview
+	let firstView = viewForConstraintItem(constraint.firstItem)
+	let secondView = viewForConstraintItem(constraint.secondItem)
+
+	switch (firstView, secondView) {
+	case let (first?, second?):
+		if let commonSuperview = closestCommonSuperview(first, second) {
+			return superviewChain(startingAt: commonSuperview)
 		}
+		return superviewChain(startingAt: first)
+	case let (first?, nil):
+		return superviewChain(startingAt: first)
+	case let (nil, second?):
+		return superviewChain(startingAt: second)
+	case (nil, nil):
+		return []
 	}
-	
-	return ordered
+}
+
+internal func closestCommonSuperview(_ first: View, _ second: View) -> View? {
+	var candidate: View? = first
+	var otherCandidate: View? = second
+
+	// O(a+b), mirroring Masonry's mas_closestCommonSuperview
+	while candidate !== otherCandidate {
+		candidate = (candidate == nil) ? second : candidate?.superview
+		otherCandidate = (otherCandidate == nil) ? first : otherCandidate?.superview
+	}
+
+	return candidate
+}
+
+internal func superviewChain(startingAt view: View) -> [View] {
+	var chain: [View] = []
+	var current: View? = view
+
+	while let currentView = current {
+		chain.append(currentView)
+		current = currentView.superview
+	}
+
+	return chain
 }
 
 internal func viewForConstraintItem(_ item: Any?) -> View? {
