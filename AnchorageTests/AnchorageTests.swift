@@ -1186,6 +1186,159 @@ extension AnchorageTests {
         XCTAssertEqual(leading.firstAttribute, .leading)
         XCTAssertEqual(leading.secondAttribute, .leading)
     }
+
+    func testConstraintContainerViews_UsesCommonAncestorChainOnly() {
+        let leftContainer = TestView()
+        let rightContainer = TestView()
+
+        #if os(macOS)
+        let rootView = window.contentView!
+        #else
+        let rootView = window
+        #endif
+
+        rootView.addSubview(leftContainer)
+        rootView.addSubview(rightContainer)
+        leftContainer.addSubview(view1)
+        rightContainer.addSubview(view2)
+
+        let constraint = NSLayoutConstraint(
+            item: view1,
+            attribute: .leading,
+            relatedBy: .equal,
+            toItem: view2,
+            attribute: .leading,
+            multiplier: 1.0,
+            constant: 0.0
+        )
+
+        let containers = constraintContainerViews(for: constraint)
+
+        assertIdentical(containers.first, rootView)
+        XCTAssertFalse(containers.contains(where: { $0 === view1 }))
+        XCTAssertFalse(containers.contains(where: { $0 === view2 }))
+        XCTAssertFalse(containers.contains(where: { $0 === leftContainer }))
+        XCTAssertFalse(containers.contains(where: { $0 === rightContainer }))
+    }
+
+    func testConstraintContainerViews_UsesCommonAncestorChainOnly_WithLayoutGuide() {
+        let leftContainer = TestView()
+        let rightContainer = TestView()
+        let guide = NSLayoutGuide()
+
+        #if os(macOS)
+        let rootView = window.contentView!
+        #else
+        let rootView = window
+        #endif
+
+        rootView.addSubview(leftContainer)
+        rootView.addSubview(rightContainer)
+        leftContainer.addLayoutGuide(guide)
+        rightContainer.addSubview(view2)
+
+        let constraint = NSLayoutConstraint(
+            item: guide,
+            attribute: .leading,
+            relatedBy: .equal,
+            toItem: view2,
+            attribute: .leading,
+            multiplier: 1.0,
+            constant: 0.0
+        )
+
+        let containers = constraintContainerViews(for: constraint)
+
+        assertIdentical(containers.first, rootView)
+        XCTAssertFalse(containers.contains(where: { $0 === view2 }))
+        XCTAssertFalse(containers.contains(where: { $0 === leftContainer }))
+        XCTAssertFalse(containers.contains(where: { $0 === rightContainer }))
+    }
+
+    func testUpdateConstraints_UpdatesExistingConstraint() {
+        let original = (view1.widthAnchor == view2.widthAnchor + 10 ~ .low)
+
+        Anchorage.updateConstraints {
+            view1.widthAnchor == view2.widthAnchor + 24 ~ .high
+        }
+
+        let matching = matchingWindowConstraints(
+            firstItem: view1,
+            secondItem: view2,
+            firstAttribute: .width,
+            secondAttribute: .width
+        )
+
+        XCTAssertEqual(matching.count, 1)
+        assertIdentical(matching.first, original)
+        XCTAssertEqual(original.constant, 24, accuracy: cgEpsilon)
+        XCTAssertEqual(original.priority.rawValue, TestPriorityHigh.rawValue, accuracy: fEpsilon)
+        XCTAssertTrue(original.isActive)
+    }
+
+    func testUpdateConstraints_DefaultBehaviorCreatesWhenNoMatch() {
+        Anchorage.updateConstraints {
+            view1.heightAnchor == view2.heightAnchor + 33
+        }
+
+        let matching = matchingWindowConstraints(
+            firstItem: view1,
+            secondItem: view2,
+            firstAttribute: .height,
+            secondAttribute: .height
+        )
+
+        XCTAssertEqual(matching.count, 1)
+        guard let constraint = matching.first else {
+            XCTFail("Expected one matching height constraint")
+            return
+        }
+        XCTAssertEqual(constraint.constant, 33, accuracy: cgEpsilon)
+        XCTAssertTrue(constraint.isActive)
+    }
+
+    func testUpdateConstraints_StrictBehaviorStillUpdatesWhenMatched() {
+        let original = (view1.leadingAnchor == view2.leadingAnchor + 5)
+
+        Anchorage.updateConstraints(unmatched: .fail) {
+            view1.leadingAnchor == view2.leadingAnchor + 12
+        }
+
+        let matching = matchingWindowConstraints(
+            firstItem: view1,
+            secondItem: view2,
+            firstAttribute: .leading,
+            secondAttribute: .leading
+        )
+
+        XCTAssertEqual(matching.count, 1)
+        assertIdentical(matching.first, original)
+        XCTAssertEqual(original.constant, 12, accuracy: cgEpsilon)
+    }
+
+    private func matchingWindowConstraints(
+        firstItem: AnyObject,
+        secondItem: AnyObject?,
+        firstAttribute: ConstraintAttribute,
+        secondAttribute: ConstraintAttribute,
+        relation: NSLayoutConstraint.Relation = .equal,
+        multiplier: CGFloat = 1.0
+    ) -> [NSLayoutConstraint] {
+        #if os(macOS)
+        let installedConstraints = window.contentView?.constraints ?? []
+        #else
+        let installedConstraints = window.constraints
+        #endif
+
+        return installedConstraints.filter { constraint in
+            let firstMatches = (constraint.firstItem as AnyObject?) === firstItem
+            let secondMatches = (constraint.secondItem as AnyObject?) === secondItem
+            let attributesMatch = constraint.firstAttribute == firstAttribute && constraint.secondAttribute == secondAttribute
+            let relationMatches = constraint.relation == relation
+            let multiplierMatches = abs(constraint.multiplier - multiplier) < cgEpsilon
+            return firstMatches && secondMatches && attributesMatch && relationMatches && multiplierMatches
+        }
+    }
 }
 
 // MARK: - Performance Tests

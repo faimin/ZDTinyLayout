@@ -301,6 +301,7 @@ internal struct ConstraintBuilder {
 // MARK: - Batching
 
 internal var batches: [ConstraintBatch] = []
+internal var updateConstraintBehaviors: [ConstraintUpdateUnmatchedBehavior] = []
 
 internal class ConstraintBatch {
 	
@@ -338,6 +339,15 @@ internal func finalize(constraint: NSLayoutConstraint, withPriority priority: Pr
 	}
 	
 	constraint.priority = priority.value
+
+	if updateConstraintBehaviors.last != nil,
+	   let existingConstraint = matchingInstalledConstraint(for: constraint) {
+		existingConstraint.constant = constraint.constant
+		existingConstraint.priority = constraint.priority
+		return existingConstraint
+	} else if let behavior = updateConstraintBehaviors.last, behavior == .fail {
+		preconditionFailure("No existing constraint matched during update. Use unmatched: .makeNew to create one when missing.")
+	}
 	
 	if let lastBatch = batches.last {
 		lastBatch.add(constraint: constraint)
@@ -347,4 +357,86 @@ internal func finalize(constraint: NSLayoutConstraint, withPriority priority: Pr
 	}
 	
 	return constraint
+}
+
+internal func matchingInstalledConstraint(for constraint: NSLayoutConstraint) -> NSLayoutConstraint? {
+	let containers = constraintContainerViews(for: constraint)
+	
+	for container in containers {
+		for installed in container.constraints {
+			if installed.matchesForUpdate(with: constraint) {
+				return installed
+			}
+		}
+	}
+	
+	return nil
+}
+
+internal func constraintContainerViews(for constraint: NSLayoutConstraint) -> [View] {
+	let firstView = viewForConstraintItem(constraint.firstItem)
+	let secondView = viewForConstraintItem(constraint.secondItem)
+
+	switch (firstView, secondView) {
+	case let (first?, second?):
+		if let commonSuperview = closestCommonSuperview(first, second) {
+			return superviewChain(startingAt: commonSuperview)
+		}
+		return superviewChain(startingAt: first)
+	case let (first?, nil):
+		return superviewChain(startingAt: first)
+	case let (nil, second?):
+		return superviewChain(startingAt: second)
+	case (nil, nil):
+		return []
+	}
+}
+
+internal func closestCommonSuperview(_ first: View, _ second: View) -> View? {
+	var candidate: View? = first
+	var otherCandidate: View? = second
+
+	// O(a+b), mirroring Masonry's mas_closestCommonSuperview
+	while candidate !== otherCandidate {
+		candidate = (candidate == nil) ? second : candidate?.superview
+		otherCandidate = (otherCandidate == nil) ? first : otherCandidate?.superview
+	}
+
+	return candidate
+}
+
+internal func superviewChain(startingAt view: View) -> [View] {
+	var chain: [View] = []
+	var current: View? = view
+
+	while let currentView = current {
+		chain.append(currentView)
+		current = currentView.superview
+	}
+
+	return chain
+}
+
+internal func viewForConstraintItem(_ item: Any?) -> View? {
+	if let view = item as? View {
+		return view
+	}
+	
+	if let guide = item as? LayoutGuide {
+		return guide.owningView
+	}
+	
+	return nil
+}
+
+internal extension NSLayoutConstraint {
+	func matchesForUpdate(with other: NSLayoutConstraint) -> Bool {
+		let multipliersMatch = abs(multiplier - other.multiplier) < 1e-5 // 0.00001
+		return (firstItem as AnyObject?) === (other.firstItem as AnyObject?) &&
+			(secondItem as AnyObject?) === (other.secondItem as AnyObject?) &&
+			firstAttribute == other.firstAttribute &&
+			secondAttribute == other.secondAttribute &&
+			relation == other.relation &&
+			multipliersMatch
+	}
 }

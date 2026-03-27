@@ -571,6 +571,35 @@ infix operator ~: PriorityPrecedence
 	return LayoutExpression(anchor: lhs, constant: -rhs)
 }
 
+// MARK: - Updating
+
+/// Controls how `updateConstraints` behaves when no installed constraint matches.
+public enum ConstraintUpdateUnmatchedBehavior {
+	/// Creates and activates a new constraint when no existing match is found.
+	case makeNew
+	/// Triggers a precondition failure when no existing match is found.
+	case fail
+}
+
+/// Updates matching installed constraints created by Anchorage expressions inside the closure.
+///
+/// Matching ignores constant and priority, so both can be updated in-place.
+/// By default, unmatched constraints are created and activated.
+///
+/// - Parameter unmatched: Behavior to use when no installed constraint matches.
+/// - Parameter closure: A closure that runs Anchorage expressions to update.
+public func updateConstraints(
+	unmatched: ConstraintUpdateUnmatchedBehavior = .makeNew,
+	_ closure: () -> Void
+) {
+	updateConstraintBehaviors.append(unmatched)
+	defer {
+		updateConstraintBehaviors.removeLast()
+	}
+	
+	closure()
+}
+
 // MARK: - Batching
 
 /// Any Anchorage constraints created inside the passed closure are returned in the array.
