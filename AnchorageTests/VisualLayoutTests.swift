@@ -308,6 +308,50 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(gap23?.constant, 30)
     }
 
+    func testArraySyntaxSupportsCustomInterViewSpacingValues() {
+        let constraints = layout(in: container) {
+            |--[view1, 10, view2, 50.0, view3]--|
+        }
+
+        let gap12 = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(gap12?.constant, 10)
+
+        let gap23 = constraints.first {
+            ($0.firstItem as? TestView) === view3 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view2 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(gap23?.constant, 50.0)
+    }
+
+    func testArraySyntaxFallsBackToDefaultSpacingWhenGapIsOmitted() {
+        let constraints = layout(in: container) {
+            |--[view1, 10, view2, view3]--|
+        }
+
+        let gap12 = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(gap12?.constant, 10)
+
+        let gap23 = constraints.first {
+            ($0.firstItem as? TestView) === view3 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view2 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(gap23?.constant, visualLayoutDefaultSpacing)
+    }
+
     func testChainOperatorDefaultSpacingWhenOmitted() {
         let constraints = layout(in: container) {
             |--view1--view2--|
@@ -381,6 +425,31 @@ class VisualLayoutTests: XCTestCase {
             ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .height
         }
         XCTAssertEqual(view2Height?.constant, 50)
+    }
+
+    func testFencedExplicitMarginsWithMixedArrayCustomSpacing() {
+        // |--15--[a,50,b]--20--| should compile and apply leading/inter/trailing margins.
+        let constraints = layout(in: container) {
+            |--15--[view1, 50, view2]--20--|
+        }
+
+        let leading = constraints.first {
+            ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .leading
+        }
+        XCTAssertEqual(leading?.constant, 15)
+
+        let spacing = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(spacing?.constant, 50)
+
+        let trailing = constraints.first {
+            ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
+        }
+        XCTAssertEqual(trailing?.constant, -20)
     }
 
     // MARK: - -- custom leading margin via leading number (postfix style)

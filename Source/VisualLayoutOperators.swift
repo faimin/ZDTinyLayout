@@ -93,6 +93,14 @@ public postfix func | (guides: [VisualLayoutGuide]) -> VisualRow {
 	VisualRow(views: guides, trailingMargin: 0)
 }
 
+/// Pins a mixed array's trailing edge to the container with zero margin.
+/// Supports arrays containing views/layout guides and numeric spacing values:
+/// `|--[view1, 10, view2, 50.0, view3]--|`
+@discardableResult
+public postfix func | (items: [Any]) -> VisualRow {
+	rowFromMixedArray(items, trailingMargin: 0)
+}
+
 // MARK: - Prefix | and |-- — leading, zero margin
 //
 // Both `|` and `|--` pin the leading edge with zero margin; they are semantically
@@ -285,6 +293,13 @@ public func -- (lhs: CGFloat, rhs: [VisualLayoutGuide]) -> VisualRowChain {
 	return VisualRowChain(views: rhs, spacings: spacings, pendingSpacing: nil, leadingMargin: lhs)
 }
 
+/// Starts a chain with a **custom leading margin** and a mixed array of views/guides and spacings:
+/// `spacing -- [view1, 10, view2, 50.0, view3]`.
+public func -- (lhs: CGFloat, rhs: [Any]) -> VisualRowChain {
+	let parsed = parseMixedArrayItems(rhs)
+	return VisualRowChain(views: parsed.views, spacings: parsed.spacings, pendingSpacing: nil, leadingMargin: lhs)
+}
+
 /// Integer overload for custom leading margin with guide arrays: `spacing -- [guide, guide]`.
 public func -- (lhs: Int, rhs: [VisualLayoutGuide]) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
@@ -297,6 +312,21 @@ public func -- (lhs: Double, rhs: [VisualLayoutGuide]) -> VisualRowChain {
 
 /// Float overload for custom leading margin with guide arrays: `spacing -- [guide, guide]`.
 public func -- (lhs: Float, rhs: [VisualLayoutGuide]) -> VisualRowChain {
+	CGFloat(lhs) -- rhs
+}
+
+/// Integer overload for custom leading margin with mixed arrays.
+public func -- (lhs: Int, rhs: [Any]) -> VisualRowChain {
+	CGFloat(lhs) -- rhs
+}
+
+/// Double overload for custom leading margin with mixed arrays.
+public func -- (lhs: Double, rhs: [Any]) -> VisualRowChain {
+	CGFloat(lhs) -- rhs
+}
+
+/// Float overload for custom leading margin with mixed arrays.
+public func -- (lhs: Float, rhs: [Any]) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
@@ -430,6 +460,14 @@ public postfix func --| (guides: [VisualLayoutGuide]) -> VisualRow {
 	VisualRow(views: guides, trailingMargin: 0)
 }
 
+/// Pins a mixed array's trailing edge to the container with zero margin.
+/// Supports arrays containing views/layout guides and numeric spacing values:
+/// `|--[view1, 10, view2, 50.0, view3]--|`
+@discardableResult
+public postfix func --| (items: [Any]) -> VisualRow {
+	rowFromMixedArray(items, trailingMargin: 0)
+}
+
 /// Trailing-margin carrier for integer literals in `chain -- N--|` expressions.
 /// Swift applies `--|` to the literal before `--` can consume it;
 /// the resulting empty-view row carries the trailing margin and is merged
@@ -466,4 +504,58 @@ public postfix func --| (trailing: CGFloat) -> VisualRow {
 @discardableResult
 public postfix func --| (chain: VisualRowChain) -> VisualRow {
 	VisualRow(chain: chain, leadingMargin: chain.leadingMargin, trailingMargin: chain.pendingSpacing ?? 0)
+}
+
+// MARK: - Mixed Array Parsing
+
+private func rowFromMixedArray(_ items: [Any], trailingMargin: CGFloat) -> VisualRow {
+	let parsed = parseMixedArrayItems(items)
+	var row = VisualRow(views: parsed.views, trailingMargin: trailingMargin)
+	row.interViewSpacings = parsed.spacings
+	return row
+}
+
+private func parseMixedArrayItems(_ items: [Any]) -> (views: [any VisualLayoutAnchorable], spacings: [CGFloat]) {
+	var views: [any VisualLayoutAnchorable] = []
+	var spacings: [CGFloat] = []
+	var pendingSpacing: CGFloat?
+
+	for item in items {
+		if let view = item as? any VisualLayoutAnchorable {
+			if !views.isEmpty {
+				spacings.append(pendingSpacing ?? visualLayoutDefaultSpacing)
+			}
+			views.append(view)
+			pendingSpacing = nil
+			continue
+		}
+
+		if let spacing = spacingValue(from: item) {
+			precondition(!views.isEmpty, "Visual layout mixed arrays must start with a view or layout guide.")
+			// If multiple spacing literals appear in a row, the last one wins.
+			pendingSpacing = spacing
+			continue
+		}
+
+		preconditionFailure("Unsupported item in visual layout mixed array: \(type(of: item)).")
+	}
+
+	precondition(pendingSpacing == nil, "Visual layout mixed arrays cannot end with a spacing value.")
+	return (views, spacings)
+}
+
+private func spacingValue(from item: Any) -> CGFloat? {
+	if let value = item as? CGFloat {
+		return value
+	}
+	if let value = item as? Double {
+		return CGFloat(value)
+	}
+	if let value = item as? Float {
+		return CGFloat(value)
+	}
+	if let value = item as? Int {
+		return CGFloat(value)
+	}
+	return nil
 }

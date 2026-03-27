@@ -114,6 +114,9 @@ let card = VisualLayoutView().layout {
 - `|--20--view1--8--view2--16--|`: explicit leading/inter-item/trailing margins.
 - `20--view1--8--view2|`: custom leading margin with trailing pinned to 0.
 - `|--[view1, view2, view3]--|`: multi-view row with equal widths and aligned tops.
+- `|--[view1, 10, view2, 50.0, view3]--|`: array form with explicit per-gap spacing values.
+- `|--15--[view1, 10, view2]--20--|`: array form with explicit leading/trailing margins and custom inter-item spacing.
+  Gaps without an explicit number fall back to `visualLayoutDefaultSpacing`.
 
 ### Vertical spacing
 
