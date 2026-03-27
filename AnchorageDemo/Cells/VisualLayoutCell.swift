@@ -58,14 +58,14 @@ private extension VisualLayoutCell {
     func configureLayout() {
         contentView.layout {
             8
-            |--8--bodyLabel--8--|
+            |--15--bodyLabel--|
             8
             |--8--UIView().layout({
                 |--topView--| /=/ 30
                 8
-                |--15--[middleLeft,50,middleRight]--20--| /=/ 50
+                |--15--middleLeft--middleRight--20--| /=/ 50
                 8
-                |bottomView| /=/ 50
+                |--bottomView--| /=/ 50
             })--|
             8
         }

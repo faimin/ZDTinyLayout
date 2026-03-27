@@ -117,7 +117,7 @@ let card = VisualLayoutView().layout {
 - `|--[view1, 10, view2, 50.0, view3]--|`: mixed array form with explicit per-gap spacing values.
 - `|--15--[middleLeft, 50, middleRight]--20--|`: mixed array form with explicit leading/trailing margins and custom inter-item spacing.
   Mixed-array spacing literals support `Int`, `Float`, `Double`, and `CGFloat`.
-  Gaps without an explicit number fall back to `visualLayoutDefaultSpacing`.
+  Gaps without an explicit number default to `0`.
   Mixed arrays must start and end with a view/layout guide (not a number).
 
 ### Vertical spacing
@@ -158,14 +158,27 @@ If a view has no superview (or a guide has no owning view), Anchorage automatica
 
 ### Default inter-item spacing
 
-When `--` spacing is omitted, Anchorage uses `visualLayoutDefaultSpacing` (default `8`):
+In Visual Layout DSL (`--` chain and array syntax), omitted inter-item spacing defaults to `0`:
 
 ```swift
-visualLayoutDefaultSpacing = 12
 layout(in: container) {
-    |--[view1,view2]--|
+    |--view1--view2--|              // gap(view1, view2) = 0
+    |--[view1, view2, view3]--|     // gaps = [0, 0]
+    |--[view1, 10, view2, view3]--| // gaps = [10, 0]
+    |--15--view1--view2--20--|      // gap(view1, view2) = 0
 }
 ```
+
+Use explicit spacing when non-zero is desired:
+
+```swift
+layout(in: container) {
+    |--view1--12--view2--|
+    |--[view1, 12, view2]--|
+}
+```
+
+`visualLayoutDefaultSpacing` is retained for source compatibility and is not used by the Visual Layout `--` DSL.
 
 ## Priority
 

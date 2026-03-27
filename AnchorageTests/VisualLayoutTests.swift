@@ -239,7 +239,7 @@ class VisualLayoutTests: XCTestCase {
             $0.secondAttribute == .trailing
         }
         XCTAssertNotNil(spacingC)
-        XCTAssertEqual(spacingC?.constant, 8)
+        XCTAssertEqual(spacingC?.constant, 0)
 
         let view1Height = constraints.first {
             ($0.firstItem as? TestView) === view1 && $0.firstAttribute == .height
@@ -330,7 +330,7 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(gap23?.constant, 50.0)
     }
 
-    func testArraySyntaxFallsBackToDefaultSpacingWhenGapIsOmitted() {
+    func testArraySyntaxFallsBackToZeroSpacingWhenGapIsOmitted() {
         let constraints = layout(in: container) {
             |--[view1, 10, view2, view3]--|
         }
@@ -349,7 +349,7 @@ class VisualLayoutTests: XCTestCase {
             ($0.secondItem as? TestView) === view2 &&
             $0.secondAttribute == .trailing
         }
-        XCTAssertEqual(gap23?.constant, visualLayoutDefaultSpacing)
+        XCTAssertEqual(gap23?.constant, 0)
     }
 
     func testChainOperatorDefaultSpacingWhenOmitted() {
@@ -362,7 +362,43 @@ class VisualLayoutTests: XCTestCase {
             ($0.secondItem as? TestView) === view1 &&
             $0.secondAttribute == .trailing
         }
-        XCTAssertEqual(spacingC?.constant, visualLayoutDefaultSpacing)
+        XCTAssertEqual(spacingC?.constant, 0)
+    }
+
+    func testChainOperatorIgnoresVisualLayoutDefaultSpacingWhenGapIsOmitted() {
+        let previousDefaultSpacing = visualLayoutDefaultSpacing
+        visualLayoutDefaultSpacing = 123
+        defer { visualLayoutDefaultSpacing = previousDefaultSpacing }
+
+        let constraints = layout(in: container) {
+            |--view1--view2--|
+        }
+
+        let spacingC = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(spacingC?.constant, 0)
+    }
+
+    func testArraySyntaxIgnoresVisualLayoutDefaultSpacingWhenGapIsOmitted() {
+        let previousDefaultSpacing = visualLayoutDefaultSpacing
+        visualLayoutDefaultSpacing = 123
+        defer { visualLayoutDefaultSpacing = previousDefaultSpacing }
+
+        let constraints = layout(in: container) {
+            |--[view1, view2]--|
+        }
+
+        let spacingC = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(spacingC?.constant, 0)
     }
 
     func testChainOperatorAlignedTops() {
@@ -398,6 +434,21 @@ class VisualLayoutTests: XCTestCase {
             ($0.firstItem as? TestView) === view2 && $0.firstAttribute == .trailing
         }
         XCTAssertEqual(trailing?.constant, -10)
+    }
+
+    func testFencedExplicitMargins_DefaultInterViewSpacingIsZero() {
+        // |--15--a--b--20--| → leading=15, spacing=0, trailing=20
+        let constraints = layout(in: container) {
+            |--15--view1--view2--20--|
+        }
+
+        let spacing = constraints.first {
+            ($0.firstItem as? TestView) === view2 &&
+            $0.firstAttribute == .leading &&
+            ($0.secondItem as? TestView) === view1 &&
+            $0.secondAttribute == .trailing
+        }
+        XCTAssertEqual(spacing?.constant, 0)
     }
 
     func testFencedExplicitMarginsWithArrayAndIntLiterals() {

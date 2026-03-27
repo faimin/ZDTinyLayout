@@ -104,8 +104,13 @@ extension Int: VisualLayoutArrayElementConvertible {
 
 // MARK: - Default Margin
 
-/// The default inter-view spacing (in points) used when no explicit gap is provided
-/// in a `--` chain (e.g. `|--a--b--|`). Defaults to 8.
+/// Legacy default inter-view spacing value, retained for source compatibility.
+///
+/// The `--` visual-layout DSL no longer reads this value. In that DSL, omitted
+/// inter-item spacing defaults to `0` and spacing must be explicitly provided
+/// when non-zero spacing is desired.
+///
+/// Defaults to 8.
 ///
 /// - Important: This value is read at operator-evaluation time, not at
 ///   constraint-activation time. It is **not thread-safe**: mutations must
@@ -160,14 +165,14 @@ public struct VisualRow: VisualLayoutItem {
 	internal var heightRelation: NSLayoutConstraint.Relation = .equal
 	internal var heightPriority: Priority = .required
 	
-	/// Creates a row from an array of anchorables, using `visualLayoutDefaultSpacing` for all gaps.
+	/// Creates a row from an array of anchorables, using 0 for all implicit gaps.
 	internal init(
 		views: [any VisualLayoutAnchorable],
 		leadingMargin: CGFloat? = nil,
 		trailingMargin: CGFloat? = nil
 	) {
 		self.views = views
-		self.interViewSpacings = Array(repeating: visualLayoutDefaultSpacing, count: max(0, views.count - 1))
+		self.interViewSpacings = Array(repeating: 0, count: max(0, views.count - 1))
 		self.leadingMargin = leadingMargin
 		self.trailingMargin = trailingMargin
 	}
@@ -181,7 +186,7 @@ public struct VisualRow: VisualLayoutItem {
 		self.views = chain.views
 		var spacings = chain.spacings
 		while spacings.count < max(0, chain.views.count - 1) {
-			spacings.append(visualLayoutDefaultSpacing)
+			spacings.append(0)
 		}
 		self.interViewSpacings = spacings
 		self.leadingMargin = leadingMargin
