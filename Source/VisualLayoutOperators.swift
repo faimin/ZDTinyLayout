@@ -84,17 +84,13 @@ public postfix func | (trailing: CGFloat) -> VisualRow {
 /// Pins the last view's trailing edge to the container with zero margin.
 @discardableResult
 public postfix func | (views: [VisualLayoutView]) -> VisualRow {
-	var row = VisualRow(views: views, trailingMargin: 0)
-	row.interViewSpacings = Array(repeating: 0, count: max(0, views.count - 1))
-	return row
+	VisualRow(views: views, trailingMargin: 0)
 }
 
 /// Pins the last guide's trailing edge to the container with zero margin.
 @discardableResult
 public postfix func | (guides: [VisualLayoutGuide]) -> VisualRow {
-	var row = VisualRow(views: guides, trailingMargin: 0)
-	row.interViewSpacings = Array(repeating: 0, count: max(0, guides.count - 1))
-	return row
+	VisualRow(views: guides, trailingMargin: 0)
 }
 
 /// Pins a mixed array's trailing edge to the container with zero margin.
@@ -455,17 +451,13 @@ public postfix func --| (element: any VisualLayoutAnchorable) -> VisualRow {
 /// Pins the last view's trailing edge to the container with zero margin.
 @discardableResult
 public postfix func --| (views: [VisualLayoutView]) -> VisualRow {
-	var row = VisualRow(views: views, trailingMargin: 0)
-	row.interViewSpacings = Array(repeating: 0, count: max(0, views.count - 1))
-	return row
+	VisualRow(views: views, trailingMargin: 0)
 }
 
 /// Pins the last guide's trailing edge to the container with zero margin.
 @discardableResult
 public postfix func --| (guides: [VisualLayoutGuide]) -> VisualRow {
-	var row = VisualRow(views: guides, trailingMargin: 0)
-	row.interViewSpacings = Array(repeating: 0, count: max(0, guides.count - 1))
-	return row
+	VisualRow(views: guides, trailingMargin: 0)
 }
 
 /// Pins a mixed array's trailing edge to the container with zero margin.
