@@ -54,16 +54,53 @@ public protocol VisualLayoutAnchorable: AnyObject {
 extension VisualLayoutView: VisualLayoutAnchorable {}
 extension VisualLayoutGuide: VisualLayoutAnchorable {}
 
-// MARK: - Default Margin
+// MARK: - Mixed Array Items
 
-/// The default inter-view spacing (in points) used when no explicit gap is provided
-/// in a `--` chain (e.g. `|--a--b--|`). Defaults to 8.
-///
-/// - Important: This value is read at operator-evaluation time, not at
-///   constraint-activation time. It is **not thread-safe**: mutations must
-///   occur on the main thread, before any layout operators that reference
-///   it are evaluated.
-public var visualLayoutDefaultSpacing: CGFloat = 8
+/// Strongly-typed token for mixed visual-layout array literals.
+public enum VisualLayoutArrayToken {
+	case anchor(any VisualLayoutAnchorable)
+	case spacing(CGFloat)
+}
+
+/// A value that can appear inside visual-layout mixed array literals.
+public protocol VisualLayoutArrayElementConvertible {
+	var visualLayoutArrayToken: VisualLayoutArrayToken { get }
+}
+
+/// Typed array-literal carrier used by visual-layout operators.
+/// Supports entries like `[view1, 10, view2, 50.0, view3]`.
+public struct VisualLayoutArrayItems: ExpressibleByArrayLiteral {
+	public typealias ArrayLiteralElement = any VisualLayoutArrayElementConvertible
+	internal let tokens: [VisualLayoutArrayToken]
+
+	public init(arrayLiteral elements: ArrayLiteralElement...) {
+		self.tokens = elements.map(\.visualLayoutArrayToken)
+	}
+}
+
+extension VisualLayoutView: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
+}
+
+extension VisualLayoutGuide: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
+}
+
+extension CGFloat: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .spacing(self) }
+}
+
+extension Double: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .spacing(CGFloat(self)) }
+}
+
+extension Float: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .spacing(CGFloat(self)) }
+}
+
+extension Int: VisualLayoutArrayElementConvertible {
+	public var visualLayoutArrayToken: VisualLayoutArrayToken { .spacing(CGFloat(self)) }
+}
 
 // MARK: - VisualLayoutItem
 
@@ -112,14 +149,14 @@ public struct VisualRow: VisualLayoutItem {
 	internal var heightRelation: NSLayoutConstraint.Relation = .equal
 	internal var heightPriority: Priority = .required
 	
-	/// Creates a row from an array of anchorables, using `visualLayoutDefaultSpacing` for all gaps.
+	/// Creates a row from an array of anchorables, using 0 for all implicit gaps.
 	internal init(
 		views: [any VisualLayoutAnchorable],
 		leadingMargin: CGFloat? = nil,
 		trailingMargin: CGFloat? = nil
 	) {
 		self.views = views
-		self.interViewSpacings = Array(repeating: visualLayoutDefaultSpacing, count: max(0, views.count - 1))
+		self.interViewSpacings = Array(repeating: 0, count: max(0, views.count - 1))
 		self.leadingMargin = leadingMargin
 		self.trailingMargin = trailingMargin
 	}
@@ -133,7 +170,7 @@ public struct VisualRow: VisualLayoutItem {
 		self.views = chain.views
 		var spacings = chain.spacings
 		while spacings.count < max(0, chain.views.count - 1) {
-			spacings.append(visualLayoutDefaultSpacing)
+			spacings.append(0)
 		}
 		self.interViewSpacings = spacings
 		self.leadingMargin = leadingMargin
