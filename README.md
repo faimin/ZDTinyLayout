@@ -77,6 +77,90 @@ Using `leftAnchor` and `rightAnchor` is rarely the right choice. To encourage th
 #### Inset instead of Shift
 When constraining leading/trailing or top/bottom, it is far more common to work in terms of an inset from the edges instead of shifting both edges in the same direction. When building the expression, Anchorage will flip the relationship and invert the constant in the constraint on the far side of the axis. This makes the expressions much more natural to work with.
 
+## Visual Layout DSL
+
+Anchorage also includes a visual-layout style DSL for describing rows vertically inside a container:
+
+```swift
+let constraints = layout(in: container) {
+    16
+    |--15--titleLabel--15--| /=/ 20
+    8
+    |--subtitleLabel1--10--subtitleLabel2--|
+    >= 12
+    |--[leftButton, rightButton]--| /=/ 44 ~ .high
+    16
+}
+```
+
+`layout(in:)` returns all generated constraints, already active.
+
+You can also use the view-returning convenience overload:
+
+```swift
+let card = VisualLayoutView().layout {
+    12
+    |--titleLabel--|
+    8
+    |--bodyLabel--|
+    12
+}
+```
+
+### Row syntax
+
+- `|view|` or `|--view--|`: pin leading/trailing to container with 0 margin.
+- `|--view1--20--view2--|`: custom inter-item spacing.
+- `|--20--view1--8--view2--16--|`: explicit leading/inter-item/trailing margins.
+- `20--view1--8--view2|`: custom leading margin with trailing pinned to 0.
+- `|--[view1, view2, view3]--|`: multi-view row with equal widths and aligned tops.
+
+### Vertical spacing
+
+Inside the block, numeric literals become vertical gaps between rows:
+
+```swift
+layout(in: container) {
+    |--header--| /=/ 44
+    8
+    |--content--|
+    atMost(24)
+}
+```
+
+Use `atLeast(_:)` and `atMost(_:)` for flexible vertical spacing constraints.
+
+### Height and priority
+
+Use `/=/` to set row item height, then `~` to set height constraint priority:
+
+```swift
+|--avatarView--| /=/ 44 ~ .high
+```
+
+### Layout guides and auto-add behavior
+
+Rows accept both views and layout guides (`VisualLayoutGuide`, aliased to `UILayoutGuide`/`NSLayoutGuide`):
+
+```swift
+let guide = VisualLayoutGuide()
+layout(in: container) {
+    |--guide--| /=/ 44
+}
+```
+
+If a view has no superview (or a guide has no owning view), Anchorage automatically adds it to the container passed to `layout(in:)`.
+
+### Default inter-item spacing
+
+When `--` spacing is omitted, Anchorage uses `visualLayoutDefaultSpacing` (default `8`):
+
+```swift
+visualLayoutDefaultSpacing = 12
+layout(in: container) {
+    |--view1--view2--|
+}
+```
 
 ## Priority
 
@@ -142,13 +226,44 @@ Anchorage.updateConstraints {
 }
 ```
 
-If no matching installed constraint is found, the default behavior is to create a new one. You can switch to strict mode to fail instead:
+### Unmatched behavior
+
+If no matching installed constraint is found, the default behavior is to create a new one (`.makeNew`):
+
+```swift
+Anchorage.updateConstraints(unmatched: .makeNew) {
+    view.widthAnchor == other.widthAnchor + 24
+}
+```
+
+You can switch to strict mode to fail instead:
 
 ```swift
 Anchorage.updateConstraints(unmatched: .fail) {
     view.widthAnchor == other.widthAnchor + 24
 }
 ```
+
+### Matching rules
+
+Anchorage treats a constraint as a match when these properties are the same:
+
+- `firstItem`
+- `secondItem`
+- `firstAttribute`
+- `secondAttribute`
+- `relation`
+- `multiplier`
+
+`constant` and `priority` are intentionally excluded from matching so they can be updated in place.
+
+### Search scope
+
+To keep updates efficient in deep hierarchies:
+
+- If both sides of a constraint resolve to views, Anchorage starts from their nearest common superview and walks upward.
+- If one side is a `UILayoutGuide`/`NSLayoutGuide`, Anchorage uses its owning view for this search.
+- Single-item constraints search that item's superview chain.
 
 ## Autoresizing Mask
 
