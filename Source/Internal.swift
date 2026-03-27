@@ -416,7 +416,7 @@ internal func viewForConstraintItem(_ item: Any?) -> View? {
 
 internal extension NSLayoutConstraint {
 	func matchesForUpdate(with other: NSLayoutConstraint) -> Bool {
-		let multipliersMatch = abs(multiplier - other.multiplier) <= .ulpOfOne
+		let multipliersMatch = abs(multiplier - other.multiplier) < 1e-5 // 0.00001
 		return (firstItem as AnyObject?) === (other.firstItem as AnyObject?) &&
 			(secondItem as AnyObject?) === (other.secondItem as AnyObject?) &&
 			firstAttribute == other.firstAttribute &&
