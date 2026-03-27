@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
                        Create constraints using intuitive operators built directly on top of the NSLayoutAnchor API. Layout has never been simpler!
                        DESC
-  s.homepage         = "https://github.com/Rightpoint/ZDTinyLayout"
+  s.homepage         = "https://github.com/faimin/ZDTinyLayout"
   s.license          = 'MIT'
   s.author           = { 
 	"Rob Visentin" => "jvisenti@gmail.com",
