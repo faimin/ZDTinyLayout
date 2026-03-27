@@ -1,6 +1,6 @@
 //
 //  VisualLayout.swift
-//  Anchorage
+//  ZDTinyLayout
 //
 //  Copyright 2024 Rightpoint and other contributors
 //  http://rightpoint.com/
@@ -384,7 +384,7 @@ public extension VisualLayoutView {
 	func layout(
 		@VisualLayoutBuilder _ items: () -> [VisualLayoutItem]
 	) -> Self {
-		_ = Anchorage.layout(in: self, items)
+		_ = ZDTinyLayout.layout(in: self, items)
 		return self
 	}
 }

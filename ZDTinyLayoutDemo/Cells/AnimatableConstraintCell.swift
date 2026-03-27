@@ -1,13 +1,13 @@
 //
 //  AnimatableConstraintCell.swift
-//  Anchorage
+//  ZDTinyLayout
 //
 //  Created by Connor Neville on 9/26/16.
 //  Copyright © 2016 Rightpoint. All rights reserved.
 //
 
 import UIKit
-import Anchorage
+import ZDTinyLayout
 
 class AnimatableConstraintCell: BaseCell {
     override class func reuseId() -> String {
@@ -16,7 +16,7 @@ class AnimatableConstraintCell: BaseCell {
 
     let bodyLabel: UILabel = {
         let l = UILabel()
-        l.text = "Constraints generated with Anchorage, just like any other constraints, can be animated by adjusting them and calling layoutIfNeeded inside an animation block. Tap to animate the below view across the screen."
+        l.text = "Constraints generated with ZDTinyLayout, just like any other constraints, can be animated by adjusting them and calling layoutIfNeeded inside an animation block. Tap to animate the below view across the screen."
         l.font = UIFont.systemFont(ofSize: 12.0)
         l.numberOfLines = 0
         return l

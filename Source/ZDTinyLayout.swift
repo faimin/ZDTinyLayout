@@ -1,6 +1,6 @@
 //
-//  Anchorage.swift
-//  Anchorage
+//  ZDTinyLayout.swift
+//  ZDTinyLayout
 //
 //  Created by Rob Visentin on 2/6/16.
 //
@@ -581,13 +581,13 @@ public enum ConstraintUpdateUnmatchedBehavior {
 	case fail
 }
 
-/// Updates matching installed constraints created by Anchorage expressions inside the closure.
+/// Updates matching installed constraints created by ZDTinyLayout expressions inside the closure.
 ///
 /// Matching ignores constant and priority, so both can be updated in-place.
 /// By default, unmatched constraints are created and activated.
 ///
 /// - Parameter unmatched: Behavior to use when no installed constraint matches.
-/// - Parameter closure: A closure that runs Anchorage expressions to update.
+/// - Parameter closure: A closure that runs ZDTinyLayout expressions to update.
 public func updateConstraints(
 	unmatched: ConstraintUpdateUnmatchedBehavior = .makeNew,
 	_ closure: () -> Void
@@ -602,18 +602,18 @@ public func updateConstraints(
 
 // MARK: - Batching
 
-/// Any Anchorage constraints created inside the passed closure are returned in the array.
+/// Any ZDTinyLayout constraints created inside the passed closure are returned in the array.
 ///
-/// - Parameter closure: A closure that runs some Anchorage expressions.
+/// - Parameter closure: A closure that runs some ZDTinyLayout expressions.
 /// - Returns: An array of new, active `NSLayoutConstraint`s.
 @discardableResult public func batch(_ closure: () -> Void) -> [NSLayoutConstraint] {
 	return batch(active: true, closure: closure)
 }
 
-/// Any Anchorage constraints created inside the passed closure are returned in the array.
+/// Any ZDTinyLayout constraints created inside the passed closure are returned in the array.
 ///
 /// - Parameter active: Whether the created constraints should be active when they are returned.
-/// - Parameter closure: A closure that runs some Anchorage expressions.
+/// - Parameter closure: A closure that runs some ZDTinyLayout expressions.
 /// - Returns: An array of new `NSLayoutConstraint`s.
 public func batch(active: Bool, closure: () -> Void) -> [NSLayoutConstraint] {
 	let batch = ConstraintBatch()

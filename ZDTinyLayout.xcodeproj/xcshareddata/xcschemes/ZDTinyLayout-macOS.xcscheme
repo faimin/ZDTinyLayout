@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
-               BuildableName = "Anchorage.framework"
-               BlueprintName = "Anchorage-iOS"
-               ReferencedContainer = "container:Anchorage.xcodeproj">
+               BlueprintIdentifier = "F15462911E56842400C3948D"
+               BuildableName = "ZDTinyLayout.framework"
+               BlueprintName = "ZDTinyLayout-macOS"
+               ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,20 +33,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7A39D62D1EB53E1100BDE9C0"
-               BuildableName = "AnchorageTests-iOS.xctest"
-               BlueprintName = "AnchorageTests-iOS"
-               ReferencedContainer = "container:Anchorage.xcodeproj">
+               BlueprintIdentifier = "CD6A0E661EB7CDEF00FFF5DB"
+               BuildableName = "ZDTinyLayoutTests-macOS.xctest"
+               BlueprintName = "ZDTinyLayoutTests-macOS"
+               ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
-            BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-iOS"
-            ReferencedContainer = "container:Anchorage.xcodeproj">
+            BlueprintIdentifier = "F15462911E56842400C3948D"
+            BuildableName = "ZDTinyLayout.framework"
+            BlueprintName = "ZDTinyLayout-macOS"
+            ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -65,10 +65,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
-            BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-iOS"
-            ReferencedContainer = "container:Anchorage.xcodeproj">
+            BlueprintIdentifier = "F15462911E56842400C3948D"
+            BuildableName = "ZDTinyLayout.framework"
+            BlueprintName = "ZDTinyLayout-macOS"
+            ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -83,10 +83,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3C2050AA1D3B20FD00995DF3"
-            BuildableName = "Anchorage.framework"
-            BlueprintName = "Anchorage-iOS"
-            ReferencedContainer = "container:Anchorage.xcodeproj">
+            BlueprintIdentifier = "F15462911E56842400C3948D"
+            BuildableName = "ZDTinyLayout.framework"
+            BlueprintName = "ZDTinyLayout-macOS"
+            ReferencedContainer = "container:ZDTinyLayout.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

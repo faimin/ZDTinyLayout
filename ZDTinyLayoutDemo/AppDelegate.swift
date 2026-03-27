@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  AnchorageDemo
+//  ZDTinyLayoutDemo
 //
 //  Created by Connor Neville on 9/23/16.
 //  Copyright © 2016 Rightpoint. All rights reserved.

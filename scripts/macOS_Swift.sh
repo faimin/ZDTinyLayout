@@ -3,8 +3,8 @@
 
 set -o pipefail && \
   xcodebuild clean build test \
-  -project Anchorage.xcodeproj \
-  -scheme Anchorage-macOS \
+  -project ZDTinyLayout.xcodeproj \
+  -scheme ZDTinyLayout-macOS \
   -sdk macosx \
   -destination "arch=x86_64" \
   SWIFT_VERSION=$1 \

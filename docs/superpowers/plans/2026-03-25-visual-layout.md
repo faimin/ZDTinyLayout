@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a `layout(in:)` Visual Layout DSL to Anchorage that lets developers describe Auto Layout using ASCII-style vertical structure with `|-view-| /=/ height` syntax.
+**Goal:** Add a `layout(in:)` Visual Layout DSL to ZDTinyLayout that lets developers describe Auto Layout using ASCII-style vertical structure with `|-view-| /=/ height` syntax.
 
-**Architecture:** Two new source files — `VisualLayout.swift` (types + `layout(in:)` function) and `VisualLayoutOperators.swift` (operator declarations and overloads). Tests go in a new `VisualLayoutTests.swift` file following the existing XCTest pattern. Existing source files are not modified except `Package.swift` and `Anchorage.podspec` for the Swift 5.9 version bump.
+**Architecture:** Two new source files — `VisualLayout.swift` (types + `layout(in:)` function) and `VisualLayoutOperators.swift` (operator declarations and overloads). Tests go in a new `VisualLayoutTests.swift` file following the existing XCTest pattern. Existing source files are not modified except `Package.swift` and `ZDTinyLayout.podspec` for the Swift 5.9 version bump.
 
 **Tech Stack:** Swift 5.9, NSLayoutAnchor/NSLayoutConstraint, XCTest, `@resultBuilder`
 
@@ -18,9 +18,9 @@
 |--------|------|----------------|
 | Create | `Source/VisualLayout.swift` | `VisualLayoutView` public typealias, `VisualLayoutItem` protocol, `VisualRow`/`VisualSpacing`/`VisualFlexibleSpacing` structs, `VisualLayoutBuilder` @resultBuilder, `atLeast`/`atMost` functions, `visualLayoutDefaultMargin` global, `layout(in:)` function + private constraint helpers |
 | Create | `Source/VisualLayoutOperators.swift` | All `operator` declarations + public overloads for postfix `\|`/`-\|`, prefix `\|`/`\|-`, infix `/=/` |
-| Create | `AnchorageTests/VisualLayoutTests.swift` | XCTest suite — operator tests, constraint-attribute tests for `layout(in:)` |
+| Create | `ZDTinyLayoutTests/VisualLayoutTests.swift` | XCTest suite — operator tests, constraint-attribute tests for `layout(in:)` |
 | Modify | `Package.swift` | `swift-tools-version:5.9`, add `.visionOS(.v1)` |
-| Modify | `Anchorage.podspec` | `swift_versions = ['5.9']`, add visionOS deployment target |
+| Modify | `ZDTinyLayout.podspec` | `swift_versions = ['5.9']`, add visionOS deployment target |
 
 ---
 
@@ -28,7 +28,7 @@
 
 **Files:**
 - Modify: `Package.swift`
-- Modify: `Anchorage.podspec`
+- Modify: `ZDTinyLayout.podspec`
 
 - [ ] **Step 1: Update `Package.swift`**
 
@@ -52,7 +52,7 @@ platforms: [
 ],
 ```
 
-- [ ] **Step 2: Update `Anchorage.podspec`**
+- [ ] **Step 2: Update `ZDTinyLayout.podspec`**
 
 Replace:
 ```ruby
@@ -79,7 +79,7 @@ Expected: Build succeeded. (Tests may still fail — that's fine.)
 - [ ] **Step 4: Commit**
 
 ```bash
-git add Package.swift Anchorage.podspec
+git add Package.swift ZDTinyLayout.podspec
 git commit -m "chore: bump minimum Swift version to 5.9, add visionOS platform"
 ```
 
@@ -88,17 +88,17 @@ git commit -m "chore: bump minimum Swift version to 5.9, add visionOS platform"
 ## Task 2: Core Types — `VisualLayout.swift` (TDD)
 
 **Files:**
-- Create: `AnchorageTests/VisualLayoutTests.swift`
+- Create: `ZDTinyLayoutTests/VisualLayoutTests.swift`
 - Create: `Source/VisualLayout.swift`
 
 ### Step 1 — Write failing tests for core types
 
-- [ ] **Create `AnchorageTests/VisualLayoutTests.swift`:**
+- [ ] **Create `ZDTinyLayoutTests/VisualLayoutTests.swift`:**
 
 ```swift
 //
 //  VisualLayoutTests.swift
-//  AnchorageTests
+//  ZDTinyLayoutTests
 //
 
 #if os(macOS)
@@ -107,7 +107,7 @@ import AppKit
 import UIKit
 #endif
 
-@testable import Anchorage
+@testable import ZDTinyLayout
 import XCTest
 
 class VisualLayoutTests: XCTestCase {
@@ -174,7 +174,7 @@ Expected: Compile error — `atLeast`, `atMost`, `VisualRow` not found.
 ```swift
 //
 //  VisualLayout.swift
-//  Anchorage
+//  ZDTinyLayout
 //
 //  Copyright 2024 Rightpoint and other contributors
 //  http://rightpoint.com/
@@ -476,7 +476,7 @@ Expected: `testAtLeastCreatesGreaterThanOrEqualSpacing`, `testAtMostCreatesLessT
 - [ ] **Step 5: Commit**
 
 ```bash
-git add Source/VisualLayout.swift AnchorageTests/VisualLayoutTests.swift
+git add Source/VisualLayout.swift ZDTinyLayoutTests/VisualLayoutTests.swift
 git commit -m "feat: add VisualLayout core types and layout(in:) function"
 ```
 
@@ -485,7 +485,7 @@ git commit -m "feat: add VisualLayout core types and layout(in:) function"
 ## Task 3: Operators — `VisualLayoutOperators.swift` (TDD)
 
 **Files:**
-- Modify: `AnchorageTests/VisualLayoutTests.swift`
+- Modify: `ZDTinyLayoutTests/VisualLayoutTests.swift`
 - Create: `Source/VisualLayoutOperators.swift`
 
 ### Step 1 — Add failing tests for operators
@@ -553,7 +553,7 @@ Expected: Compile errors — operators `|`, `-|`, `|-`, `/=/` not declared.
 ```swift
 //
 //  VisualLayoutOperators.swift
-//  Anchorage
+//  ZDTinyLayout
 //
 //  Copyright 2024 Rightpoint and other contributors
 //  http://rightpoint.com/
@@ -662,7 +662,7 @@ Expected: All 9 tests PASS.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add Source/VisualLayoutOperators.swift AnchorageTests/VisualLayoutTests.swift
+git add Source/VisualLayoutOperators.swift ZDTinyLayoutTests/VisualLayoutTests.swift
 git commit -m "feat: add VisualLayout operators (|, -|, |-) and /=/ height operator"
 ```
 
@@ -673,7 +673,7 @@ git commit -m "feat: add VisualLayout operators (|, -|, |-) and /=/ height opera
 The `layout(in:)` function was already implemented in Task 2. This task adds tests that verify the exact constraint attributes.
 
 **Files:**
-- Modify: `AnchorageTests/VisualLayoutTests.swift`
+- Modify: `ZDTinyLayoutTests/VisualLayoutTests.swift`
 
 ### Step 1 — Add failing tests that verify constraint attributes
 
@@ -915,12 +915,12 @@ Run:
 ```bash
 swift test
 ```
-Expected: All tests PASS (existing `AnchorageTests` unaffected, all new `VisualLayoutTests` PASS).
+Expected: All tests PASS (existing `ZDTinyLayoutTests` unaffected, all new `VisualLayoutTests` PASS).
 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add AnchorageTests/VisualLayoutTests.swift
+git add ZDTinyLayoutTests/VisualLayoutTests.swift
 git commit -m "test: add comprehensive VisualLayout constraint verification tests"
 ```
 
@@ -948,8 +948,8 @@ Expected: No errors. Warnings (if any) from pre-existing code are acceptable, bu
 
 ```bash
 git add Source/VisualLayout.swift Source/VisualLayoutOperators.swift \
-    AnchorageTests/VisualLayoutTests.swift Package.swift Anchorage.podspec
-git commit -m "feat: add Visual Layout DSL to Anchorage
+    ZDTinyLayoutTests/VisualLayoutTests.swift Package.swift ZDTinyLayout.podspec
+git commit -m "feat: add Visual Layout DSL to ZDTinyLayout
 
 Adds layout(in:) function with @resultBuilder DSL for expressing
 Auto Layout in an ASCII-style vertical structure:

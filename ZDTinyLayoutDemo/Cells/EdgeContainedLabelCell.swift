@@ -1,13 +1,13 @@
 //
 //  EdgeContainedLabelCell
-//  AnchorageDemo
+//  ZDTinyLayoutDemo
 //
 //  Created by Connor Neville on 9/21/16.
 //  Copyright © 2016 Connor Neville. All rights reserved.
 //
 
 import UIKit
-import Anchorage
+import ZDTinyLayout
 
 class EdgeContainedLabelCell: BaseCell {
     override class func reuseId() -> String {

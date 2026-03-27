@@ -1,6 +1,6 @@
 //
 //  VisualLayoutTests.swift
-//  AnchorageTests
+//  ZDTinyLayoutTests
 //
 
 #if os(macOS)
@@ -9,7 +9,7 @@ import AppKit
 import UIKit
 #endif
 
-@testable import Anchorage
+@testable import ZDTinyLayout
 import XCTest
 
 class VisualLayoutTests: XCTestCase {

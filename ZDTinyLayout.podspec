@@ -1,14 +1,17 @@
 Pod::Spec.new do |s|
-  s.name             = "Anchorage"
+  s.name             = "ZDTinyLayout"
   s.version          = "4.5.0"
   s.summary          = "A collection of operators and utilities that simplify iOS layout code."
   s.description      = <<-DESC
                        Create constraints using intuitive operators built directly on top of the NSLayoutAnchor API. Layout has never been simpler!
                        DESC
-  s.homepage         = "https://github.com/Rightpoint/Anchorage"
+  s.homepage         = "https://github.com/Rightpoint/ZDTinyLayout"
   s.license          = 'MIT'
-  s.author           = { "Rob Visentin" => "jvisenti@gmail.com" }
-  s.source           = { :git => "https://github.com/Rightpoint/Anchorage.git", :tag => s.version.to_s }
+  s.author           = { 
+	"Rob Visentin" => "jvisenti@gmail.com",
+	"Zero.D.Saber" => "fuxianchao@gmail.com"
+  }
+  s.source           = { :git => "https://github.com/faimin/ZDTinyLayout.git", :tag => s.version.to_s }
   s.swift_versions    = ['5.9']
 
   s.ios.deployment_target = '9.0'

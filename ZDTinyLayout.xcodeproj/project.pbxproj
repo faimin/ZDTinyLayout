@@ -35,11 +35,11 @@
 		2DD2426B1D95C2CE001D6725 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */; };
 		2DD2426D1D95C2CE001D6725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426C1D95C2CE001D6725 /* Assets.xcassets */; };
 		2DD242701D95C2CE001D6725 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */; };
-		3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
+		3C2050B71D3B213B00995DF3 /* ZDTinyLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* ZDTinyLayout.swift */; };
 		4DA4FFA06AEF4606809DBAAA /* VisualLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783E45FEB2DA4FF194160E4A /* VisualLayout.swift */; };
 		750E547E7703420E94F27432 /* VisualLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783E45FEB2DA4FF194160E4A /* VisualLayout.swift */; };
-		7A39D6311EB53E1100BDE9C0 /* AnchorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */; };
-		7A39D6331EB53E1100BDE9C0 /* Anchorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */; };
+		7A39D6311EB53E1100BDE9C0 /* ZDTinyLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6301EB53E1100BDE9C0 /* ZDTinyLayoutTests.swift */; };
+		7A39D6331EB53E1100BDE9C0 /* ZDTinyLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2050AB1D3B20FD00995DF3 /* ZDTinyLayout.framework */; };
 		8794B929AF93436B91F4E3E1 /* VisualLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783E45FEB2DA4FF194160E4A /* VisualLayout.swift */; };
 		AF183CA3B9F548139025139F /* VisualLayoutOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B335320E6643998419A43D /* VisualLayoutOperators.swift */; };
 		BBE7C0D71FAB676F00DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE7C0D51FAB65B900DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift */; };
@@ -49,11 +49,11 @@
 		C2271C2A2F74E79C00BE7676 /* VisualLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2271C292F74E79B00BE7676 /* VisualLayoutTests.swift */; };
 		C2271C2B2F74E79C00BE7676 /* VisualLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2271C292F74E79B00BE7676 /* VisualLayoutTests.swift */; };
 		C2271C2C2F74E79C00BE7676 /* VisualLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2271C292F74E79B00BE7676 /* VisualLayoutTests.swift */; };
-		CD6A0E6C1EB7CDEF00FFF5DB /* Anchorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F15462921E56842400C3948D /* Anchorage.framework */; };
-		CD6A0E801EB7CE3A00FFF5DB /* Anchorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6A0E771EB7CE3A00FFF5DB /* Anchorage.framework */; };
-		CD71F7A31EB7DD2D008C1CC4 /* AnchorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */; };
-		CD71F7A41EB7DD2E008C1CC4 /* AnchorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */; };
-		CD71F7A51EB7DD38008C1CC4 /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
+		CD6A0E6C1EB7CDEF00FFF5DB /* ZDTinyLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F15462921E56842400C3948D /* ZDTinyLayout.framework */; };
+		CD6A0E801EB7CE3A00FFF5DB /* ZDTinyLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6A0E771EB7CE3A00FFF5DB /* ZDTinyLayout.framework */; };
+		CD71F7A31EB7DD2D008C1CC4 /* ZDTinyLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6301EB53E1100BDE9C0 /* ZDTinyLayoutTests.swift */; };
+		CD71F7A41EB7DD2E008C1CC4 /* ZDTinyLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A39D6301EB53E1100BDE9C0 /* ZDTinyLayoutTests.swift */; };
+		CD71F7A51EB7DD38008C1CC4 /* ZDTinyLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* ZDTinyLayout.swift */; };
 		CD71F7A61EB7DD38008C1CC4 /* AnchorGroupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */; };
 		CD71F7A71EB7DD38008C1CC4 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB41EB7A904000F3DDD /* Priority.swift */; };
 		CD71F7A81EB7DD38008C1CC4 /* Compatability.swift in Sources */ = {isa = PBXBuildFile; fileRef = D401673E1EB7A58D0025DCA5 /* Compatability.swift */; };
@@ -66,7 +66,7 @@
 		D469DCB71EB7A975000F3DDD /* AnchorGroupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */; };
 		D469DCB81EB7AB2F000F3DDD /* AnchorGroupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */; };
 		D469DCB91EB7AB2F000F3DDD /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB41EB7A904000F3DDD /* Priority.swift */; };
-		F154629B1E56846200C3948D /* Anchorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* Anchorage.swift */; };
+		F154629B1E56846200C3948D /* ZDTinyLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2050B61D3B213B00995DF3 /* ZDTinyLayout.swift */; };
 		F3CC49F507C141B4B45D0344 /* VisualLayoutOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B335320E6643998419A43D /* VisualLayoutOperators.swift */; };
 /* End PBXBuildFile section */
 
@@ -76,28 +76,28 @@
 			containerPortal = 3C2050A21D3B20FD00995DF3 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 3C2050AA1D3B20FD00995DF3;
-			remoteInfo = "Anchorage-iOS";
+			remoteInfo = "ZDTinyLayout-iOS";
 		};
 		CD6A0E6D1EB7CDEF00FFF5DB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C2050A21D3B20FD00995DF3 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = F15462911E56842400C3948D;
-			remoteInfo = "Anchorage-macOS";
+			remoteInfo = "ZDTinyLayout-macOS";
 		};
 		CD6A0E811EB7CE3A00FFF5DB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C2050A21D3B20FD00995DF3 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = CD6A0E761EB7CE3A00FFF5DB;
-			remoteInfo = "Anchorage-tvOS";
+			remoteInfo = "ZDTinyLayout-tvOS";
 		};
 		D497F1161EB270CC00CBCF2F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C2050A21D3B20FD00995DF3 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 3C2050AA1D3B20FD00995DF3;
-			remoteInfo = "Anchorage-iOS";
+			remoteInfo = "ZDTinyLayout-iOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -109,30 +109,30 @@
 		2DBB2D491D99597500A1E94B /* EdgeContainedLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EdgeContainedLabelCell.swift; path = Cells/EdgeContainedLabelCell.swift; sourceTree = "<group>"; };
 		2DBB2D4A1D99597500A1E94B /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseCell.swift; path = Cells/BaseCell.swift; sourceTree = "<group>"; };
 		2DBB2D521D995FA000A1E94B /* AnimatableConstraintCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimatableConstraintCell.swift; path = Cells/AnimatableConstraintCell.swift; sourceTree = "<group>"; };
-		2DD242681D95C2CE001D6725 /* AnchorageDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnchorageDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DD242681D95C2CE001D6725 /* ZDTinyLayoutDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZDTinyLayoutDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DD2426A1D95C2CE001D6725 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DD2426C1D95C2CE001D6725 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DD2426F1D95C2CE001D6725 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2DD242711D95C2CE001D6725 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C2050AB1D3B20FD00995DF3 /* ZDTinyLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZDTinyLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2050AF1D3B20FD00995DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3C2050B61D3B213B00995DF3 /* Anchorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchorage.swift; sourceTree = "<group>"; };
+		3C2050B61D3B213B00995DF3 /* ZDTinyLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZDTinyLayout.swift; sourceTree = "<group>"; };
 		5B535F432322F06C006C85FB /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		64B335320E6643998419A43D /* VisualLayoutOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualLayoutOperators.swift; sourceTree = "<group>"; };
 		783E45FEB2DA4FF194160E4A /* VisualLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualLayout.swift; sourceTree = "<group>"; };
-		7A39D62E1EB53E1100BDE9C0 /* AnchorageTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AnchorageTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorageTests.swift; sourceTree = "<group>"; };
+		7A39D62E1EB53E1100BDE9C0 /* ZDTinyLayoutTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZDTinyLayoutTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A39D6301EB53E1100BDE9C0 /* ZDTinyLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDTinyLayoutTests.swift; sourceTree = "<group>"; };
 		7A39D6321EB53E1100BDE9C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BBE7C0D51FAB65B900DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutAnchor+MultiplierConstraints.swift"; sourceTree = "<group>"; };
 		C2271C292F74E79B00BE7676 /* VisualLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualLayoutTests.swift; sourceTree = "<group>"; };
-		CD6A0E671EB7CDEF00FFF5DB /* AnchorageTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AnchorageTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD6A0E771EB7CE3A00FFF5DB /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD6A0E7F1EB7CE3A00FFF5DB /* Anchorage-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Anchorage-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6A0E671EB7CDEF00FFF5DB /* ZDTinyLayoutTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZDTinyLayoutTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6A0E771EB7CE3A00FFF5DB /* ZDTinyLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZDTinyLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6A0E7F1EB7CE3A00FFF5DB /* ZDTinyLayout-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZDTinyLayout-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D401673C1EB7A4A30025DCA5 /* Internal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Internal.swift; sourceTree = "<group>"; };
 		D401673E1EB7A58D0025DCA5 /* Compatability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compatability.swift; sourceTree = "<group>"; };
 		D469DCB41EB7A904000F3DDD /* Priority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
 		D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnchorGroupProvider.swift; sourceTree = "<group>"; };
-		F15462921E56842400C3948D /* Anchorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F15462921E56842400C3948D /* ZDTinyLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZDTinyLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCFAC07D62F74C1A9359B1E7 /* VisualLayoutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisualLayoutCell.swift; path = Cells/VisualLayoutCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,7 +155,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A39D6331EB53E1100BDE9C0 /* Anchorage.framework in Frameworks */,
+				7A39D6331EB53E1100BDE9C0 /* ZDTinyLayout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD6A0E6C1EB7CDEF00FFF5DB /* Anchorage.framework in Frameworks */,
+				CD6A0E6C1EB7CDEF00FFF5DB /* ZDTinyLayout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,7 +178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD6A0E801EB7CE3A00FFF5DB /* Anchorage.framework in Frameworks */,
+				CD6A0E801EB7CE3A00FFF5DB /* ZDTinyLayout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +206,7 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
-		2DD242691D95C2CE001D6725 /* AnchorageDemo */ = {
+		2DD242691D95C2CE001D6725 /* ZDTinyLayoutDemo */ = {
 			isa = PBXGroup;
 			children = (
 				2DBB2D441D99596100A1E94B /* RootViewController.swift */,
@@ -216,16 +216,16 @@
 				2DD2426E1D95C2CE001D6725 /* LaunchScreen.storyboard */,
 				2DD242711D95C2CE001D6725 /* Info.plist */,
 			);
-			path = AnchorageDemo;
+			path = ZDTinyLayoutDemo;
 			sourceTree = "<group>";
 		};
 		3C2050A11D3B20FD00995DF3 = {
 			isa = PBXGroup;
 			children = (
 				5B535F432322F06C006C85FB /* Package.swift */,
-				3C2050AD1D3B20FD00995DF3 /* Anchorage */,
-				2DD242691D95C2CE001D6725 /* AnchorageDemo */,
-				7A39D62F1EB53E1100BDE9C0 /* AnchorageTests */,
+				3C2050AD1D3B20FD00995DF3 /* ZDTinyLayout */,
+				2DD242691D95C2CE001D6725 /* ZDTinyLayoutDemo */,
+				7A39D62F1EB53E1100BDE9C0 /* ZDTinyLayoutTests */,
 				3C2050AC1D3B20FD00995DF3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -233,21 +233,21 @@
 		3C2050AC1D3B20FD00995DF3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */,
-				2DD242681D95C2CE001D6725 /* AnchorageDemo.app */,
-				F15462921E56842400C3948D /* Anchorage.framework */,
-				7A39D62E1EB53E1100BDE9C0 /* AnchorageTests-iOS.xctest */,
-				CD6A0E671EB7CDEF00FFF5DB /* AnchorageTests-macOS.xctest */,
-				CD6A0E771EB7CE3A00FFF5DB /* Anchorage.framework */,
-				CD6A0E7F1EB7CE3A00FFF5DB /* Anchorage-tvOSTests.xctest */,
+				3C2050AB1D3B20FD00995DF3 /* ZDTinyLayout.framework */,
+				2DD242681D95C2CE001D6725 /* ZDTinyLayoutDemo.app */,
+				F15462921E56842400C3948D /* ZDTinyLayout.framework */,
+				7A39D62E1EB53E1100BDE9C0 /* ZDTinyLayoutTests-iOS.xctest */,
+				CD6A0E671EB7CDEF00FFF5DB /* ZDTinyLayoutTests-macOS.xctest */,
+				CD6A0E771EB7CE3A00FFF5DB /* ZDTinyLayout.framework */,
+				CD6A0E7F1EB7CE3A00FFF5DB /* ZDTinyLayout-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3C2050AD1D3B20FD00995DF3 /* Anchorage */ = {
+		3C2050AD1D3B20FD00995DF3 /* ZDTinyLayout */ = {
 			isa = PBXGroup;
 			children = (
-				3C2050B61D3B213B00995DF3 /* Anchorage.swift */,
+				3C2050B61D3B213B00995DF3 /* ZDTinyLayout.swift */,
 				D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */,
 				D469DCB41EB7A904000F3DDD /* Priority.swift */,
 				D401673E1EB7A58D0025DCA5 /* Compatability.swift */,
@@ -257,18 +257,18 @@
 				64B335320E6643998419A43D /* VisualLayoutOperators.swift */,
 				3C2050AF1D3B20FD00995DF3 /* Info.plist */,
 			);
-			name = Anchorage;
+			name = ZDTinyLayout;
 			path = Source;
 			sourceTree = "<group>";
 		};
-		7A39D62F1EB53E1100BDE9C0 /* AnchorageTests */ = {
+		7A39D62F1EB53E1100BDE9C0 /* ZDTinyLayoutTests */ = {
 			isa = PBXGroup;
 			children = (
 				C2271C292F74E79B00BE7676 /* VisualLayoutTests.swift */,
-				7A39D6301EB53E1100BDE9C0 /* AnchorageTests.swift */,
+				7A39D6301EB53E1100BDE9C0 /* ZDTinyLayoutTests.swift */,
 				7A39D6321EB53E1100BDE9C0 /* Info.plist */,
 			);
-			path = AnchorageTests;
+			path = ZDTinyLayoutTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,9 +298,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		2DD242671D95C2CE001D6725 /* AnchorageDemo */ = {
+		2DD242671D95C2CE001D6725 /* ZDTinyLayoutDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2DD242721D95C2CE001D6725 /* Build configuration list for PBXNativeTarget "AnchorageDemo" */;
+			buildConfigurationList = 2DD242721D95C2CE001D6725 /* Build configuration list for PBXNativeTarget "ZDTinyLayoutDemo" */;
 			buildPhases = (
 				2DD242641D95C2CE001D6725 /* Sources */,
 				2DD242651D95C2CE001D6725 /* Frameworks */,
@@ -311,14 +311,14 @@
 			dependencies = (
 				D497F1171EB270CC00CBCF2F /* PBXTargetDependency */,
 			);
-			name = AnchorageDemo;
-			productName = AnchorageDemo;
-			productReference = 2DD242681D95C2CE001D6725 /* AnchorageDemo.app */;
+			name = ZDTinyLayoutDemo;
+			productName = ZDTinyLayoutDemo;
+			productReference = 2DD242681D95C2CE001D6725 /* ZDTinyLayoutDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3C2050AA1D3B20FD00995DF3 /* Anchorage-iOS */ = {
+		3C2050AA1D3B20FD00995DF3 /* ZDTinyLayout-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3C2050B31D3B20FD00995DF3 /* Build configuration list for PBXNativeTarget "Anchorage-iOS" */;
+			buildConfigurationList = 3C2050B31D3B20FD00995DF3 /* Build configuration list for PBXNativeTarget "ZDTinyLayout-iOS" */;
 			buildPhases = (
 				3C2050A61D3B20FD00995DF3 /* Sources */,
 				3C2050A71D3B20FD00995DF3 /* Frameworks */,
@@ -329,14 +329,14 @@
 			);
 			dependencies = (
 			);
-			name = "Anchorage-iOS";
-			productName = Anchorage;
-			productReference = 3C2050AB1D3B20FD00995DF3 /* Anchorage.framework */;
+			name = "ZDTinyLayout-iOS";
+			productName = ZDTinyLayout;
+			productReference = 3C2050AB1D3B20FD00995DF3 /* ZDTinyLayout.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		7A39D62D1EB53E1100BDE9C0 /* AnchorageTests-iOS */ = {
+		7A39D62D1EB53E1100BDE9C0 /* ZDTinyLayoutTests-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7A39D6381EB53E1100BDE9C0 /* Build configuration list for PBXNativeTarget "AnchorageTests-iOS" */;
+			buildConfigurationList = 7A39D6381EB53E1100BDE9C0 /* Build configuration list for PBXNativeTarget "ZDTinyLayoutTests-iOS" */;
 			buildPhases = (
 				7A39D62A1EB53E1100BDE9C0 /* Sources */,
 				7A39D62B1EB53E1100BDE9C0 /* Frameworks */,
@@ -347,14 +347,14 @@
 			dependencies = (
 				7A39D6351EB53E1100BDE9C0 /* PBXTargetDependency */,
 			);
-			name = "AnchorageTests-iOS";
-			productName = AnchorageTests;
-			productReference = 7A39D62E1EB53E1100BDE9C0 /* AnchorageTests-iOS.xctest */;
+			name = "ZDTinyLayoutTests-iOS";
+			productName = ZDTinyLayoutTests;
+			productReference = 7A39D62E1EB53E1100BDE9C0 /* ZDTinyLayoutTests-iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		CD6A0E661EB7CDEF00FFF5DB /* AnchorageTests-macOS */ = {
+		CD6A0E661EB7CDEF00FFF5DB /* ZDTinyLayoutTests-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD6A0E711EB7CDEF00FFF5DB /* Build configuration list for PBXNativeTarget "AnchorageTests-macOS" */;
+			buildConfigurationList = CD6A0E711EB7CDEF00FFF5DB /* Build configuration list for PBXNativeTarget "ZDTinyLayoutTests-macOS" */;
 			buildPhases = (
 				CD6A0E631EB7CDEF00FFF5DB /* Sources */,
 				CD6A0E641EB7CDEF00FFF5DB /* Frameworks */,
@@ -365,14 +365,14 @@
 			dependencies = (
 				CD6A0E6E1EB7CDEF00FFF5DB /* PBXTargetDependency */,
 			);
-			name = "AnchorageTests-macOS";
-			productName = "AnchorageTests-macOS";
-			productReference = CD6A0E671EB7CDEF00FFF5DB /* AnchorageTests-macOS.xctest */;
+			name = "ZDTinyLayoutTests-macOS";
+			productName = "ZDTinyLayoutTests-macOS";
+			productReference = CD6A0E671EB7CDEF00FFF5DB /* ZDTinyLayoutTests-macOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		CD6A0E761EB7CE3A00FFF5DB /* Anchorage-tvOS */ = {
+		CD6A0E761EB7CE3A00FFF5DB /* ZDTinyLayout-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD6A0E881EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "Anchorage-tvOS" */;
+			buildConfigurationList = CD6A0E881EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "ZDTinyLayout-tvOS" */;
 			buildPhases = (
 				CD6A0E721EB7CE3A00FFF5DB /* Sources */,
 				CD6A0E731EB7CE3A00FFF5DB /* Frameworks */,
@@ -383,14 +383,14 @@
 			);
 			dependencies = (
 			);
-			name = "Anchorage-tvOS";
-			productName = "Anchorage-tvOS";
-			productReference = CD6A0E771EB7CE3A00FFF5DB /* Anchorage.framework */;
+			name = "ZDTinyLayout-tvOS";
+			productName = "ZDTinyLayout-tvOS";
+			productReference = CD6A0E771EB7CE3A00FFF5DB /* ZDTinyLayout.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		CD6A0E7E1EB7CE3A00FFF5DB /* Anchorage-tvOSTests */ = {
+		CD6A0E7E1EB7CE3A00FFF5DB /* ZDTinyLayout-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD6A0E8B1EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "Anchorage-tvOSTests" */;
+			buildConfigurationList = CD6A0E8B1EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "ZDTinyLayout-tvOSTests" */;
 			buildPhases = (
 				CD6A0E7B1EB7CE3A00FFF5DB /* Sources */,
 				CD6A0E7C1EB7CE3A00FFF5DB /* Frameworks */,
@@ -401,14 +401,14 @@
 			dependencies = (
 				CD6A0E821EB7CE3A00FFF5DB /* PBXTargetDependency */,
 			);
-			name = "Anchorage-tvOSTests";
-			productName = "Anchorage-tvOSTests";
-			productReference = CD6A0E7F1EB7CE3A00FFF5DB /* Anchorage-tvOSTests.xctest */;
+			name = "ZDTinyLayout-tvOSTests";
+			productName = "ZDTinyLayout-tvOSTests";
+			productReference = CD6A0E7F1EB7CE3A00FFF5DB /* ZDTinyLayout-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		F15462911E56842400C3948D /* Anchorage-macOS */ = {
+		F15462911E56842400C3948D /* ZDTinyLayout-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F15462991E56842400C3948D /* Build configuration list for PBXNativeTarget "Anchorage-macOS" */;
+			buildConfigurationList = F15462991E56842400C3948D /* Build configuration list for PBXNativeTarget "ZDTinyLayout-macOS" */;
 			buildPhases = (
 				F154628D1E56842400C3948D /* Sources */,
 				F154628E1E56842400C3948D /* Frameworks */,
@@ -419,9 +419,9 @@
 			);
 			dependencies = (
 			);
-			name = "Anchorage-macOS";
-			productName = "Anchorage-macOS";
-			productReference = F15462921E56842400C3948D /* Anchorage.framework */;
+			name = "ZDTinyLayout-macOS";
+			productName = "ZDTinyLayout-macOS";
+			productReference = F15462921E56842400C3948D /* ZDTinyLayout.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -469,7 +469,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3C2050A51D3B20FD00995DF3 /* Build configuration list for PBXProject "Anchorage" */;
+			buildConfigurationList = 3C2050A51D3B20FD00995DF3 /* Build configuration list for PBXProject "ZDTinyLayout" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -482,13 +482,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2DD242671D95C2CE001D6725 /* AnchorageDemo */,
-				3C2050AA1D3B20FD00995DF3 /* Anchorage-iOS */,
-				7A39D62D1EB53E1100BDE9C0 /* AnchorageTests-iOS */,
-				F15462911E56842400C3948D /* Anchorage-macOS */,
-				CD6A0E661EB7CDEF00FFF5DB /* AnchorageTests-macOS */,
-				CD6A0E761EB7CE3A00FFF5DB /* Anchorage-tvOS */,
-				CD6A0E7E1EB7CE3A00FFF5DB /* Anchorage-tvOSTests */,
+				2DD242671D95C2CE001D6725 /* ZDTinyLayoutDemo */,
+				3C2050AA1D3B20FD00995DF3 /* ZDTinyLayout-iOS */,
+				7A39D62D1EB53E1100BDE9C0 /* ZDTinyLayoutTests-iOS */,
+				F15462911E56842400C3948D /* ZDTinyLayout-macOS */,
+				CD6A0E661EB7CDEF00FFF5DB /* ZDTinyLayoutTests-macOS */,
+				CD6A0E761EB7CE3A00FFF5DB /* ZDTinyLayout-tvOS */,
+				CD6A0E7E1EB7CE3A00FFF5DB /* ZDTinyLayout-tvOSTests */,
 				CD6A0E9B1EB7D36400FFF5DB /* RunAllTests */,
 			);
 		};
@@ -561,7 +561,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Avoiding modern build system because of simultaneous access bug: https://stackoverflow.com/a/55572873/255489\nxcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme Anchorage-iOS -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=4.2 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\nxcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme Anchorage-iOS -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=5.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\n";
+			shellScript = "# Avoiding modern build system because of simultaneous access bug: https://stackoverflow.com/a/55572873/255489\nxcodebuild build-for-testing test-without-building -project ZDTinyLayout.xcodeproj -scheme ZDTinyLayout-iOS -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=4.2 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\nxcodebuild build-for-testing test-without-building -project ZDTinyLayout.xcodeproj -scheme ZDTinyLayout-iOS -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=5.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\n";
 		};
 		CD6A0EA01EB7D45D00FFF5DB /* Build and test macOS */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -575,7 +575,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Avoiding modern build system because of simultaneous access bug: https://stackoverflow.com/a/55572873/255489\nxcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme Anchorage-macOS -sdk macosx -destination \"arch=x86_64\" SWIFT_VERSION=4.2 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\nxcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme Anchorage-macOS -sdk macosx -destination \"arch=x86_64\" SWIFT_VERSION=5.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\n";
+			shellScript = "# Avoiding modern build system because of simultaneous access bug: https://stackoverflow.com/a/55572873/255489\nxcodebuild build-for-testing test-without-building -project ZDTinyLayout.xcodeproj -scheme ZDTinyLayout-macOS -sdk macosx -destination \"arch=x86_64\" SWIFT_VERSION=4.2 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\nxcodebuild build-for-testing test-without-building -project ZDTinyLayout.xcodeproj -scheme ZDTinyLayout-macOS -sdk macosx -destination \"arch=x86_64\" SWIFT_VERSION=5.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\n";
 		};
 		CD6A0EA11EB7D57E00FFF5DB /* Build and test tvOS */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -589,7 +589,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Avoiding modern build system because of simultaneous access bug: https://stackoverflow.com/a/55572873/255489\nxcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme \"Anchorage-tvOS\" -sdk \"appletvsimulator\" -destination \"name=Apple TV\" SWIFT_VERSION=4.2 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\nxcodebuild build-for-testing test-without-building -project Anchorage.xcodeproj -scheme \"Anchorage-tvOS\" -sdk \"appletvsimulator\" -destination \"name=Apple TV\" SWIFT_VERSION=5.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\n";
+			shellScript = "# Avoiding modern build system because of simultaneous access bug: https://stackoverflow.com/a/55572873/255489\nxcodebuild build-for-testing test-without-building -project ZDTinyLayout.xcodeproj -scheme \"ZDTinyLayout-tvOS\" -sdk \"appletvsimulator\" -destination \"name=Apple TV\" SWIFT_VERSION=4.2 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\nxcodebuild build-for-testing test-without-building -project ZDTinyLayout.xcodeproj -scheme \"ZDTinyLayout-tvOS\" -sdk \"appletvsimulator\" -destination \"name=Apple TV\" SWIFT_VERSION=5.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\n";
 		};
 		CD6A0EA21EB7DBA300FFF5DB /* Build iOS example project */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -603,7 +603,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Avoiding modern build system because of simultaneous access bug: https://stackoverflow.com/a/55572873/255489\nxcodebuild build -project Anchorage.xcodeproj -scheme AnchorageDemo -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=4.2 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\nxcodebuild build -project Anchorage.xcodeproj -scheme AnchorageDemo -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=5.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\n";
+			shellScript = "# Avoiding modern build system because of simultaneous access bug: https://stackoverflow.com/a/55572873/255489\nxcodebuild build -project ZDTinyLayout.xcodeproj -scheme ZDTinyLayoutDemo -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=4.2 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\nxcodebuild build -project ZDTinyLayout.xcodeproj -scheme ZDTinyLayoutDemo -sdk iphonesimulator -destination \"name=iPhone 6s\" SWIFT_VERSION=5.0 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= -UseModernBuildSystem=NO\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -628,7 +628,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C2050B71D3B213B00995DF3 /* Anchorage.swift in Sources */,
+				3C2050B71D3B213B00995DF3 /* ZDTinyLayout.swift in Sources */,
 				BBE7C0D71FAB676F00DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift in Sources */,
 				D401673D1EB7A4A30025DCA5 /* Internal.swift in Sources */,
 				D401673F1EB7A58D0025DCA5 /* Compatability.swift in Sources */,
@@ -643,7 +643,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A39D6311EB53E1100BDE9C0 /* AnchorageTests.swift in Sources */,
+				7A39D6311EB53E1100BDE9C0 /* ZDTinyLayoutTests.swift in Sources */,
 				C2271C2C2F74E79C00BE7676 /* VisualLayoutTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -652,7 +652,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD71F7A31EB7DD2D008C1CC4 /* AnchorageTests.swift in Sources */,
+				CD71F7A31EB7DD2D008C1CC4 /* ZDTinyLayoutTests.swift in Sources */,
 				C2271C2B2F74E79C00BE7676 /* VisualLayoutTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -663,7 +663,7 @@
 			files = (
 				CD71F7A81EB7DD38008C1CC4 /* Compatability.swift in Sources */,
 				BBE7C0D91FAB677600DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift in Sources */,
-				CD71F7A51EB7DD38008C1CC4 /* Anchorage.swift in Sources */,
+				CD71F7A51EB7DD38008C1CC4 /* ZDTinyLayout.swift in Sources */,
 				CD71F7A61EB7DD38008C1CC4 /* AnchorGroupProvider.swift in Sources */,
 				CD71F7A91EB7DD38008C1CC4 /* Internal.swift in Sources */,
 				CD71F7A71EB7DD38008C1CC4 /* Priority.swift in Sources */,
@@ -676,7 +676,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD71F7A41EB7DD2E008C1CC4 /* AnchorageTests.swift in Sources */,
+				CD71F7A41EB7DD2E008C1CC4 /* ZDTinyLayoutTests.swift in Sources */,
 				C2271C2A2F74E79C00BE7676 /* VisualLayoutTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -687,7 +687,7 @@
 			files = (
 				D40167401EB7A6270025DCA5 /* Internal.swift in Sources */,
 				BBE7C0D81FAB677500DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift in Sources */,
-				F154629B1E56846200C3948D /* Anchorage.swift in Sources */,
+				F154629B1E56846200C3948D /* ZDTinyLayout.swift in Sources */,
 				D40167411EB7A6270025DCA5 /* Compatability.swift in Sources */,
 				D469DCB91EB7AB2F000F3DDD /* Priority.swift in Sources */,
 				D469DCB81EB7AB2F000F3DDD /* AnchorGroupProvider.swift in Sources */,
@@ -701,22 +701,22 @@
 /* Begin PBXTargetDependency section */
 		7A39D6351EB53E1100BDE9C0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3C2050AA1D3B20FD00995DF3 /* Anchorage-iOS */;
+			target = 3C2050AA1D3B20FD00995DF3 /* ZDTinyLayout-iOS */;
 			targetProxy = 7A39D6341EB53E1100BDE9C0 /* PBXContainerItemProxy */;
 		};
 		CD6A0E6E1EB7CDEF00FFF5DB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F15462911E56842400C3948D /* Anchorage-macOS */;
+			target = F15462911E56842400C3948D /* ZDTinyLayout-macOS */;
 			targetProxy = CD6A0E6D1EB7CDEF00FFF5DB /* PBXContainerItemProxy */;
 		};
 		CD6A0E821EB7CE3A00FFF5DB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CD6A0E761EB7CE3A00FFF5DB /* Anchorage-tvOS */;
+			target = CD6A0E761EB7CE3A00FFF5DB /* ZDTinyLayout-tvOS */;
 			targetProxy = CD6A0E811EB7CE3A00FFF5DB /* PBXContainerItemProxy */;
 		};
 		D497F1171EB270CC00CBCF2F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3C2050AA1D3B20FD00995DF3 /* Anchorage-iOS */;
+			target = 3C2050AA1D3B20FD00995DF3 /* ZDTinyLayout-iOS */;
 			targetProxy = D497F1161EB270CC00CBCF2F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -740,10 +740,10 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = AnchorageDemo/Info.plist;
+				INFOPLIST_FILE = ZDTinyLayoutDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rightpoint.AnchorageDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rightpoint.ZDTinyLayoutDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};
@@ -756,10 +756,10 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = AnchorageDemo/Info.plist;
+				INFOPLIST_FILE = ZDTinyLayoutDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rightpoint.AnchorageDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rightpoint.ZDTinyLayoutDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};
@@ -896,7 +896,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
-				PRODUCT_NAME = Anchorage;
+				PRODUCT_NAME = ZDTinyLayout;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -919,7 +919,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
-				PRODUCT_NAME = Anchorage;
+				PRODUCT_NAME = ZDTinyLayout;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -930,7 +930,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = AnchorageTests/Info.plist;
+				INFOPLIST_FILE = ZDTinyLayoutTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
@@ -944,7 +944,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = AnchorageTests/Info.plist;
+				INFOPLIST_FILE = ZDTinyLayoutTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
@@ -958,7 +958,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = AnchorageTests/Info.plist;
+				INFOPLIST_FILE = ZDTinyLayoutTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
@@ -972,7 +972,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = AnchorageTests/Info.plist;
+				INFOPLIST_FILE = ZDTinyLayoutTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
@@ -995,7 +995,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
-				PRODUCT_NAME = Anchorage;
+				PRODUCT_NAME = ZDTinyLayout;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1017,7 +1017,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
-				PRODUCT_NAME = Anchorage;
+				PRODUCT_NAME = ZDTinyLayout;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1031,7 +1031,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = AnchorageTests/Info.plist;
+				INFOPLIST_FILE = ZDTinyLayoutTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1047,7 +1047,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = AnchorageTests/Info.plist;
+				INFOPLIST_FILE = ZDTinyLayoutTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1091,7 +1091,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
-				PRODUCT_NAME = Anchorage;
+				PRODUCT_NAME = ZDTinyLayout;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1116,7 +1116,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
-				PRODUCT_NAME = Anchorage;
+				PRODUCT_NAME = ZDTinyLayout;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1126,7 +1126,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2DD242721D95C2CE001D6725 /* Build configuration list for PBXNativeTarget "AnchorageDemo" */ = {
+		2DD242721D95C2CE001D6725 /* Build configuration list for PBXNativeTarget "ZDTinyLayoutDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2DD242731D95C2CE001D6725 /* Debug */,
@@ -1135,7 +1135,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3C2050A51D3B20FD00995DF3 /* Build configuration list for PBXProject "Anchorage" */ = {
+		3C2050A51D3B20FD00995DF3 /* Build configuration list for PBXProject "ZDTinyLayout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C2050B11D3B20FD00995DF3 /* Debug */,
@@ -1144,7 +1144,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3C2050B31D3B20FD00995DF3 /* Build configuration list for PBXNativeTarget "Anchorage-iOS" */ = {
+		3C2050B31D3B20FD00995DF3 /* Build configuration list for PBXNativeTarget "ZDTinyLayout-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C2050B41D3B20FD00995DF3 /* Debug */,
@@ -1153,7 +1153,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7A39D6381EB53E1100BDE9C0 /* Build configuration list for PBXNativeTarget "AnchorageTests-iOS" */ = {
+		7A39D6381EB53E1100BDE9C0 /* Build configuration list for PBXNativeTarget "ZDTinyLayoutTests-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7A39D6361EB53E1100BDE9C0 /* Debug */,
@@ -1162,7 +1162,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD6A0E711EB7CDEF00FFF5DB /* Build configuration list for PBXNativeTarget "AnchorageTests-macOS" */ = {
+		CD6A0E711EB7CDEF00FFF5DB /* Build configuration list for PBXNativeTarget "ZDTinyLayoutTests-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD6A0E6F1EB7CDEF00FFF5DB /* Debug */,
@@ -1171,7 +1171,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD6A0E881EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "Anchorage-tvOS" */ = {
+		CD6A0E881EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "ZDTinyLayout-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD6A0E891EB7CE3A00FFF5DB /* Debug */,
@@ -1180,7 +1180,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD6A0E8B1EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "Anchorage-tvOSTests" */ = {
+		CD6A0E8B1EB7CE3A00FFF5DB /* Build configuration list for PBXNativeTarget "ZDTinyLayout-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD6A0E8C1EB7CE3A00FFF5DB /* Debug */,
@@ -1198,7 +1198,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F15462991E56842400C3948D /* Build configuration list for PBXNativeTarget "Anchorage-macOS" */ = {
+		F15462991E56842400C3948D /* Build configuration list for PBXNativeTarget "ZDTinyLayout-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F15462971E56842400C3948D /* Debug */,
