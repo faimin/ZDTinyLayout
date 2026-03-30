@@ -601,6 +601,18 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertTrue(guide.owningView === container)
     }
 
+    func testLayoutKeepsGuideAlreadyAddedToContainer() {
+        let guide = VisualLayoutGuide()
+        container.addLayoutGuide(guide)
+        XCTAssertTrue(guide.owningView === container)
+
+        _ = layout(in: container) {
+            |--guide--| /=/ 30
+        }
+
+        XCTAssertTrue(guide.owningView === container)
+    }
+
     func testGuideConstraintsAreGenerated() {
         let guide = VisualLayoutGuide()
         let constraints = layout(in: container) {

@@ -159,7 +159,7 @@ layout(in: container) {
 }
 ```
 
-If a view has no superview (or a guide has no owning view), ZDTinyLayout automatically adds it to the container passed to `layout(in:)`.
+If a view has no superview (or a guide has no owning view), ZDTinyLayout automatically adds it to the container passed to `layout(in:)`. If a view/guide is already attached to a different container, `layout(in:)` triggers a precondition failure to prevent invalid cross-container layout constraints.
 
 ### Default inter-item spacing
 

@@ -284,10 +284,24 @@ public func layout(
 			laidOutAtLeastOneRow = true
 			row.views.forEach { element in
 				if let v = element as? VisualLayoutView {
-					if v.superview == nil { view.addSubview(v) }
+					if let superview = v.superview {
+						assert(
+							superview === view,
+							"Visual layout rows can only contain views that are either unattached or already added to the layout container."
+						)
+					} else {
+						view.addSubview(v)
+					}
 					v.translatesAutoresizingMaskIntoConstraints = false
 				} else if let g = element as? VisualLayoutGuide {
-					if g.owningView == nil { view.addLayoutGuide(g) }
+					if let owningView = g.owningView {
+						assert(
+							owningView === view,
+							"Visual layout rows can only contain layout guides that are either unattached or already added to the layout container."
+						)
+					} else {
+						view.addLayoutGuide(g)
+					}
 				}
 			}
 			
