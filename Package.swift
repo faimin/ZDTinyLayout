@@ -22,7 +22,10 @@ let package = Package(
         .target(
             name: "ZDTinyLayout",
             dependencies: [],
-            path: "Source"
+            path: "Source",
+			resources: [
+				.process("Resource/PrivacyInfo.xcprivacy")
+			]
 		),
         .testTarget(
             name: "ZDTinyLayoutTests",
