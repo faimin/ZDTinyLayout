@@ -5,7 +5,11 @@
 //  Created by Zero.D.Saber on 2026/3/31.
 //
 
+#if os(macOS)
+import Cocoa
+#else
 import UIKit
+#endif
 
 /// Result builder used by `NSLayoutConstraint.tl.activate/deactivate`.
 ///
