@@ -137,7 +137,14 @@ extension VisualLayoutNamespace where Base: View {
             } else if let guide = item as? LayoutGuide {
                 base.addLayoutGuide(guide)
             } else if let layer = item as? CALayer {
+#if os(macOS)
+                if base.layer == nil {
+                    base.wantsLayer = true
+                }
+                base.layer?.addSublayer(layer)
+#else
                 base.layer.addSublayer(layer)
+#endif
             } else if let vc = item as? ViewController {
                 base.addSubview(vc.view)
             } else {
