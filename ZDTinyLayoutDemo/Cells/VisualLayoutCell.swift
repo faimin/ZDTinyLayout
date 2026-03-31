@@ -56,11 +56,11 @@ private extension VisualLayoutCell {
     }
     
     func configureLayout() {
-        contentView.layout {
+       let _: UIView = contentView.tl.layout {
             8
             |--15--bodyLabel--|
             8
-            |--8--UIView().layout({
+            |--8--UIView().tl.layout({
                 |--topView--| /=/ 30
                 8
                 |--15--[middleLeft,15,middleRight]--20--| /=/ 50

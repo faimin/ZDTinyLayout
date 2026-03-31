@@ -243,18 +243,18 @@ public enum VisualLayoutBuilder {
 	}
 }
 
-// MARK: - layout — view-returning overload
+// MARK: - layout — tl namespace overloads
 
-public extension VisualLayoutView {
-    /// Builds vertical layout constraints in the receiver using an ASCII-style DSL.
+public extension VisualLayoutNamespace where Base: VisualLayoutView {
+    /// Builds vertical layout constraints in `base` using an ASCII-style DSL.
     ///
     /// Numeric/flexible spacing items control the vertical gaps between rows.
     /// Each `VisualRow` can contain views or layout guides; unattached elements are
-    /// automatically added to the receiver before constraints are created.
+    /// automatically added to `base` before constraints are created.
     /// All generated constraints are activated before this method returns.
     ///
     /// ```swift
-    /// layout {
+    /// container.tl.layout {
     ///     100
     ///     |--emailField--| /=/ 44
     ///     8
@@ -272,7 +272,7 @@ public extension VisualLayoutView {
     ) -> [NSLayoutConstraint] {
         let layoutItems = items()
         var constraints: [NSLayoutConstraint] = []
-        var prevAnchor: NSLayoutYAxisAnchor = topAnchor
+        var prevAnchor: NSLayoutYAxisAnchor = base.topAnchor
         var pendingSpacing: VisualLayoutItem?
         var laidOutAtLeastOneRow = false
         
@@ -291,21 +291,21 @@ public extension VisualLayoutView {
                     if let v = element as? VisualLayoutView {
                         if let superview = v.superview {
                             assert(
-                                superview === self,
+                                superview === base,
                                 "Visual layout rows can only contain views that are either unattached or already added to the layout container."
                             )
                         } else {
-                            addSubview(v)
+                            base.addSubview(v)
                         }
                         v.translatesAutoresizingMaskIntoConstraints = false
                     } else if let g = element as? VisualLayoutGuide {
                         if let owningView = g.owningView {
                             assert(
-                                owningView === self,
+                                owningView === base,
                                 "Visual layout rows can only contain layout guides that are either unattached or already added to the layout container."
                             )
                         } else {
-                            addLayoutGuide(g)
+                            base.addLayoutGuide(g)
                         }
                     }
                 }
@@ -317,14 +317,14 @@ public extension VisualLayoutView {
                 
                 // 2. Leading constraint
                 if let margin = row.leadingMargin {
-                    let c = first.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin)
+                    let c = first.leadingAnchor.constraint(equalTo: base.leadingAnchor, constant: margin)
                     c.isActive = true
                     constraints.append(c)
                 }
                 
                 // 3. Trailing constraint
                 if let margin = row.trailingMargin, let last = row.views.last {
-                    let c = last.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin)
+                    let c = last.trailingAnchor.constraint(equalTo: base.trailingAnchor, constant: -margin)
                     c.isActive = true
                     constraints.append(c)
                 }
@@ -372,11 +372,11 @@ public extension VisualLayoutView {
         // - if the block ends with a spacing item, honor it
         // - otherwise, when at least one row exists, close the chain with zero spacing
         if let spacing = pendingSpacing {
-            let bottomC = bottomConstraint(from: bottomAnchor, to: prevAnchor, spacing: spacing)
+            let bottomC = bottomConstraint(from: base.bottomAnchor, to: prevAnchor, spacing: spacing)
             bottomC.isActive = true
             constraints.append(bottomC)
         } else if laidOutAtLeastOneRow {
-            let bottomC = bottomAnchor.constraint(equalTo: prevAnchor, constant: 0)
+            let bottomC = base.bottomAnchor.constraint(equalTo: prevAnchor, constant: 0)
             bottomC.isActive = true
             constraints.append(bottomC)
         }
@@ -384,10 +384,10 @@ public extension VisualLayoutView {
         return constraints
     }
     
-	/// Convenience overload of `layout(_:)` that returns `self` for chaining.
+	/// Convenience overload of `layout(_:)` that returns `base` for chaining.
 	///
 	/// ```swift
-	/// let card = UIView().layout {
+	/// let card = UIView().tl.layout {
 	///     16
 	///     |--titleLabel--| /=/ 20
 	///     8
@@ -398,9 +398,9 @@ public extension VisualLayoutView {
 	@discardableResult
 	func layout(
 		@VisualLayoutBuilder _ items: () -> [VisualLayoutItem]
-	) -> Self {
+	) -> Base {
         let _: [NSLayoutConstraint] = layout(items)
-		return self
+		return base
 	}
 }
 

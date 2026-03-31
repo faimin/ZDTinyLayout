@@ -740,7 +740,7 @@ class VisualLayoutTests: XCTestCase {
         let middleRight = TestView()
         let bottom = TestView()
 
-        let nested = TestView().layout {
+        let nested = TestView().tl.layout {
             |--top--| /=/ 30
             8
             |--15--[middleLeft, middleRight]--20--| /=/ 50
@@ -761,6 +761,20 @@ class VisualLayoutTests: XCTestCase {
             ($0.firstItem as? TestView) === nested && $0.firstAttribute == .leading
         }
         XCTAssertEqual(leading?.constant, 8)
+    }
+
+    // MARK: - tl namespace
+
+    func testNamespaceLayoutReturnsReceiverForChaining() {
+        let host = TestView()
+        let child = TestView()
+
+        let returned: TestView = host.tl.layout {
+            |--child--|
+        }
+
+        XCTAssertTrue(returned === host)
+        XCTAssertTrue(child.superview === host)
     }
 
     func testFencedExplicitMarginsWithDoubleValues() {
