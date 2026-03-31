@@ -104,7 +104,7 @@ extension Int: VisualLayoutArrayElementConvertible {
 
 // MARK: - VisualLayoutItem
 
-/// A type that can appear as a line in a `layout(in:)` block.
+/// A type that can appear as a line in a `layout(:_)` block.
 public protocol VisualLayoutItem {}
 
 // MARK: - VisualRowChain
@@ -208,7 +208,7 @@ public func atMost(_ value: CGFloat) -> VisualFlexibleSpacing {
 
 // MARK: - VisualLayoutBuilder
 
-/// Result builder that powers the `layout(in:) { }` DSL.
+/// Result builder that powers the `layout(_:)` DSL.
 /// Converts numeric literals, `VisualRow`, and `VisualFlexibleSpacing`
 /// expressions into a flat `[VisualLayoutItem]` array.
 ///
@@ -243,147 +243,148 @@ public enum VisualLayoutBuilder {
 	}
 }
 
-// MARK: - layout(in:)
-
-/// Describes the vertical layout of views inside `view` using an ASCII-style DSL.
-///
-/// ```swift
-/// layout(in: container) {
-///     100
-///     |--emailField--| /=/ 44
-///     8
-///     |--[nameField, phoneField]--| /=/ 44
-///     atLeast(20)
-///     |loginButton| /=/ 50
-///     0
-/// }
-/// ```
-///
-/// - Returns: All generated constraints, already activated.
-@discardableResult
-public func layout(
-	in view: VisualLayoutView,
-	@VisualLayoutBuilder _ items: () -> [VisualLayoutItem]
-) -> [NSLayoutConstraint] {
-	let layoutItems = items()
-	var constraints: [NSLayoutConstraint] = []
-	var prevAnchor: NSLayoutYAxisAnchor = view.topAnchor
-	var pendingSpacing: VisualLayoutItem?
-	var laidOutAtLeastOneRow = false
-	
-	for item in layoutItems {
-		switch item {
-		case let spacing as VisualSpacing:
-			pendingSpacing = spacing
-			
-		case let flex as VisualFlexibleSpacing:
-			pendingSpacing = flex
-			
-		case let row as VisualRow:
-			guard let first = row.views.first else { continue }
-			laidOutAtLeastOneRow = true
-			row.views.forEach { element in
-				if let v = element as? VisualLayoutView {
-					if let superview = v.superview {
-						assert(
-							superview === view,
-							"Visual layout rows can only contain views that are either unattached or already added to the layout container."
-						)
-					} else {
-						view.addSubview(v)
-					}
-					v.translatesAutoresizingMaskIntoConstraints = false
-				} else if let g = element as? VisualLayoutGuide {
-					if let owningView = g.owningView {
-						assert(
-							owningView === view,
-							"Visual layout rows can only contain layout guides that are either unattached or already added to the layout container."
-						)
-					} else {
-						view.addLayoutGuide(g)
-					}
-				}
-			}
-			
-			// 1. Vertical (top) constraint
-			let topC = topConstraint(from: first.topAnchor, to: prevAnchor, spacing: pendingSpacing)
-			topC.isActive = true
-			constraints.append(topC)
-			
-			// 2. Leading constraint
-			if let margin = row.leadingMargin {
-				let c = first.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin)
-				c.isActive = true
-				constraints.append(c)
-			}
-			
-			// 3. Trailing constraint
-			if let margin = row.trailingMargin, let last = row.views.last {
-				let c = last.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin)
-				c.isActive = true
-				constraints.append(c)
-			}
-			
-			// 4. Multi-element: equal widths, adjacent spacing, aligned tops
-			let elementCount = row.views.count
-			if elementCount > 1 {
-				for i in 1..<elementCount {
-					let prev = row.views[i - 1]
-					let cur = row.views[i]
-					let topC = cur.topAnchor.constraint(equalTo: first.topAnchor)
-					topC.isActive = true
-					constraints.append(topC)
-					let widthC = cur.widthAnchor.constraint(equalTo: prev.widthAnchor)
-					widthC.isActive = true
-					constraints.append(widthC)
-					let gap = row.interViewSpacings[i - 1]
-					let spacingC = cur.leadingAnchor.constraint(
-						equalTo: prev.trailingAnchor,
-						constant: gap
-					)
-					spacingC.isActive = true
-					constraints.append(spacingC)
-				}
-			}
-			
-			// 5. Height constraints (one per element in the row)
-			if let height = row.height {
-				for element in row.views {
-					let c = heightConstraint(for: element, value: height, relation: row.heightRelation, priority: row.heightPriority)
-					c.isActive = true
-					constraints.append(c)
-				}
-			}
-			
-			prevAnchor = row.views.last!.bottomAnchor
-			pendingSpacing = nil
-			
-		default:
-			break
-		}
-	}
-	
-	// Trailing bottom constraint:
-	// - if the block ends with a spacing item, honor it
-	// - otherwise, when at least one row exists, close the chain with zero spacing
-	if let spacing = pendingSpacing {
-		let bottomC = bottomConstraint(from: view.bottomAnchor, to: prevAnchor, spacing: spacing)
-		bottomC.isActive = true
-		constraints.append(bottomC)
-	} else if laidOutAtLeastOneRow {
-		let bottomC = view.bottomAnchor.constraint(equalTo: prevAnchor, constant: 0)
-		bottomC.isActive = true
-		constraints.append(bottomC)
-	}
-	
-	return constraints
-}
-
-// MARK: - layout(in:) — view-returning overload
+// MARK: - layout — view-returning overload
 
 public extension VisualLayoutView {
-	/// Describes the vertical layout of subviews using an ASCII-style DSL,
-	/// returning the receiver for declarative chaining.
+    /// Builds vertical layout constraints in the receiver using an ASCII-style DSL.
+    ///
+    /// Numeric/flexible spacing items control the vertical gaps between rows.
+    /// Each `VisualRow` can contain views or layout guides; unattached elements are
+    /// automatically added to the receiver before constraints are created.
+    /// All generated constraints are activated before this method returns.
+    ///
+    /// ```swift
+    /// layout {
+    ///     100
+    ///     |--emailField--| /=/ 44
+    ///     8
+    ///     |--[nameField, phoneField]--| /=/ 44
+    ///     atLeast(20)
+    ///     |loginButton| /=/ 50
+    ///     0
+    /// }
+    /// ```
+    ///
+    /// - Returns: All generated constraints, already activated.
+    @discardableResult
+    func layout(
+        @VisualLayoutBuilder _ items: () -> [VisualLayoutItem]
+    ) -> [NSLayoutConstraint] {
+        let layoutItems = items()
+        var constraints: [NSLayoutConstraint] = []
+        var prevAnchor: NSLayoutYAxisAnchor = topAnchor
+        var pendingSpacing: VisualLayoutItem?
+        var laidOutAtLeastOneRow = false
+        
+        for item in layoutItems {
+            switch item {
+            case let spacing as VisualSpacing:
+                pendingSpacing = spacing
+                
+            case let flex as VisualFlexibleSpacing:
+                pendingSpacing = flex
+                
+            case let row as VisualRow:
+                guard let first = row.views.first else { continue }
+                laidOutAtLeastOneRow = true
+                row.views.forEach { element in
+                    if let v = element as? VisualLayoutView {
+                        if let superview = v.superview {
+                            assert(
+                                superview === self,
+                                "Visual layout rows can only contain views that are either unattached or already added to the layout container."
+                            )
+                        } else {
+                            addSubview(v)
+                        }
+                        v.translatesAutoresizingMaskIntoConstraints = false
+                    } else if let g = element as? VisualLayoutGuide {
+                        if let owningView = g.owningView {
+                            assert(
+                                owningView === self,
+                                "Visual layout rows can only contain layout guides that are either unattached or already added to the layout container."
+                            )
+                        } else {
+                            addLayoutGuide(g)
+                        }
+                    }
+                }
+                
+                // 1. Vertical (top) constraint
+                let topC = topConstraint(from: first.topAnchor, to: prevAnchor, spacing: pendingSpacing)
+                topC.isActive = true
+                constraints.append(topC)
+                
+                // 2. Leading constraint
+                if let margin = row.leadingMargin {
+                    let c = first.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin)
+                    c.isActive = true
+                    constraints.append(c)
+                }
+                
+                // 3. Trailing constraint
+                if let margin = row.trailingMargin, let last = row.views.last {
+                    let c = last.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin)
+                    c.isActive = true
+                    constraints.append(c)
+                }
+                
+                // 4. Multi-element: equal widths, adjacent spacing, aligned tops
+                let elementCount = row.views.count
+                if elementCount > 1 {
+                    for i in 1..<elementCount {
+                        let prev = row.views[i - 1]
+                        let cur = row.views[i]
+                        let topC = cur.topAnchor.constraint(equalTo: first.topAnchor)
+                        topC.isActive = true
+                        constraints.append(topC)
+                        let widthC = cur.widthAnchor.constraint(equalTo: prev.widthAnchor)
+                        widthC.isActive = true
+                        constraints.append(widthC)
+                        let gap = row.interViewSpacings[i - 1]
+                        let spacingC = cur.leadingAnchor.constraint(
+                            equalTo: prev.trailingAnchor,
+                            constant: gap
+                        )
+                        spacingC.isActive = true
+                        constraints.append(spacingC)
+                    }
+                }
+                
+                // 5. Height constraints (one per element in the row)
+                if let height = row.height {
+                    for element in row.views {
+                        let c = heightConstraint(for: element, value: height, relation: row.heightRelation, priority: row.heightPriority)
+                        c.isActive = true
+                        constraints.append(c)
+                    }
+                }
+                
+                prevAnchor = row.views.last!.bottomAnchor
+                pendingSpacing = nil
+                
+            default:
+                break
+            }
+        }
+        
+        // Trailing bottom constraint:
+        // - if the block ends with a spacing item, honor it
+        // - otherwise, when at least one row exists, close the chain with zero spacing
+        if let spacing = pendingSpacing {
+            let bottomC = bottomConstraint(from: bottomAnchor, to: prevAnchor, spacing: spacing)
+            bottomC.isActive = true
+            constraints.append(bottomC)
+        } else if laidOutAtLeastOneRow {
+            let bottomC = bottomAnchor.constraint(equalTo: prevAnchor, constant: 0)
+            bottomC.isActive = true
+            constraints.append(bottomC)
+        }
+        
+        return constraints
+    }
+    
+	/// Convenience overload of `layout(_:)` that returns `self` for chaining.
 	///
 	/// ```swift
 	/// let card = UIView().layout {
@@ -398,7 +399,7 @@ public extension VisualLayoutView {
 	func layout(
 		@VisualLayoutBuilder _ items: () -> [VisualLayoutItem]
 	) -> Self {
-		_ = ZDTinyLayout.layout(in: self, items)
+        let _: [NSLayoutConstraint] = layout(items)
 		return self
 	}
 }
