@@ -26,19 +26,14 @@
 
 #if os(macOS)
 import Cocoa
-/// The platform-specific view type used in Visual Layout APIs.
-public typealias VisualLayoutView = NSView
-/// The platform-specific layout guide type used in Visual Layout APIs.
-public typealias VisualLayoutGuide = NSLayoutGuide
 #else
 import UIKit
-/// The platform-specific view type used in Visual Layout APIs.
-public typealias VisualLayoutView = UIView
-/// The platform-specific layout guide type used in Visual Layout APIs.
-public typealias VisualLayoutGuide = UILayoutGuide
 #endif
 
 // MARK: - VisualLayoutAnchorable
+
+/// `VisualLayoutView` and `VisualLayoutGuide` are declared in `Internal.swift`
+/// and share the same platform mapping as the core `View`/`LayoutGuide` aliases.
 
 /// A type that can participate in a visual layout row — either a view or a layout guide.
 /// Exposes the layout anchors needed to build horizontal and vertical constraints.
