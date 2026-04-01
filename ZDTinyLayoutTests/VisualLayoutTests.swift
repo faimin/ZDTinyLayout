@@ -808,6 +808,20 @@ class VisualLayoutTests: XCTestCase {
 #endif
     }
 
+    func testAddComponentsSupportsArrayExpression() {
+        let host = TestView()
+        let first = TestView()
+        let second = TestView()
+        let components: [any ZDTLComponentsProtocol] = [first, second]
+
+        _ = host.tl.addComponents {
+            components
+        }
+
+        XCTAssertTrue(first.superview === host)
+        XCTAssertTrue(second.superview === host)
+    }
+
     func testFencedExplicitMarginsWithDoubleValues() {
         let lead: Double = 10.5
         let inter: Double = 6.25

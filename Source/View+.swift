@@ -37,6 +37,10 @@ public struct ZDTLComponentBuilder<T> {
         [expression]
     }
 
+    public static func buildExpression(_ expression: Component) -> Component {
+        expression
+    }
+
     /// Handles `if` branches without `else`.
     public static func buildOptional(_ component: Component?) -> Component {
         guard let component = component else {
