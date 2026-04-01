@@ -150,7 +150,7 @@ Use `/=/` to set row item height, then `~` to set height constraint priority:
 
 ### Layout guides and auto-add behavior
 
-Rows accept both views and layout guides (`VisualLayoutGuide`, aliased to `UILayoutGuide`/`NSLayoutGuide`):
+Rows accept both views and layout guides (`VisualLayoutGuide`, a shared platform alias also used by internal `LayoutGuide`):
 
 ```swift
 let guide = VisualLayoutGuide()

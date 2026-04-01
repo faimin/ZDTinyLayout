@@ -29,9 +29,14 @@
 #if os(macOS)
 import Cocoa
 
-internal typealias View = NSView
+/// Platform view type exposed by Visual Layout APIs.
+public typealias VisualLayoutView = NSView
+/// Platform layout guide type exposed by Visual Layout APIs.
+public typealias VisualLayoutGuide = NSLayoutGuide
+
+internal typealias View = VisualLayoutView
 internal typealias ViewController = NSViewController
-internal typealias LayoutGuide = NSLayoutGuide
+internal typealias LayoutGuide = VisualLayoutGuide
 
 internal let LayoutPriorityRequired = NSLayoutConstraint.Priority.required
 internal let LayoutPriorityHigh = NSLayoutConstraint.Priority.defaultHigh
@@ -40,9 +45,14 @@ internal let LayoutPriorityFittingSize = NSLayoutConstraint.Priority.fittingSize
 #else
 import UIKit
 
-internal typealias View = UIView
+/// Platform view type exposed by Visual Layout APIs.
+public typealias VisualLayoutView = UIView
+/// Platform layout guide type exposed by Visual Layout APIs.
+public typealias VisualLayoutGuide = UILayoutGuide
+
+internal typealias View = VisualLayoutView
 internal typealias ViewController = UIViewController
-internal typealias LayoutGuide = UILayoutGuide
+internal typealias LayoutGuide = VisualLayoutGuide
 
 internal let LayoutPriorityRequired = UILayoutPriority.required
 internal let LayoutPriorityHigh = UILayoutPriority.defaultHigh

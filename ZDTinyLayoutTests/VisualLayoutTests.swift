@@ -103,10 +103,10 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(row.trailingMargin, 0)
     }
 
-    // MARK: - layout(in:) Single View
+    // MARK: - tl.layout Single View
 
     func testSingleViewWithMarginsAndHeight() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             100
             |--view1--| /=/ 44
             0
@@ -153,7 +153,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testEdgePinnedViewNoMargin() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |view1|
         }
         XCTAssertEqual(constraints.count, 4)
@@ -162,7 +162,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testViewWithNoHeightHasNoHeightConstraint() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--|
         }
         XCTAssertEqual(constraints.count, 4)
@@ -170,7 +170,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testNoTrailingNumberDefaultsBottomToZero() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--| /=/ 44
         }
         XCTAssertEqual(constraints.count, 5)
@@ -182,7 +182,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testTwoViewsVerticalSpacing() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--| /=/ 44
             8
             |--view2--| /=/ 50
@@ -198,10 +198,10 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(view2Top?.constant, 8)
     }
 
-    // MARK: - layout(in:) Multi-View Row
+    // MARK: - tl.layout Multi-View Row
 
     func testMultiViewRowEqualWidthsAndSpacing() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--[view1, view2]--| /=/ 44
         }
         XCTAssertEqual(constraints.count, 9)
@@ -255,7 +255,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testThreeViewMultiRow() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--[view1, view2, view3]--|
         }
         XCTAssertEqual(constraints.count, 10)
@@ -274,7 +274,7 @@ class VisualLayoutTests: XCTestCase {
     // MARK: - -- custom inter-view spacing
 
     func testChainOperatorCustomSpacing() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--20--view2--|
         }
         let spacingC = constraints.first {
@@ -288,7 +288,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testChainOperatorThreeViewsCustomSpacing() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--20--view2--30--view3--|
         }
         let gap12 = constraints.first {
@@ -309,7 +309,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testArraySyntaxSupportsCustomInterViewSpacingValues() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--[view1, 10, view2, 50.0, view3]--|
         }
 
@@ -331,7 +331,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testArraySyntaxFallsBackToZeroSpacingWhenGapIsOmitted() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--[view1, 10, view2, view3]--|
         }
 
@@ -353,7 +353,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testChainOperatorDefaultSpacingWhenOmitted() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--view2--|
         }
         let spacingC = constraints.first {
@@ -366,7 +366,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testChainOperatorAlignedTops() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--20--view2--|
         }
         let topAlign = constraints.first {
@@ -382,7 +382,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testFencedExplicitMarginsAllEdges() {
         // |--20--a--3--b--10--| → leading=20, spacing=3, trailing=10
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--20--view1--3--view2--10--|
         }
         let leading = constraints.first {
@@ -402,7 +402,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testFencedExplicitMargins_DefaultInterViewSpacingIsZero() {
         // |--15--a--b--20--| → leading=15, spacing=0, trailing=20
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--15--view1--view2--20--|
         }
 
@@ -417,7 +417,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testFencedExplicitMarginsWithArrayAndIntLiterals() {
         // |--15--[a,b]--20--| should compile and apply both explicit margins.
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--15--[view1, view2]--20--| /=/ 50
         }
 
@@ -444,7 +444,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testFencedExplicitMarginsWithMixedArrayCustomSpacing() {
         // |--15--[a,50,b]--20--| should compile and apply leading/inter/trailing margins.
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--15--[view1, 50, view2]--20--|
         }
 
@@ -471,7 +471,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testLeadingNumberSetsLeadingMargin() {
         // 20--a--3--b| → leading=20, spacing=3, trailing=0
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             20--view1--3--view2|
         }
         let leading = constraints.first {
@@ -496,12 +496,12 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(trailing?.constant, 0, "trailing margin 0 → constraint constant should be 0")
     }
 
-    // MARK: - layout(in:) Spacing edge cases
+    // MARK: - tl.layout Spacing edge cases
 
     func testConsecutiveSpacingsLastOneWins() {
         // Two spacing literals in a row — the second silently overwrites the first.
         // This is the specified behavior: only the most recent pending spacing is applied.
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             8
             16
             |--view1--|
@@ -514,7 +514,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testAdjacentRowsWithoutSpacingDefaultsToZero() {
         // No spacing between two rows → top of second view is flush to bottom of first.
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--| /=/ 44
             |--view2--| /=/ 44
         }
@@ -527,10 +527,10 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(view2Top?.constant, 0)
     }
 
-    // MARK: - layout(in:) Flexible Spacing
+    // MARK: - tl.layout Flexible Spacing
 
     func testAtLeastSpacingBeforeView() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             atLeast(20)
             |view1|
         }
@@ -540,7 +540,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testAtMostTrailingSpacing() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--|
             atMost(30)
         }
@@ -553,7 +553,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testAtLeastTrailingSpacing() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--|
             atLeast(16)
         }
@@ -566,7 +566,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testTranslatesAutoresizingMaskIsDisabled() {
-        _ = layout(in: container) {
+        let _: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--|
         }
         XCTAssertFalse(view1.translatesAutoresizingMaskIntoConstraints)
@@ -580,7 +580,7 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertNil(orphan1.superview)
         XCTAssertNil(orphan2.superview)
 
-        _ = layout(in: container) {
+        let _: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--orphan1--| /=/ 30
             8
             |--orphan2--| /=/ 30
@@ -594,7 +594,7 @@ class VisualLayoutTests: XCTestCase {
         let guide = VisualLayoutGuide()
         XCTAssertNil(guide.owningView)
 
-        _ = layout(in: container) {
+        let _: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--guide--| /=/ 30
         }
 
@@ -606,7 +606,7 @@ class VisualLayoutTests: XCTestCase {
         container.addLayoutGuide(guide)
         XCTAssertTrue(guide.owningView === container)
 
-        _ = layout(in: container) {
+        let _: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--guide--| /=/ 30
         }
 
@@ -615,7 +615,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testGuideConstraintsAreGenerated() {
         let guide = VisualLayoutGuide()
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--guide--| /=/ 44
         }
 
@@ -641,7 +641,7 @@ class VisualLayoutTests: XCTestCase {
     func testLayoutDoesNotReparentAlreadyAddedViews() {
         // view1 is already added to container in setUp — should stay there
         XCTAssertTrue(view1.superview === container)
-        _ = layout(in: container) {
+        let _: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--| /=/ 30
         }
         XCTAssertTrue(view1.superview === container)
@@ -651,7 +651,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testPipeExplicitMargins() {
         // |16 -- view -- 16| — leading=16, trailing=16
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |16 -- view1 -- 16| /=/ 44
         }
         let leading = constraints.first {
@@ -667,7 +667,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testDoubleDashPipeExplicitMargins() {
         // |--16 -- view -- 16--| — leading=16, trailing=16
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--16 -- view1 -- 16--| /=/ 44
         }
         let leading = constraints.first {
@@ -683,7 +683,7 @@ class VisualLayoutTests: XCTestCase {
 
     func testDoubleDashMultiViewExplicitMargins() {
         // |8 -- view1 -- 12 -- view2 -- 8| — leading=8, inter=12, trailing=8
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |8 -- view1 -- 12 -- view2 -- 8|
         }
         let leading = constraints.first {
@@ -714,7 +714,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testHeightPriorityAppliedToConstraint() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--| /=/ 44 ~ .high
         }
         let heightC = constraints.first {
@@ -725,7 +725,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testDefaultHeightPriorityIsRequired() {
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--view1--| /=/ 44
         }
         let heightC = constraints.first {
@@ -740,7 +740,7 @@ class VisualLayoutTests: XCTestCase {
         let middleRight = TestView()
         let bottom = TestView()
 
-        let nested = TestView().layout {
+        let nested: TestView = TestView().tl.layout {
             |--top--| /=/ 30
             8
             |--15--[middleLeft, middleRight]--20--| /=/ 50
@@ -748,7 +748,7 @@ class VisualLayoutTests: XCTestCase {
             |bottom|
         }
 
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--8--nested--|
         }
 
@@ -763,13 +763,72 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertEqual(leading?.constant, 8)
     }
 
+    // MARK: - tl namespace
+
+    func testNamespaceLayoutReturnsReceiverForChaining() {
+        let host = TestView()
+        let child = TestView()
+
+        let returned: TestView = host.tl.layout {
+            |--child--|
+        }
+
+        XCTAssertTrue(returned === host)
+        XCTAssertTrue(child.superview === host)
+    }
+
+    func testLayoutConstraintsReturnsConstraintsWithoutTypeAnnotation() {
+        let host = TestView()
+        let child = TestView()
+
+        let constraints = host.tl.layoutConstraints {
+            |--child--|
+        }
+
+        XCTAssertEqual(constraints.count, 4)
+        XCTAssertTrue(child.superview === host)
+    }
+
+    func testAddComponentsAddsLayerAndCreatesBackingLayerIfNeeded() {
+        let host = TestView()
+        let sublayer = CALayer()
+
+#if os(macOS)
+        XCTAssertNil(host.layer)
+        _ = host.tl.addComponents {
+            sublayer
+        }
+        XCTAssertNotNil(host.layer)
+        XCTAssertTrue(host.layer?.sublayers?.contains(where: { $0 === sublayer }) ?? false)
+#else
+        _ = host.tl.addComponents {
+            sublayer
+        }
+        XCTAssertTrue(host.layer.sublayers?.contains(where: { $0 === sublayer }) ?? false)
+#endif
+    }
+
+    func testAddComponentsSupportsArrayExpression() {
+        let host = TestView()
+        let first = TestView()
+        let second = TestView()
+        let components: [any ZDTLComponentsProtocol] = [first, second]
+
+        _ = host.tl.addComponents {
+            components
+        }
+
+        XCTAssertTrue(first.superview === host)
+        XCTAssertTrue(second.superview === host)
+    }
+
     func testFencedExplicitMarginsWithDoubleValues() {
         let lead: Double = 10.5
         let inter: Double = 6.25
         let trail: Double = 12.75
         let height: Double = 40.5
 
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--lead--view1--inter--view2--trail--| /=/ height
         }
 
@@ -807,7 +866,7 @@ class VisualLayoutTests: XCTestCase {
         let trail: Float = 11.5
         let height: Float = 32.5
 
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--lead--view1--inter--view2--trail--| /=/ height
         }
 
@@ -843,7 +902,7 @@ class VisualLayoutTests: XCTestCase {
         let topSpacing: Float = 7.5
         let bottomSpacing: Float = 4.25
 
-        let constraints = layout(in: container) {
+        let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             topSpacing
             |--view1--|
             bottomSpacing
@@ -860,5 +919,45 @@ class VisualLayoutTests: XCTestCase {
         }
         XCTAssertNotNil(bottom)
         XCTAssertEqual(bottom!.constant, CGFloat(bottomSpacing), accuracy: 0.0001)
+    }
+
+    @MainActor
+    func testConstraintNamespaceActivateAndDeactivate() {
+        let constraint = view1.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: 8)
+        XCTAssertFalse(constraint.isActive)
+
+        NSLayoutConstraint.tl.activate {
+            constraint
+        }
+        XCTAssertTrue(constraint.isActive)
+
+        NSLayoutConstraint.tl.deactivate {
+            constraint
+        }
+        XCTAssertFalse(constraint.isActive)
+    }
+
+    @MainActor
+    func testConstraintNamespaceIfElseSupportsMultipleConstraintsPerBranch() {
+        let usePrimaryPath = true
+        let first = view1.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: 8)
+        let second = view1.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 12)
+        let third = view1.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -12)
+        let fourth = view1.heightAnchor.constraint(equalToConstant: 44)
+
+        NSLayoutConstraint.tl.activate {
+            if usePrimaryPath {
+                first
+                second
+            } else {
+                third
+                fourth
+            }
+        }
+
+        XCTAssertTrue(first.isActive)
+        XCTAssertTrue(second.isActive)
+        XCTAssertFalse(third.isActive)
+        XCTAssertFalse(fourth.isActive)
     }
 }
