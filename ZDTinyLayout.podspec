@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "ZDTinyLayout"
-  s.version          = "0.0.1"
+  s.version          = "0.0.2"
   s.summary          = "A collection of operators and utilities that simplify iOS layout code."
   s.description      = <<-DESC
                        Create constraints using intuitive operators built directly on top of the NSLayoutAnchor API. Layout has never been simpler!
