@@ -19,14 +19,24 @@ import UIKit
 /// - loops (`for`)
 @resultBuilder
 public struct ZDTinyLayoutConstraintBuilder {
-    /// Collects direct constraint expressions from the block body.
-    public static func buildBlock(_ components: NSLayoutConstraint...) -> [NSLayoutConstraint] {
-        components
+    /// Lifts a single constraint expression into a builder component.
+    public static func buildExpression(_ expression: NSLayoutConstraint) -> [NSLayoutConstraint] {
+        [expression]
+    }
+
+    /// Passes through array expressions used in advanced call sites.
+    public static func buildExpression(_ expression: [NSLayoutConstraint]) -> [NSLayoutConstraint] {
+        expression
+    }
+
+    /// Merges all builder components from the block body.
+    public static func buildBlock(_ components: [NSLayoutConstraint]...) -> [NSLayoutConstraint] {
+        components.flatMap { $0 }
     }
 
     /// Flattens constraints produced by `for` loops.
-    public static func buildArray(_ components: [NSLayoutConstraint]) -> [NSLayoutConstraint] {
-        components
+    public static func buildArray(_ components: [[NSLayoutConstraint]]) -> [NSLayoutConstraint] {
+        components.flatMap { $0 }
     }
 
     /// Handles optional branches (`if` without `else`).
@@ -35,13 +45,13 @@ public struct ZDTinyLayoutConstraintBuilder {
     }
 
     /// Handles the `if` branch in `if-else`.
-    public static func buildEither(first component: NSLayoutConstraint) -> [NSLayoutConstraint] {
-        [component]
+    public static func buildEither(first component: [NSLayoutConstraint]) -> [NSLayoutConstraint] {
+        component
     }
 
     /// Handles the `else` branch in `if-else`.
-    public static func buildEither(second component: NSLayoutConstraint) -> [NSLayoutConstraint] {
-        [component]
+    public static func buildEither(second component: [NSLayoutConstraint]) -> [NSLayoutConstraint] {
+        component
     }
 }
 

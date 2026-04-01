@@ -910,4 +910,28 @@ class VisualLayoutTests: XCTestCase {
         }
         XCTAssertFalse(constraint.isActive)
     }
+
+    @MainActor
+    func testConstraintNamespaceIfElseSupportsMultipleConstraintsPerBranch() {
+        let usePrimaryPath = true
+        let first = view1.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: 8)
+        let second = view1.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 12)
+        let third = view1.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -12)
+        let fourth = view1.heightAnchor.constraint(equalToConstant: 44)
+
+        NSLayoutConstraint.tl.activate {
+            if usePrimaryPath {
+                first
+                second
+            } else {
+                third
+                fourth
+            }
+        }
+
+        XCTAssertTrue(first.isActive)
+        XCTAssertTrue(second.isActive)
+        XCTAssertFalse(third.isActive)
+        XCTAssertFalse(fourth.isActive)
+    }
 }
