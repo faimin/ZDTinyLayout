@@ -87,7 +87,7 @@ When constraining leading/trailing or top/bottom, it is far more common to work 
 ZDTinyLayout also includes a visual-layout style DSL for describing rows vertically inside a container:
 
 ```swift
-let constraints = layout(in: container) {
+let constraints = container.tl.layoutConstraints {
     16
     |--15--titleLabel--15--| /=/ 20
     8
@@ -98,12 +98,12 @@ let constraints = layout(in: container) {
 }
 ```
 
-`layout(in:)` returns all generated constraints, already active.
+`layoutConstraints` returns all generated constraints, already active.
 
 You can also use the view-returning convenience overload:
 
 ```swift
-let card = VisualLayoutView().layout {
+let card = VisualLayoutView().tl.layout {
     12
     |--titleLabel--|
     8
@@ -130,7 +130,7 @@ let card = VisualLayoutView().layout {
 Inside the block, numeric literals become vertical gaps between rows:
 
 ```swift
-layout(in: container) {
+container.tl.layoutConstraints {
     |--header--| /=/ 44
     8
     |--content--|
@@ -154,19 +154,19 @@ Rows accept both views and layout guides (`VisualLayoutGuide`, a shared platform
 
 ```swift
 let guide = VisualLayoutGuide()
-layout(in: container) {
+container.tl.layoutConstraints {
     |--guide--| /=/ 44
 }
 ```
 
-If a view has no superview (or a guide has no owning view), ZDTinyLayout automatically adds it to the container passed to `layout(in:)`. If a view/guide is already attached to a different container, `layout(in:)` triggers a precondition failure to prevent invalid cross-container layout constraints.
+If a view has no superview (or a guide has no owning view), ZDTinyLayout automatically adds it to the receiver view. If a view/guide is already attached to a different container, `layoutConstraints`/`layout` triggers a precondition failure to prevent invalid cross-container layout constraints.
 
 ### Default inter-item spacing
 
 In Visual Layout DSL (`--` chain and array syntax), omitted inter-item spacing defaults to `0`:
 
 ```swift
-layout(in: container) {
+container.tl.layoutConstraints {
     |--view1--view2--|              // gap(view1, view2) = 0
     |--[view1, view2, view3]--|     // gaps = [0, 0]
     |--[view1, 10, view2, view3]--| // gaps = [10, 0]
@@ -177,9 +177,23 @@ layout(in: container) {
 Use explicit spacing when non-zero is desired:
 
 ```swift
-layout(in: container) {
+container.tl.layoutConstraints {
     |--view1--12--view2--|
     |--[view1, 12, view2]--|
+}
+```
+
+### Add Components
+
+You can add views/layout guides/layers/view controllers in declaration order via `tl.addComponents`.
+Arrays are supported directly inside the builder block.
+
+```swift
+let staticParts: [any ZDTLComponentsProtocol] = [titleLabel, subtitleLabel]
+
+container.tl.addComponents {
+    staticParts
+    if showSeparator { separatorLayer }
 }
 ```
 
