@@ -249,7 +249,7 @@ public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
     /// All generated constraints are activated before this method returns.
     ///
     /// ```swift
-    /// container.tl.layout {
+    /// container.tl.layoutConstraints {
     ///     100
     ///     |--emailField--| /=/ 44
     ///     8
@@ -260,9 +260,9 @@ public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
     /// }
     /// ```
     ///
-    /// - Returns: All generated constraints, already activated.
+	/// - Returns: All generated constraints, already activated.
     @discardableResult
-    func layout(
+    func layoutConstraints(
         @VisualLayoutBuilder _ items: () -> [VisualLayoutItem]
     ) -> [NSLayoutConstraint] {
         let layoutItems = items()
@@ -379,7 +379,7 @@ public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
         return constraints
     }
     
-	/// Convenience overload of `layout(_:)` that returns `base` for chaining.
+	/// Builds constraints and returns `base` for chaining.
 	///
 	/// ```swift
 	/// let card = UIView().tl.layout {
@@ -394,7 +394,7 @@ public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
 	func layout(
 		@VisualLayoutBuilder _ items: () -> [VisualLayoutItem]
 	) -> Base {
-        let _: [NSLayoutConstraint] = layout(items)
+        _ = layoutConstraints(items)
 		return base
 	}
 }
