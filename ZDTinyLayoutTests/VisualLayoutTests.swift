@@ -894,4 +894,20 @@ class VisualLayoutTests: XCTestCase {
         XCTAssertNotNil(bottom)
         XCTAssertEqual(bottom!.constant, CGFloat(bottomSpacing), accuracy: 0.0001)
     }
+
+    @MainActor
+    func testConstraintNamespaceActivateAndDeactivate() {
+        let constraint = view1.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: 8)
+        XCTAssertFalse(constraint.isActive)
+
+        NSLayoutConstraint.tl.activate {
+            constraint
+        }
+        XCTAssertTrue(constraint.isActive)
+
+        NSLayoutConstraint.tl.deactivate {
+            constraint
+        }
+        XCTAssertFalse(constraint.isActive)
+    }
 }

@@ -24,11 +24,16 @@ public struct VisualLayoutNamespace<Base> {
 /// Marker protocol for `tl` namespace support.
 public protocol VisualLayoutNamespaceCompatible: AnyObject {}
 
-extension VisualLayoutView: VisualLayoutNamespaceCompatible {}
+extension NSObject: VisualLayoutNamespaceCompatible {}
 
-public extension VisualLayoutNamespaceCompatible where Self: VisualLayoutView {
+public extension VisualLayoutNamespaceCompatible {
 	/// Namespace for Visual Layout DSL APIs.
 	var tl: VisualLayoutNamespace<Self> {
 		VisualLayoutNamespace(base: self)
 	}
+    
+    /// Namespace type for constraint batch APIs.
+    static var tl: VisualLayoutNamespace<Self>.Type {
+        VisualLayoutNamespace<Self>.self
+    }
 }
