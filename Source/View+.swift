@@ -18,7 +18,7 @@ import UIKit
 /// It supports direct expressions, optionals, conditionals, switches,
 /// availability branches, and loops, then flattens everything into `[T]`.
 @resultBuilder
-public struct ZDTLComponetBuilder<T> {
+public struct ZDTLComponentBuilder<T> {
     // MARK: Nested Types
 
     public typealias Expression = T
@@ -129,7 +129,7 @@ extension VisualLayoutNamespace where Base: View {
     /// - Returns: The receiver (`base`) for chaining.
     @discardableResult
     func addComponents(
-        @ZDTLComponetBuilder<any ZDTLComponentsProtocol> _ components: () -> [any ZDTLComponentsProtocol]
+        @ZDTLComponentBuilder<any ZDTLComponentsProtocol> _ components: () -> [any ZDTLComponentsProtocol]
     ) -> Base {
         for item in components() {
             if let view = item as? View {
