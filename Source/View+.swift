@@ -109,7 +109,7 @@ extension CALayer: ZDTLComponentsProtocol {}
 
 extension LayoutGuide: ZDTLComponentsProtocol {}
 
-extension VisualLayoutNamespace where Base: View {
+extension ZDTinyLayoutNamespace where Base: View {
     /// Adds components to the receiver in declaration order.
     ///
     /// - Views are added via `addSubview(_:)`.

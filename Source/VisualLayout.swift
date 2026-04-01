@@ -240,7 +240,7 @@ public enum VisualLayoutBuilder {
 
 // MARK: - layout — tl namespace overloads
 
-public extension VisualLayoutNamespace where Base: VisualLayoutView {
+public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
     /// Builds vertical layout constraints in `base` using an ASCII-style DSL.
     ///
     /// Numeric/flexible spacing items control the vertical gaps between rows.

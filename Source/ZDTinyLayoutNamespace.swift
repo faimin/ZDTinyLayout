@@ -1,5 +1,5 @@
 //
-//  VisualLayoutNamespace.swift
+//  ZDTinyLayoutNamespace.swift
 //  ZDTinyLayout
 //
 //  Created by Zero.D.Saber on 2026/3/31.
@@ -14,7 +14,7 @@ import UIKit
 // MARK: - tl namespace
 
 /// Namespace proxy for visual layout APIs.
-public struct VisualLayoutNamespace<Base> {
+public struct ZDTinyLayoutNamespace<Base> {
 	internal let base: Base
 	internal init(base: Base) {
 		self.base = base
@@ -22,18 +22,18 @@ public struct VisualLayoutNamespace<Base> {
 }
 
 /// Marker protocol for `tl` namespace support.
-public protocol VisualLayoutNamespaceCompatible: AnyObject {}
+public protocol ZDTinyLayoutNamespaceCompatible: AnyObject {}
 
-extension NSObject: VisualLayoutNamespaceCompatible {}
+extension NSObject: ZDTinyLayoutNamespaceCompatible {}
 
-public extension VisualLayoutNamespaceCompatible {
+public extension ZDTinyLayoutNamespaceCompatible {
 	/// Namespace for Visual Layout DSL APIs.
-	var tl: VisualLayoutNamespace<Self> {
-		VisualLayoutNamespace(base: self)
+	var tl: ZDTinyLayoutNamespace<Self> {
+		ZDTinyLayoutNamespace(base: self)
 	}
     
     /// Namespace type for constraint batch APIs.
-    static var tl: VisualLayoutNamespace<Self>.Type {
-        VisualLayoutNamespace<Self>.self
+    static var tl: ZDTinyLayoutNamespace<Self>.Type {
+        ZDTinyLayoutNamespace<Self>.self
     }
 }
