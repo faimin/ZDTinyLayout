@@ -72,9 +72,9 @@
 		DA8D39602F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D395F2F7C23C6001DF3A6 /* NSLayoutConstraint+.swift */; };
 		DA8D39612F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D395F2F7C23C6001DF3A6 /* NSLayoutConstraint+.swift */; };
 		DA8D39622F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D395F2F7C23C6001DF3A6 /* NSLayoutConstraint+.swift */; };
-		DA8D39642F7C25D9001DF3A6 /* VisualLayoutNamespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D39632F7C25D9001DF3A6 /* VisualLayoutNamespace.swift */; };
-		DA8D39652F7C25D9001DF3A6 /* VisualLayoutNamespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D39632F7C25D9001DF3A6 /* VisualLayoutNamespace.swift */; };
-		DA8D39662F7C25D9001DF3A6 /* VisualLayoutNamespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D39632F7C25D9001DF3A6 /* VisualLayoutNamespace.swift */; };
+		DA8D39642F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D39632F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift */; };
+		DA8D39652F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D39632F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift */; };
+		DA8D39662F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D39632F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift */; };
 		DA8D396C2F7C2988001DF3A6 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D396B2F7C2982001DF3A6 /* View+.swift */; };
 		DA8D396D2F7C2988001DF3A6 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D396B2F7C2982001DF3A6 /* View+.swift */; };
 		DA8D396E2F7C2988001DF3A6 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D396B2F7C2982001DF3A6 /* View+.swift */; };
@@ -146,7 +146,7 @@
 		D469DCB41EB7A904000F3DDD /* Priority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
 		D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnchorGroupProvider.swift; sourceTree = "<group>"; };
 		DA8D395F2F7C23C6001DF3A6 /* NSLayoutConstraint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+.swift"; sourceTree = "<group>"; };
-		DA8D39632F7C25D9001DF3A6 /* VisualLayoutNamespace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualLayoutNamespace.swift; sourceTree = "<group>"; };
+		DA8D39632F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDTinyLayoutNamespace.swift; sourceTree = "<group>"; };
 		DA8D396B2F7C2982001DF3A6 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		F15462921E56842400C3948D /* ZDTinyLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZDTinyLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCFAC07D62F74C1A9359B1E7 /* VisualLayoutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisualLayoutCell.swift; path = Cells/VisualLayoutCell.swift; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 				BBE7C0D51FAB65B900DACD2D /* NSLayoutAnchor+MultiplierConstraints.swift */,
 				783E45FEB2DA4FF194160E4A /* VisualLayout.swift */,
 				64B335320E6643998419A43D /* VisualLayoutOperators.swift */,
-				DA8D39632F7C25D9001DF3A6 /* VisualLayoutNamespace.swift */,
+				DA8D39632F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift */,
 				DA8D395F2F7C23C6001DF3A6 /* NSLayoutConstraint+.swift */,
 				DA8D396B2F7C2982001DF3A6 /* View+.swift */,
 				3C2050AF1D3B20FD00995DF3 /* Info.plist */,
@@ -669,7 +669,7 @@
 				4DA4FFA06AEF4606809DBAAA /* VisualLayout.swift in Sources */,
 				2DBE95780B3F4DD6A05E9055 /* VisualLayoutOperators.swift in Sources */,
 				DA8D39622F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */,
-				DA8D39652F7C25D9001DF3A6 /* VisualLayoutNamespace.swift in Sources */,
+				DA8D39652F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -705,7 +705,7 @@
 				8794B929AF93436B91F4E3E1 /* VisualLayout.swift in Sources */,
 				AF183CA3B9F548139025139F /* VisualLayoutOperators.swift in Sources */,
 				DA8D39612F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */,
-				DA8D39642F7C25D9001DF3A6 /* VisualLayoutNamespace.swift in Sources */,
+				DA8D39642F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,7 +732,7 @@
 				750E547E7703420E94F27432 /* VisualLayout.swift in Sources */,
 				F3CC49F507C141B4B45D0344 /* VisualLayoutOperators.swift in Sources */,
 				DA8D39602F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */,
-				DA8D39662F7C25D9001DF3A6 /* VisualLayoutNamespace.swift in Sources */,
+				DA8D39662F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
