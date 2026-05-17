@@ -592,7 +592,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testLayoutAutoAddsGuideWithoutOwningView() {
-        let guide = VisualLayoutGuide()
+        let guide = LayoutGuide()
         XCTAssertNil(guide.owningView)
 
         let _: [NSLayoutConstraint] = container.tl.layoutConstraints {
@@ -603,7 +603,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testLayoutKeepsGuideAlreadyAddedToContainer() {
-        let guide = VisualLayoutGuide()
+        let guide = LayoutGuide()
         container.addLayoutGuide(guide)
         XCTAssertTrue(guide.owningView === container)
 
@@ -615,7 +615,7 @@ class VisualLayoutTests: XCTestCase {
     }
 
     func testGuideConstraintsAreGenerated() {
-        let guide = VisualLayoutGuide()
+        let guide = LayoutGuide()
         let constraints: [NSLayoutConstraint] = container.tl.layoutConstraints {
             |--guide--| /=/ 44
         }

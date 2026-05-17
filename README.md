@@ -103,7 +103,7 @@ let constraints = container.tl.layoutConstraints {
 You can also use the view-returning convenience overload:
 
 ```swift
-let card = VisualLayoutView().tl.layout {
+let card = View().tl.layout {
     12
     |--titleLabel--|
     8
@@ -150,10 +150,10 @@ Use `/=/` to set row item height, then `~` to set height constraint priority:
 
 ### Layout guides and auto-add behavior
 
-Rows accept both views and layout guides (`VisualLayoutGuide`, a shared platform alias also used by internal `LayoutGuide`):
+Rows accept both views and layout guides (`LayoutGuide`, a shared platform alias also used by internal `LayoutGuide`):
 
 ```swift
-let guide = VisualLayoutGuide()
+let guide = LayoutGuide()
 container.tl.layoutConstraints {
     |--guide--| /=/ 44
 }

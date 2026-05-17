@@ -44,7 +44,7 @@ public extension ZDTinyLayoutNamespace where Base: UIStackView {
 
 // MARK: - View modifiers
 
-public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
+public extension ZDTinyLayoutNamespace where Base: View {
     @discardableResult
     func width(_ w: CGFloat) -> Self {
         base.translatesAutoresizingMaskIntoConstraints = false
