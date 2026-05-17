@@ -92,6 +92,7 @@ public struct AnchorPair<T: LayoutAnchorType, U: LayoutAnchorType>: LayoutAnchor
 	
 }
 
+@MainActor
 internal extension AnchorPair {
 	
 	func finalize(constraintsEqualToConstant size: CGSize, priority: Priority = .required) -> ConstraintPair {
@@ -211,6 +212,7 @@ internal prefix func - (rhs: EdgeInsets) -> EdgeInsets {
 	)
 }
 
+@MainActor
 internal extension EdgeAnchors {
 	
 	init(horizontal: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>, vertical: AnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>) {
@@ -269,13 +271,13 @@ internal extension EdgeAnchors {
 
 internal struct ConstraintBuilder {
 	
-	typealias Horizontal = (NSLayoutXAxisAnchor, LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint
-	typealias Vertical = (NSLayoutYAxisAnchor, LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint
-	typealias Dimension = (NSLayoutDimension, LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint
+	typealias Horizontal = @MainActor (NSLayoutXAxisAnchor, LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint
+	typealias Vertical = @MainActor (NSLayoutYAxisAnchor, LayoutExpression<NSLayoutYAxisAnchor, CGFloat>) -> NSLayoutConstraint
+	typealias Dimension = @MainActor (NSLayoutDimension, LayoutExpression<NSLayoutDimension, CGFloat>) -> NSLayoutConstraint
 	
-	static let equality = ConstraintBuilder(horizontal: ==, vertical: ==, dimension: ==)
-	static let lessThanOrEqual = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=, dimension: <=)
-	static let greaterThanOrEqual = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=, dimension: >=)
+    static let equality = ConstraintBuilder(horizontal: ==, vertical: ==, dimension: ==)
+    static let lessThanOrEqual = ConstraintBuilder(leading: <=, top: <=, trailing: >=, bottom: >=, centerX: <=, centerY: <=, dimension: <=)
+    static let greaterThanOrEqual = ConstraintBuilder(leading: >=, top: >=, trailing: <=, bottom: <=, centerX: >=, centerY: >=, dimension: >=)
 	
 	var topBuilder: Vertical
 	var leadingBuilder: Horizontal
@@ -310,9 +312,10 @@ internal struct ConstraintBuilder {
 
 // MARK: - Batching
 
-internal var batches: [ConstraintBatch] = []
-internal var updateConstraintBehaviors: [ConstraintUpdateUnmatchedBehavior] = []
+nonisolated(unsafe) internal var batches: [ConstraintBatch] = []
+nonisolated(unsafe) internal var updateConstraintBehaviors: [ConstraintUpdateUnmatchedBehavior] = []
 
+@MainActor
 internal class ConstraintBatch {
 	
 	var constraints = [NSLayoutConstraint]()
@@ -331,6 +334,7 @@ internal class ConstraintBatch {
 /// otherwise executes the closure in a new batch.
 ///
 /// - Parameter closure: The work to perform inside of a batch
+@MainActor
 internal func performInBatch(closure: () -> Void) {
 	if batches.isEmpty {
 		batch(closure)
@@ -342,6 +346,7 @@ internal func performInBatch(closure: () -> Void) {
 
 // MARK: - Constraint Activation
 
+@MainActor
 internal func finalize(constraint: NSLayoutConstraint, withPriority priority: Priority = .required) -> NSLayoutConstraint {
 	// Only disable autoresizing constraints on the LHS item, which is the one definitely intended to be governed by Auto Layout
 	if let first = constraint.firstItem as? View {
@@ -369,6 +374,7 @@ internal func finalize(constraint: NSLayoutConstraint, withPriority priority: Pr
 	return constraint
 }
 
+@MainActor
 internal func matchingInstalledConstraint(for constraint: NSLayoutConstraint) -> NSLayoutConstraint? {
 	let containers = constraintContainerViews(for: constraint)
 	
@@ -383,6 +389,7 @@ internal func matchingInstalledConstraint(for constraint: NSLayoutConstraint) ->
 	return nil
 }
 
+@MainActor
 internal func constraintContainerViews(for constraint: NSLayoutConstraint) -> [View] {
 	let firstView = viewForConstraintItem(constraint.firstItem)
 	let secondView = viewForConstraintItem(constraint.secondItem)
@@ -402,6 +409,7 @@ internal func constraintContainerViews(for constraint: NSLayoutConstraint) -> [V
 	}
 }
 
+@MainActor
 internal func closestCommonSuperview(_ first: View, _ second: View) -> View? {
 	var candidate: View? = first
 	var otherCandidate: View? = second
@@ -415,6 +423,7 @@ internal func closestCommonSuperview(_ first: View, _ second: View) -> View? {
 	return candidate
 }
 
+@MainActor
 internal func superviewChain(startingAt view: View) -> [View] {
 	var chain: [View] = []
 	var current: View? = view
@@ -427,6 +436,7 @@ internal func superviewChain(startingAt view: View) -> [View] {
 	return chain
 }
 
+@MainActor
 internal func viewForConstraintItem(_ item: Any?) -> View? {
 	if let view = item as? View {
 		return view

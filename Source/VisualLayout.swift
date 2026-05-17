@@ -37,6 +37,7 @@ import UIKit
 
 /// A type that can participate in a visual layout row — either a view or a layout guide.
 /// Exposes the layout anchors needed to build horizontal and vertical constraints.
+@MainActor
 public protocol VisualLayoutAnchorable: AnyObject {
 	var leadingAnchor: NSLayoutXAxisAnchor { get }
 	var trailingAnchor: NSLayoutXAxisAnchor { get }
@@ -73,11 +74,11 @@ public struct VisualLayoutArrayItems: ExpressibleByArrayLiteral {
 	}
 }
 
-extension VisualLayoutView: VisualLayoutArrayElementConvertible {
+extension VisualLayoutView: @preconcurrency VisualLayoutArrayElementConvertible {
 	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
 }
 
-extension VisualLayoutGuide: VisualLayoutArrayElementConvertible {
+extension VisualLayoutGuide: @preconcurrency VisualLayoutArrayElementConvertible {
 	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
 }
 
@@ -401,6 +402,7 @@ public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
 
 // MARK: - Private Constraint Helpers
 
+@MainActor
 private func topConstraint(
 	from anchor: NSLayoutYAxisAnchor,
 	to prevAnchor: NSLayoutYAxisAnchor,
@@ -422,6 +424,7 @@ private func topConstraint(
 	return anchor.constraint(equalTo: prevAnchor, constant: 0)
 }
 
+@MainActor
 private func bottomConstraint(
 	from bottomAnchor: NSLayoutYAxisAnchor,
 	to prevAnchor: NSLayoutYAxisAnchor,
@@ -443,6 +446,7 @@ private func bottomConstraint(
 	return bottomAnchor.constraint(equalTo: prevAnchor, constant: 0)
 }
 
+@MainActor
 private func heightConstraint(
 	for element: any VisualLayoutAnchorable,
 	value: CGFloat,

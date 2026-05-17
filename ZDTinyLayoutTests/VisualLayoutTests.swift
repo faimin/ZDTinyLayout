@@ -12,6 +12,7 @@ import UIKit
 @testable import ZDTinyLayout
 import XCTest
 
+@MainActor
 class VisualLayoutTests: XCTestCase {
 
     let container = TestView()

@@ -35,6 +35,7 @@ let cgEpsilon: CGFloat = 0.00001
 let fEpsilon: Float = 0.00001
 let dEpsilon: Double = 0.00001
 
+@MainActor
 class ZDTinyLayoutTests: XCTestCase {
 
     let view1 = TestView()
