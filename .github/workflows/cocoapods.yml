@@ -16,7 +16,7 @@ jobs:
         platform: [ios, tvos, osx, visionos]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install CocoaPods
         run: gem install cocoapods --no-document
