@@ -12,11 +12,12 @@ Pod::Spec.new do |s|
 	"Zero.D.Saber" => "fuxianchao@gmail.com"
   }
   s.source           = { :git => "https://github.com/faimin/ZDTinyLayout.git", :tag => s.version.to_s }
-  s.swift_versions    = ['5.9']
+  s.swift_versions    = ['6']
 
-  s.ios.deployment_target = '9.0'
-  s.tvos.deployment_target = '9.0'
-  s.osx.deployment_target = '10.11'
+  s.ios.deployment_target = '12.0'
+  s.tvos.deployment_target = '12.0'
+  s.osx.deployment_target = '10.14'
+  s.watchos.deployment_target = '5.0'
   s.visionos.deployment_target = '1.0'
   s.requires_arc = true
 
