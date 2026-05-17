@@ -69,54 +69,57 @@
 		D469DCB71EB7A975000F3DDD /* AnchorGroupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */; };
 		D469DCB81EB7AB2F000F3DDD /* AnchorGroupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */; };
 		D469DCB91EB7AB2F000F3DDD /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D469DCB41EB7A904000F3DDD /* Priority.swift */; };
-		DA2983C02FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B72FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift */; };
-		DA2983C12FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B62FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift */; };
-		DA2983C22FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BD2FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift */; };
-		DA2983C32FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B42FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift */; };
-		DA2983C42FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BF2FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift */; };
-		DA2983C52FB8D7AA009B57D6 /* ZDTLAlignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B02FB8D7AA009B57D6 /* ZDTLAlignmentView.swift */; };
-		DA2983C62FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B82FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift */; };
-		DA2983C72FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BA2FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift */; };
-		DA2983C82FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B22FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift */; };
-		DA2983C92FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B52FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift */; };
-		DA2983CA2FB8D7AA009B57D6 /* ZDTLStackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B32FB8D7AA009B57D6 /* ZDTLStackable.swift */; };
-		DA2983CB2FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B92FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift */; };
-		DA2983CC2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BB2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift */; };
-		DA2983CD2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BC2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift */; };
-		DA2983CE2FB8D7AA009B57D6 /* ZDTLAttachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B12FB8D7AA009B57D6 /* ZDTLAttachable.swift */; };
-		DA2983CF2FB8D7AA009B57D6 /* ZDTLStackUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BE2FB8D7AA009B57D6 /* ZDTLStackUI.swift */; };
-		DA2983D02FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B72FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift */; };
-		DA2983D12FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B62FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift */; };
-		DA2983D22FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BD2FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift */; };
-		DA2983D32FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B42FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift */; };
-		DA2983D42FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BF2FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift */; };
-		DA2983D52FB8D7AA009B57D6 /* ZDTLAlignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B02FB8D7AA009B57D6 /* ZDTLAlignmentView.swift */; };
-		DA2983D62FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B82FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift */; };
-		DA2983D72FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BA2FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift */; };
-		DA2983D82FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B22FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift */; };
-		DA2983D92FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B52FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift */; };
-		DA2983DA2FB8D7AA009B57D6 /* ZDTLStackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B32FB8D7AA009B57D6 /* ZDTLStackable.swift */; };
-		DA2983DB2FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B92FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift */; };
-		DA2983DC2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BB2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift */; };
-		DA2983DD2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BC2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift */; };
-		DA2983DE2FB8D7AA009B57D6 /* ZDTLAttachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B12FB8D7AA009B57D6 /* ZDTLAttachable.swift */; };
-		DA2983DF2FB8D7AA009B57D6 /* ZDTLStackUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BE2FB8D7AA009B57D6 /* ZDTLStackUI.swift */; };
-		DA2983E02FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B72FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift */; };
-		DA2983E12FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B62FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift */; };
-		DA2983E22FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BD2FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift */; };
-		DA2983E32FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B42FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift */; };
-		DA2983E42FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BF2FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift */; };
-		DA2983E52FB8D7AA009B57D6 /* ZDTLAlignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B02FB8D7AA009B57D6 /* ZDTLAlignmentView.swift */; };
-		DA2983E62FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B82FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift */; };
-		DA2983E72FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BA2FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift */; };
-		DA2983E82FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B22FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift */; };
-		DA2983E92FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B52FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift */; };
-		DA2983EA2FB8D7AA009B57D6 /* ZDTLStackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B32FB8D7AA009B57D6 /* ZDTLStackable.swift */; };
-		DA2983EB2FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B92FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift */; };
-		DA2983EC2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BB2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift */; };
-		DA2983ED2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BC2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift */; };
-		DA2983EE2FB8D7AA009B57D6 /* ZDTLAttachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B12FB8D7AA009B57D6 /* ZDTLAttachable.swift */; };
-		DA2983EF2FB8D7AA009B57D6 /* ZDTLStackUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BE2FB8D7AA009B57D6 /* ZDTLStackUI.swift */; };
+		DA2983C02FB8D7AA009B57D6 /* Stackable+Hairlines.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B72FB8D7AA009B57D6 /* Stackable+Hairlines.swift */; };
+		DA2983C12FB8D7AA009B57D6 /* Stackable+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B62FB8D7AA009B57D6 /* Stackable+Debug.swift */; };
+		DA2983C22FB8D7AA009B57D6 /* StackableUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BD2FB8D7AA009B57D6 /* StackableUtilities.swift */; };
+		DA2983C32FB8D7AA009B57D6 /* Stackable+A11y.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B42FB8D7AA009B57D6 /* Stackable+A11y.swift */; };
+		DA2983C42FB8D7AA009B57D6 /* View+BindVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BF2FB8D7AA009B57D6 /* View+BindVisible.swift */; };
+		DA2983C52FB8D7AA009B57D6 /* AlignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B02FB8D7AA009B57D6 /* AlignmentView.swift */; };
+		DA2983C62FB8D7AA009B57D6 /* Stackable+Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B82FB8D7AA009B57D6 /* Stackable+Spacing.swift */; };
+		DA2983C72FB8D7AA009B57D6 /* Stackable+ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BA2FB8D7AA009B57D6 /* Stackable+ViewModifier.swift */; };
+		DA2983C82FB8D7AA009B57D6 /* ScrollingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B22FB8D7AA009B57D6 /* ScrollingStackView.swift */; };
+		DA2983C92FB8D7AA009B57D6 /* Stackable+Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B52FB8D7AA009B57D6 /* Stackable+Alignment.swift */; };
+		DA2983CA2FB8D7AA009B57D6 /* Stackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B32FB8D7AA009B57D6 /* Stackable.swift */; };
+		DA2983CB2FB8D7AA009B57D6 /* Stackable+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B92FB8D7AA009B57D6 /* Stackable+Utilities.swift */; };
+		DA2983CC2FB8D7AA009B57D6 /* Stackable+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BB2FB8D7AA009B57D6 /* Stackable+Views.swift */; };
+		DA2983CD2FB8D7AA009B57D6 /* StackableBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BC2FB8D7AA009B57D6 /* StackableBuilder.swift */; };
+		DA2983CE2FB8D7AA009B57D6 /* Attachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B12FB8D7AA009B57D6 /* Attachable.swift */; };
+		DA2983CF2FB8D7AA009B57D6 /* StackUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BE2FB8D7AA009B57D6 /* StackUI.swift */; };
+		DA2983D02FB8D7AA009B57D6 /* Stackable+Hairlines.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B72FB8D7AA009B57D6 /* Stackable+Hairlines.swift */; };
+		DA2983D12FB8D7AA009B57D6 /* Stackable+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B62FB8D7AA009B57D6 /* Stackable+Debug.swift */; };
+		DA2983D22FB8D7AA009B57D6 /* StackableUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BD2FB8D7AA009B57D6 /* StackableUtilities.swift */; };
+		DA2983D32FB8D7AA009B57D6 /* Stackable+A11y.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B42FB8D7AA009B57D6 /* Stackable+A11y.swift */; };
+		DA2983D42FB8D7AA009B57D6 /* View+BindVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BF2FB8D7AA009B57D6 /* View+BindVisible.swift */; };
+		DA2983D52FB8D7AA009B57D6 /* AlignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B02FB8D7AA009B57D6 /* AlignmentView.swift */; };
+		DA2983D62FB8D7AA009B57D6 /* Stackable+Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B82FB8D7AA009B57D6 /* Stackable+Spacing.swift */; };
+		DA2983D72FB8D7AA009B57D6 /* Stackable+ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BA2FB8D7AA009B57D6 /* Stackable+ViewModifier.swift */; };
+		DA2983D82FB8D7AA009B57D6 /* ScrollingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B22FB8D7AA009B57D6 /* ScrollingStackView.swift */; };
+		DA2983D92FB8D7AA009B57D6 /* Stackable+Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B52FB8D7AA009B57D6 /* Stackable+Alignment.swift */; };
+		DA2983DA2FB8D7AA009B57D6 /* Stackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B32FB8D7AA009B57D6 /* Stackable.swift */; };
+		DA2983DB2FB8D7AA009B57D6 /* Stackable+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B92FB8D7AA009B57D6 /* Stackable+Utilities.swift */; };
+		DA2983DC2FB8D7AA009B57D6 /* Stackable+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BB2FB8D7AA009B57D6 /* Stackable+Views.swift */; };
+		DA2983DD2FB8D7AA009B57D6 /* StackableBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BC2FB8D7AA009B57D6 /* StackableBuilder.swift */; };
+		DA2983DE2FB8D7AA009B57D6 /* Attachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B12FB8D7AA009B57D6 /* Attachable.swift */; };
+		DA2983DF2FB8D7AA009B57D6 /* StackUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BE2FB8D7AA009B57D6 /* StackUI.swift */; };
+		DA2983E02FB8D7AA009B57D6 /* Stackable+Hairlines.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B72FB8D7AA009B57D6 /* Stackable+Hairlines.swift */; };
+		DA2983E12FB8D7AA009B57D6 /* Stackable+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B62FB8D7AA009B57D6 /* Stackable+Debug.swift */; };
+		DA2983E22FB8D7AA009B57D6 /* StackableUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BD2FB8D7AA009B57D6 /* StackableUtilities.swift */; };
+		DA2983E32FB8D7AA009B57D6 /* Stackable+A11y.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B42FB8D7AA009B57D6 /* Stackable+A11y.swift */; };
+		DA2983E42FB8D7AA009B57D6 /* View+BindVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BF2FB8D7AA009B57D6 /* View+BindVisible.swift */; };
+		DA2983E52FB8D7AA009B57D6 /* AlignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B02FB8D7AA009B57D6 /* AlignmentView.swift */; };
+		DA2983E62FB8D7AA009B57D6 /* Stackable+Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B82FB8D7AA009B57D6 /* Stackable+Spacing.swift */; };
+		DA2983E72FB8D7AA009B57D6 /* Stackable+ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BA2FB8D7AA009B57D6 /* Stackable+ViewModifier.swift */; };
+		DA2983E82FB8D7AA009B57D6 /* ScrollingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B22FB8D7AA009B57D6 /* ScrollingStackView.swift */; };
+		DA2983E92FB8D7AA009B57D6 /* Stackable+Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B52FB8D7AA009B57D6 /* Stackable+Alignment.swift */; };
+		DA2983EA2FB8D7AA009B57D6 /* Stackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B32FB8D7AA009B57D6 /* Stackable.swift */; };
+		DA2983EB2FB8D7AA009B57D6 /* Stackable+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B92FB8D7AA009B57D6 /* Stackable+Utilities.swift */; };
+		DA2983EC2FB8D7AA009B57D6 /* Stackable+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BB2FB8D7AA009B57D6 /* Stackable+Views.swift */; };
+		DA2983ED2FB8D7AA009B57D6 /* StackableBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BC2FB8D7AA009B57D6 /* StackableBuilder.swift */; };
+		DA2983EE2FB8D7AA009B57D6 /* Attachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983B12FB8D7AA009B57D6 /* Attachable.swift */; };
+		DA2983EF2FB8D7AA009B57D6 /* StackUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983BE2FB8D7AA009B57D6 /* StackUI.swift */; };
+		DA2983F12FB998A5009B57D6 /* StackableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983F02FB998A5009B57D6 /* StackableTests.swift */; };
+		DA2983F22FB998A5009B57D6 /* StackableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983F02FB998A5009B57D6 /* StackableTests.swift */; };
+		DA2983F32FB998A5009B57D6 /* StackableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2983F02FB998A5009B57D6 /* StackableTests.swift */; };
 		DA8D39602F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D395F2F7C23C6001DF3A6 /* NSLayoutConstraint+.swift */; };
 		DA8D39612F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D395F2F7C23C6001DF3A6 /* NSLayoutConstraint+.swift */; };
 		DA8D39622F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8D395F2F7C23C6001DF3A6 /* NSLayoutConstraint+.swift */; };
@@ -193,22 +196,23 @@
 		D401673E1EB7A58D0025DCA5 /* Compatability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compatability.swift; sourceTree = "<group>"; };
 		D469DCB41EB7A904000F3DDD /* Priority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
 		D469DCB61EB7A975000F3DDD /* AnchorGroupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnchorGroupProvider.swift; sourceTree = "<group>"; };
-		DA2983B02FB8D7AA009B57D6 /* ZDTLAlignmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDTLAlignmentView.swift; sourceTree = "<group>"; };
-		DA2983B12FB8D7AA009B57D6 /* ZDTLAttachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDTLAttachable.swift; sourceTree = "<group>"; };
-		DA2983B22FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDTLScrollingStackView.swift; sourceTree = "<group>"; };
-		DA2983B32FB8D7AA009B57D6 /* ZDTLStackable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDTLStackable.swift; sourceTree = "<group>"; };
-		DA2983B42FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZDTLStackable+A11y.swift"; sourceTree = "<group>"; };
-		DA2983B52FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZDTLStackable+Alignment.swift"; sourceTree = "<group>"; };
-		DA2983B62FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZDTLStackable+Debug.swift"; sourceTree = "<group>"; };
-		DA2983B72FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZDTLStackable+Hairlines.swift"; sourceTree = "<group>"; };
-		DA2983B82FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZDTLStackable+Spacing.swift"; sourceTree = "<group>"; };
-		DA2983B92FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZDTLStackable+Utilities.swift"; sourceTree = "<group>"; };
-		DA2983BA2FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZDTLStackable+ViewModifier.swift"; sourceTree = "<group>"; };
-		DA2983BB2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZDTLStackable+Views.swift"; sourceTree = "<group>"; };
-		DA2983BC2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDTLStackableBuilder.swift; sourceTree = "<group>"; };
-		DA2983BD2FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDTLStackableUtilities.swift; sourceTree = "<group>"; };
-		DA2983BE2FB8D7AA009B57D6 /* ZDTLStackUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDTLStackUI.swift; sourceTree = "<group>"; };
-		DA2983BF2FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZDTLView+BindVisible.swift"; sourceTree = "<group>"; };
+		DA2983B02FB8D7AA009B57D6 /* AlignmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignmentView.swift; sourceTree = "<group>"; };
+		DA2983B12FB8D7AA009B57D6 /* Attachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attachable.swift; sourceTree = "<group>"; };
+		DA2983B22FB8D7AA009B57D6 /* ScrollingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingStackView.swift; sourceTree = "<group>"; };
+		DA2983B32FB8D7AA009B57D6 /* Stackable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stackable.swift; sourceTree = "<group>"; };
+		DA2983B42FB8D7AA009B57D6 /* Stackable+A11y.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stackable+A11y.swift"; sourceTree = "<group>"; };
+		DA2983B52FB8D7AA009B57D6 /* Stackable+Alignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stackable+Alignment.swift"; sourceTree = "<group>"; };
+		DA2983B62FB8D7AA009B57D6 /* Stackable+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stackable+Debug.swift"; sourceTree = "<group>"; };
+		DA2983B72FB8D7AA009B57D6 /* Stackable+Hairlines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stackable+Hairlines.swift"; sourceTree = "<group>"; };
+		DA2983B82FB8D7AA009B57D6 /* Stackable+Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stackable+Spacing.swift"; sourceTree = "<group>"; };
+		DA2983B92FB8D7AA009B57D6 /* Stackable+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stackable+Utilities.swift"; sourceTree = "<group>"; };
+		DA2983BA2FB8D7AA009B57D6 /* Stackable+ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stackable+ViewModifier.swift"; sourceTree = "<group>"; };
+		DA2983BB2FB8D7AA009B57D6 /* Stackable+Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stackable+Views.swift"; sourceTree = "<group>"; };
+		DA2983BC2FB8D7AA009B57D6 /* StackableBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackableBuilder.swift; sourceTree = "<group>"; };
+		DA2983BD2FB8D7AA009B57D6 /* StackableUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackableUtilities.swift; sourceTree = "<group>"; };
+		DA2983BE2FB8D7AA009B57D6 /* StackUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackUI.swift; sourceTree = "<group>"; };
+		DA2983BF2FB8D7AA009B57D6 /* View+BindVisible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BindVisible.swift"; sourceTree = "<group>"; };
+		DA2983F02FB998A5009B57D6 /* StackableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackableTests.swift; sourceTree = "<group>"; };
 		DA8D395F2F7C23C6001DF3A6 /* NSLayoutConstraint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+.swift"; sourceTree = "<group>"; };
 		DA8D39632F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDTinyLayoutNamespace.swift; sourceTree = "<group>"; };
 		DA8D396B2F7C2982001DF3A6 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
@@ -339,22 +343,22 @@
 				DA8D39632F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift */,
 				DA8D395F2F7C23C6001DF3A6 /* NSLayoutConstraint+.swift */,
 				DA8D396B2F7C2982001DF3A6 /* View+.swift */,
-				DA2983B02FB8D7AA009B57D6 /* ZDTLAlignmentView.swift */,
-				DA2983B12FB8D7AA009B57D6 /* ZDTLAttachable.swift */,
-				DA2983B22FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift */,
-				DA2983B32FB8D7AA009B57D6 /* ZDTLStackable.swift */,
-				DA2983B42FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift */,
-				DA2983B52FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift */,
-				DA2983B62FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift */,
-				DA2983B72FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift */,
-				DA2983B82FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift */,
-				DA2983B92FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift */,
-				DA2983BA2FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift */,
-				DA2983BB2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift */,
-				DA2983BC2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift */,
-				DA2983BD2FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift */,
-				DA2983BE2FB8D7AA009B57D6 /* ZDTLStackUI.swift */,
-				DA2983BF2FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift */,
+				DA2983B02FB8D7AA009B57D6 /* AlignmentView.swift */,
+				DA2983B12FB8D7AA009B57D6 /* Attachable.swift */,
+				DA2983B22FB8D7AA009B57D6 /* ScrollingStackView.swift */,
+				DA2983B32FB8D7AA009B57D6 /* Stackable.swift */,
+				DA2983B42FB8D7AA009B57D6 /* Stackable+A11y.swift */,
+				DA2983B52FB8D7AA009B57D6 /* Stackable+Alignment.swift */,
+				DA2983B62FB8D7AA009B57D6 /* Stackable+Debug.swift */,
+				DA2983B72FB8D7AA009B57D6 /* Stackable+Hairlines.swift */,
+				DA2983B82FB8D7AA009B57D6 /* Stackable+Spacing.swift */,
+				DA2983B92FB8D7AA009B57D6 /* Stackable+Utilities.swift */,
+				DA2983BA2FB8D7AA009B57D6 /* Stackable+ViewModifier.swift */,
+				DA2983BB2FB8D7AA009B57D6 /* Stackable+Views.swift */,
+				DA2983BC2FB8D7AA009B57D6 /* StackableBuilder.swift */,
+				DA2983BD2FB8D7AA009B57D6 /* StackableUtilities.swift */,
+				DA2983BE2FB8D7AA009B57D6 /* StackUI.swift */,
+				DA2983BF2FB8D7AA009B57D6 /* View+BindVisible.swift */,
 				3C2050AF1D3B20FD00995DF3 /* Info.plist */,
 			);
 			name = ZDTinyLayout;
@@ -364,6 +368,7 @@
 		7A39D62F1EB53E1100BDE9C0 /* ZDTinyLayoutTests */ = {
 			isa = PBXGroup;
 			children = (
+				DA2983F02FB998A5009B57D6 /* StackableTests.swift */,
 				C2271C292F74E79B00BE7676 /* VisualLayoutTests.swift */,
 				7A39D6301EB53E1100BDE9C0 /* ZDTinyLayoutTests.swift */,
 				7A39D6321EB53E1100BDE9C0 /* Info.plist */,
@@ -747,22 +752,22 @@
 				DA8D396D2F7C2988001DF3A6 /* View+.swift in Sources */,
 				D469DCB51EB7A904000F3DDD /* Priority.swift in Sources */,
 				4DA4FFA06AEF4606809DBAAA /* VisualLayout.swift in Sources */,
-				DA2983D02FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift in Sources */,
-				DA2983D12FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift in Sources */,
-				DA2983D22FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift in Sources */,
-				DA2983D32FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift in Sources */,
-				DA2983D42FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift in Sources */,
-				DA2983D52FB8D7AA009B57D6 /* ZDTLAlignmentView.swift in Sources */,
-				DA2983D62FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift in Sources */,
-				DA2983D72FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift in Sources */,
-				DA2983D82FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift in Sources */,
-				DA2983D92FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift in Sources */,
-				DA2983DA2FB8D7AA009B57D6 /* ZDTLStackable.swift in Sources */,
-				DA2983DB2FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift in Sources */,
-				DA2983DC2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift in Sources */,
-				DA2983DD2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift in Sources */,
-				DA2983DE2FB8D7AA009B57D6 /* ZDTLAttachable.swift in Sources */,
-				DA2983DF2FB8D7AA009B57D6 /* ZDTLStackUI.swift in Sources */,
+				DA2983D02FB8D7AA009B57D6 /* Stackable+Hairlines.swift in Sources */,
+				DA2983D12FB8D7AA009B57D6 /* Stackable+Debug.swift in Sources */,
+				DA2983D22FB8D7AA009B57D6 /* StackableUtilities.swift in Sources */,
+				DA2983D32FB8D7AA009B57D6 /* Stackable+A11y.swift in Sources */,
+				DA2983D42FB8D7AA009B57D6 /* View+BindVisible.swift in Sources */,
+				DA2983D52FB8D7AA009B57D6 /* AlignmentView.swift in Sources */,
+				DA2983D62FB8D7AA009B57D6 /* Stackable+Spacing.swift in Sources */,
+				DA2983D72FB8D7AA009B57D6 /* Stackable+ViewModifier.swift in Sources */,
+				DA2983D82FB8D7AA009B57D6 /* ScrollingStackView.swift in Sources */,
+				DA2983D92FB8D7AA009B57D6 /* Stackable+Alignment.swift in Sources */,
+				DA2983DA2FB8D7AA009B57D6 /* Stackable.swift in Sources */,
+				DA2983DB2FB8D7AA009B57D6 /* Stackable+Utilities.swift in Sources */,
+				DA2983DC2FB8D7AA009B57D6 /* Stackable+Views.swift in Sources */,
+				DA2983DD2FB8D7AA009B57D6 /* StackableBuilder.swift in Sources */,
+				DA2983DE2FB8D7AA009B57D6 /* Attachable.swift in Sources */,
+				DA2983DF2FB8D7AA009B57D6 /* StackUI.swift in Sources */,
 				2DBE95780B3F4DD6A05E9055 /* VisualLayoutOperators.swift in Sources */,
 				DA8D39622F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */,
 				DA8D39652F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift in Sources */,
@@ -774,6 +779,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A39D6311EB53E1100BDE9C0 /* ZDTinyLayoutTests.swift in Sources */,
+				DA2983F12FB998A5009B57D6 /* StackableTests.swift in Sources */,
 				C2271C2C2F74E79C00BE7676 /* VisualLayoutTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -783,6 +789,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD71F7A31EB7DD2D008C1CC4 /* ZDTinyLayoutTests.swift in Sources */,
+				DA2983F32FB998A5009B57D6 /* StackableTests.swift in Sources */,
 				C2271C2B2F74E79C00BE7676 /* VisualLayoutTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -799,22 +806,22 @@
 				DA8D396C2F7C2988001DF3A6 /* View+.swift in Sources */,
 				CD71F7A71EB7DD38008C1CC4 /* Priority.swift in Sources */,
 				8794B929AF93436B91F4E3E1 /* VisualLayout.swift in Sources */,
-				DA2983C02FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift in Sources */,
-				DA2983C12FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift in Sources */,
-				DA2983C22FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift in Sources */,
-				DA2983C32FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift in Sources */,
-				DA2983C42FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift in Sources */,
-				DA2983C52FB8D7AA009B57D6 /* ZDTLAlignmentView.swift in Sources */,
-				DA2983C62FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift in Sources */,
-				DA2983C72FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift in Sources */,
-				DA2983C82FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift in Sources */,
-				DA2983C92FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift in Sources */,
-				DA2983CA2FB8D7AA009B57D6 /* ZDTLStackable.swift in Sources */,
-				DA2983CB2FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift in Sources */,
-				DA2983CC2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift in Sources */,
-				DA2983CD2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift in Sources */,
-				DA2983CE2FB8D7AA009B57D6 /* ZDTLAttachable.swift in Sources */,
-				DA2983CF2FB8D7AA009B57D6 /* ZDTLStackUI.swift in Sources */,
+				DA2983C02FB8D7AA009B57D6 /* Stackable+Hairlines.swift in Sources */,
+				DA2983C12FB8D7AA009B57D6 /* Stackable+Debug.swift in Sources */,
+				DA2983C22FB8D7AA009B57D6 /* StackableUtilities.swift in Sources */,
+				DA2983C32FB8D7AA009B57D6 /* Stackable+A11y.swift in Sources */,
+				DA2983C42FB8D7AA009B57D6 /* View+BindVisible.swift in Sources */,
+				DA2983C52FB8D7AA009B57D6 /* AlignmentView.swift in Sources */,
+				DA2983C62FB8D7AA009B57D6 /* Stackable+Spacing.swift in Sources */,
+				DA2983C72FB8D7AA009B57D6 /* Stackable+ViewModifier.swift in Sources */,
+				DA2983C82FB8D7AA009B57D6 /* ScrollingStackView.swift in Sources */,
+				DA2983C92FB8D7AA009B57D6 /* Stackable+Alignment.swift in Sources */,
+				DA2983CA2FB8D7AA009B57D6 /* Stackable.swift in Sources */,
+				DA2983CB2FB8D7AA009B57D6 /* Stackable+Utilities.swift in Sources */,
+				DA2983CC2FB8D7AA009B57D6 /* Stackable+Views.swift in Sources */,
+				DA2983CD2FB8D7AA009B57D6 /* StackableBuilder.swift in Sources */,
+				DA2983CE2FB8D7AA009B57D6 /* Attachable.swift in Sources */,
+				DA2983CF2FB8D7AA009B57D6 /* StackUI.swift in Sources */,
 				AF183CA3B9F548139025139F /* VisualLayoutOperators.swift in Sources */,
 				DA8D39612F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */,
 				DA8D39642F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift in Sources */,
@@ -826,6 +833,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD71F7A41EB7DD2E008C1CC4 /* ZDTinyLayoutTests.swift in Sources */,
+				DA2983F22FB998A5009B57D6 /* StackableTests.swift in Sources */,
 				C2271C2A2F74E79C00BE7676 /* VisualLayoutTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -842,22 +850,22 @@
 				DA8D396E2F7C2988001DF3A6 /* View+.swift in Sources */,
 				D469DCB81EB7AB2F000F3DDD /* AnchorGroupProvider.swift in Sources */,
 				750E547E7703420E94F27432 /* VisualLayout.swift in Sources */,
-				DA2983E02FB8D7AA009B57D6 /* ZDTLStackable+Hairlines.swift in Sources */,
-				DA2983E12FB8D7AA009B57D6 /* ZDTLStackable+Debug.swift in Sources */,
-				DA2983E22FB8D7AA009B57D6 /* ZDTLStackableUtilities.swift in Sources */,
-				DA2983E32FB8D7AA009B57D6 /* ZDTLStackable+A11y.swift in Sources */,
-				DA2983E42FB8D7AA009B57D6 /* ZDTLView+BindVisible.swift in Sources */,
-				DA2983E52FB8D7AA009B57D6 /* ZDTLAlignmentView.swift in Sources */,
-				DA2983E62FB8D7AA009B57D6 /* ZDTLStackable+Spacing.swift in Sources */,
-				DA2983E72FB8D7AA009B57D6 /* ZDTLStackable+ViewModifier.swift in Sources */,
-				DA2983E82FB8D7AA009B57D6 /* ZDTLScrollingStackView.swift in Sources */,
-				DA2983E92FB8D7AA009B57D6 /* ZDTLStackable+Alignment.swift in Sources */,
-				DA2983EA2FB8D7AA009B57D6 /* ZDTLStackable.swift in Sources */,
-				DA2983EB2FB8D7AA009B57D6 /* ZDTLStackable+Utilities.swift in Sources */,
-				DA2983EC2FB8D7AA009B57D6 /* ZDTLStackable+Views.swift in Sources */,
-				DA2983ED2FB8D7AA009B57D6 /* ZDTLStackableBuilder.swift in Sources */,
-				DA2983EE2FB8D7AA009B57D6 /* ZDTLAttachable.swift in Sources */,
-				DA2983EF2FB8D7AA009B57D6 /* ZDTLStackUI.swift in Sources */,
+				DA2983E02FB8D7AA009B57D6 /* Stackable+Hairlines.swift in Sources */,
+				DA2983E12FB8D7AA009B57D6 /* Stackable+Debug.swift in Sources */,
+				DA2983E22FB8D7AA009B57D6 /* StackableUtilities.swift in Sources */,
+				DA2983E32FB8D7AA009B57D6 /* Stackable+A11y.swift in Sources */,
+				DA2983E42FB8D7AA009B57D6 /* View+BindVisible.swift in Sources */,
+				DA2983E52FB8D7AA009B57D6 /* AlignmentView.swift in Sources */,
+				DA2983E62FB8D7AA009B57D6 /* Stackable+Spacing.swift in Sources */,
+				DA2983E72FB8D7AA009B57D6 /* Stackable+ViewModifier.swift in Sources */,
+				DA2983E82FB8D7AA009B57D6 /* ScrollingStackView.swift in Sources */,
+				DA2983E92FB8D7AA009B57D6 /* Stackable+Alignment.swift in Sources */,
+				DA2983EA2FB8D7AA009B57D6 /* Stackable.swift in Sources */,
+				DA2983EB2FB8D7AA009B57D6 /* Stackable+Utilities.swift in Sources */,
+				DA2983EC2FB8D7AA009B57D6 /* Stackable+Views.swift in Sources */,
+				DA2983ED2FB8D7AA009B57D6 /* StackableBuilder.swift in Sources */,
+				DA2983EE2FB8D7AA009B57D6 /* Attachable.swift in Sources */,
+				DA2983EF2FB8D7AA009B57D6 /* StackUI.swift in Sources */,
 				F3CC49F507C141B4B45D0344 /* VisualLayoutOperators.swift in Sources */,
 				DA8D39602F7C23C9001DF3A6 /* NSLayoutConstraint+.swift in Sources */,
 				DA8D39662F7C25D9001DF3A6 /* ZDTinyLayoutNamespace.swift in Sources */,
@@ -989,7 +997,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1042,7 +1050,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1101,7 +1109,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ZDTinyLayoutTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1115,7 +1123,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ZDTinyLayoutTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rightpoint.$(PRODUCT_NAME)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1169,7 +1177,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 12.0;
+				TVOS_DEPLOYMENT_TARGET = 15.6;
 			};
 			name = Debug;
 		};
@@ -1191,7 +1199,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 12.0;
+				TVOS_DEPLOYMENT_TARGET = 15.6;
 			};
 			name = Release;
 		};
@@ -1207,7 +1215,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 12.0;
+				TVOS_DEPLOYMENT_TARGET = 15.6;
 			};
 			name = Debug;
 		};
@@ -1223,7 +1231,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 12.0;
+				TVOS_DEPLOYMENT_TARGET = 15.6;
 			};
 			name = Release;
 		};

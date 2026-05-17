@@ -1,5 +1,5 @@
 //
-//  ZDTLStackable+Debug.swift
+//  Stackable+Debug.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
@@ -18,14 +18,14 @@ import UIKit
 
 public extension ZDTinyLayoutNamespace where Base: UIStackView {
 
-    var debug: ZDTLDebugExtension {
-        get { return ZDTLDebugExtension(base) }
+    var debug: DebugExtension {
+        get { return DebugExtension(base) }
         set {}
     }
 }
 
 @MainActor
-public class ZDTLDebugExtension {
+public class DebugExtension {
 
     public private(set) var stack: UIStackView
     public init(_ stack: UIStackView) {
@@ -35,7 +35,7 @@ public class ZDTLDebugExtension {
 
 // MARK: - Debug public API
 
-public extension ZDTLDebugExtension {
+public extension DebugExtension {
 
     func showOutlines() {
         stack.debug_outline(recurse: true)
@@ -79,7 +79,7 @@ private extension UIView {
             $0.accessibilityIdentifier == UIStackView.tl.axID.debug.outline
         }) else { return }
 
-        let view = ZDTLDebugView(.init(
+        let view = DebugView(.init(
             shape: .outline,
             lineStyle: .solid,
             color: .groupTableViewBackground,
@@ -122,7 +122,7 @@ private extension UIView {
             $0.accessibilityIdentifier == UIStackView.tl.axID.debug.margin
         }) else { return }
 
-        let view = ZDTLDebugView(.init(
+        let view = DebugView(.init(
             shape: .outline,
             lineStyle: .dashed,
             color: UIColor.black.withAlphaComponent(0.1),
@@ -149,9 +149,9 @@ private extension UIView {
             guard let constraint = constraints.first else { return }
             let isFlexible = constraint.relation != .equal
 
-            let lineStyle: ZDTLDebugView.LineStyle = isFlexible ? .dashed : .solid
+            let lineStyle: DebugView.LineStyle = isFlexible ? .dashed : .solid
 
-            let debugView = ZDTLDebugView(.init(
+            let debugView = DebugView(.init(
                 shape: axis == .vertical ? .height : .width,
                 lineStyle: lineStyle,
                 color: UIColor.red.withAlphaComponent(0.3),
@@ -179,9 +179,9 @@ private extension UIView {
     }
 }
 
-// MARK: - ZDTLDebugView
+// MARK: - DebugView
 
-private class ZDTLDebugView: UIView {
+private class DebugView: UIView {
 
     struct Shape: OptionSet {
         public let rawValue: Int

@@ -1,5 +1,5 @@
 //
-//  ZDTLStackable+A11y.swift
+//  Stackable+A11y.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
@@ -12,14 +12,14 @@ import Cocoa
 import UIKit
 #endif
 
-public enum ZDTLStackableAccessibilityID {
+public enum StackableAccessibilityID {
     public static let space = "com.rightpoint.stackable.space"
     public static let hairline = "com.rightpoint.stackable.hairline"
 
-    public typealias debug = ZDTLDebugAccessibilityID
+    public typealias debug = DebugAccessibilityID
 }
 
-public enum ZDTLDebugAccessibilityID {
+public enum DebugAccessibilityID {
     public static let outline = "com.rightpoint.stackable.debug.outline"
     public static let space = "com.rightpoint.stackable.debug.space"
     public static let margin = "com.rightpoint.stackable.debug.margin"
@@ -27,6 +27,6 @@ public enum ZDTLDebugAccessibilityID {
 
 #if !os(macOS)
 public extension ZDTinyLayoutNamespace where Base: UIStackView {
-    typealias axID = ZDTLStackableAccessibilityID
+    typealias axID = StackableAccessibilityID
 }
 #endif

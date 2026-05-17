@@ -1,5 +1,5 @@
 //
-//  ZDTLStackable.swift
+//  Stackable.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
@@ -14,16 +14,16 @@ import UIKit
 
 #if !os(macOS)
 
-// MARK: - ZDTLStackable
+// MARK: - Stackable
 
-/// Any object conforming to `ZDTLStackable` simply needs to define how it interacts with a
+/// Any object conforming to `Stackable` simply needs to define how it interacts with a
 /// stack view, most often by adding views or spacing.
 ///
-/// Objects that simply add a single arranged subview can conform to `ZDTLStackableView` instead
+/// Objects that simply add a single arranged subview can conform to `StackableView` instead
 /// to receive automatic insetting and alignment functionality.
 ///
 /// ```swift
-/// extension String: ZDTLStackable {
+/// extension String: Stackable {
 ///     func configure(stackView: UIStackView) {
 ///         let label = UILabel()
 ///         label.text = self
@@ -32,7 +32,7 @@ import UIKit
 /// }
 /// ```
 @MainActor
-public protocol ZDTLStackable {
+public protocol Stackable {
     /// Defines how to interact with a stack view.
     /// Never call this method directly.
     ///
@@ -40,15 +40,15 @@ public protocol ZDTLStackable {
     func configure(stackView: UIStackView)
 }
 
-// MARK: - ZDTLStackableView
+// MARK: - StackableView
 
-/// Conformance to `ZDTLStackableView` receives automatic conformance to `ZDTLStackable`,
+/// Conformance to `StackableView` receives automatic conformance to `Stackable`,
 /// and inherits functionality for insetting and alignment.
 ///
 /// Types that manipulate a stack view further than simply adding a single arranged subview
-/// should conform to `ZDTLStackable` directly.
+/// should conform to `Stackable` directly.
 @MainActor
-public protocol ZDTLStackableView: ZDTLStackable {
+public protocol StackableView: Stackable {
     /// Creates the view to be added to the stack view.
     ///
     /// - Parameter stackView: The stack view that your view will be added to.
@@ -57,7 +57,7 @@ public protocol ZDTLStackableView: ZDTLStackable {
     func makeStackableView(for stackView: UIStackView) -> UIView
 }
 
-extension ZDTLStackableView {
+extension StackableView {
     public func configure(stackView: UIStackView) {
         let view = makeStackableView(for: stackView)
         stackView.addArrangedSubview(view)
@@ -69,7 +69,7 @@ extension ZDTLStackableView {
 @MainActor
 extension ZDTinyLayoutNamespace where Base: UIStackView {
 
-    /// Adds a `ZDTLStackable` item to the stack view.
+    /// Adds a `Stackable` item to the stack view.
     ///
     /// ```swift
     /// stackView.tl.add("Hello World!")
@@ -78,12 +78,12 @@ extension ZDTinyLayoutNamespace where Base: UIStackView {
     /// stackView.tl.add(UIStackView.tl.flexibleSpace)
     /// ```
     @discardableResult
-    public func add(_ stackable: any ZDTLStackable) -> Base {
+    public func add(_ stackable: any Stackable) -> Base {
         add([stackable])
         return base
     }
 
-    /// Adds `ZDTLStackable` items to the stack view.
+    /// Adds `Stackable` items to the stack view.
     ///
     /// ```swift
     /// let cells: [UIView] = ...
@@ -96,12 +96,12 @@ extension ZDTinyLayoutNamespace where Base: UIStackView {
     /// ])
     /// ```
     @discardableResult
-    public func add(_ stackables: [any ZDTLStackable]) -> Base {
+    public func add(_ stackables: [any Stackable]) -> Base {
         stackables.forEach { $0.configure(stackView: base) }
         return base
     }
 
-    /// Adds `ZDTLStackable` items to the stack view using a result builder.
+    /// Adds `Stackable` items to the stack view using a result builder.
     ///
     /// ```swift
     /// stackView.tl.add {
@@ -113,7 +113,7 @@ extension ZDTinyLayoutNamespace where Base: UIStackView {
     /// }
     /// ```
     @discardableResult
-    public func add(@ZDTLStackableBuilder _ stackables: () -> [any ZDTLStackable]) -> Base {
+    public func add(@StackableBuilder _ stackables: () -> [any Stackable]) -> Base {
         add(stackables())
         return base
     }
@@ -122,7 +122,7 @@ extension ZDTinyLayoutNamespace where Base: UIStackView {
 // MARK: - Array Conformance
 
 @MainActor
-extension Array: ZDTLStackable where Element: ZDTLStackable {
+extension Array: Stackable where Element: Stackable {
     public func configure(stackView: UIStackView) {
         forEach { $0.configure(stackView: stackView) }
     }
@@ -131,7 +131,7 @@ extension Array: ZDTLStackable where Element: ZDTLStackable {
 // MARK: - Optional Conformance
 
 @MainActor
-extension Optional: ZDTLStackable where Wrapped: ZDTLStackable {
+extension Optional: Stackable where Wrapped: Stackable {
     public func configure(stackView: UIStackView) {
         map { $0.configure(stackView: stackView) }
     }

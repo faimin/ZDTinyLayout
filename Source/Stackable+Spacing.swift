@@ -1,5 +1,5 @@
 //
-//  ZDTLStackable+Spacing.swift
+//  Stackable+Spacing.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
@@ -14,10 +14,10 @@ import UIKit
 
 #if !os(macOS)
 
-// MARK: - ZDTLStackableSpaceItem
+// MARK: - StackableSpaceItem
 
 /// The public type representing a space. Opaque to consumer and cannot be manipulated further.
-public struct ZDTLStackableSpaceItem {
+public struct StackableSpaceItem {
     internal let type: SpaceType
 
     internal enum SpaceType {
@@ -27,12 +27,12 @@ public struct ZDTLStackableSpaceItem {
         case spaceAfter(_ view: UIView?, CGFloat)
         case spaceBetween(_ view1: UIView?, _ view2: UIView?, CGFloat)
         case spaceAfterGroup([UIView], CGFloat)
-        case flexibleSpace(ZDTLStackableFlexibleSpace)
+        case flexibleSpace(StackableFlexibleSpace)
     }
 }
 
 /// Defines the different types of spaces with flexible bounds.
-public enum ZDTLStackableFlexibleSpace {
+public enum StackableFlexibleSpace {
     case atLeast(CGFloat)
     case range(ClosedRange<CGFloat>)
     case atMost(CGFloat)
@@ -42,89 +42,89 @@ public enum ZDTLStackableFlexibleSpace {
 
 public extension ZDTinyLayoutNamespace where Base: UIStackView {
 
-    static func space(_ space: CGFloat) -> ZDTLStackableSpaceItem {
+    static func space(_ space: CGFloat) -> StackableSpaceItem {
         return .init(type: .smartSpace(space))
     }
 
-    static func space(after view: UIView?, _ space: CGFloat) -> ZDTLStackableSpaceItem {
+    static func space(after view: UIView?, _ space: CGFloat) -> StackableSpaceItem {
         return .init(type: .spaceAfter(view, space))
     }
 
-    static func space(before view: UIView?, _ space: CGFloat) -> ZDTLStackableSpaceItem {
+    static func space(before view: UIView?, _ space: CGFloat) -> StackableSpaceItem {
         return .init(type: .spaceBefore(view, space))
     }
 
-    static func spaceBetween(_ view1: UIView?, _ view2: UIView?, _ space: CGFloat) -> ZDTLStackableSpaceItem {
+    static func spaceBetween(_ view1: UIView?, _ view2: UIView?, _ space: CGFloat) -> StackableSpaceItem {
         return .init(type: .spaceBetween(view1, view2, space))
     }
 
-    static func spaces(between views: [UIView], _ space: CGFloat) -> [ZDTLStackableSpaceItem] {
+    static func spaces(between views: [UIView], _ space: CGFloat) -> [StackableSpaceItem] {
         let pairs = zip(views, views.dropFirst())
         return pairs.map { UIStackView.tl.spaceBetween($0.0, $0.1, space) }
     }
 
-    static func space(afterGroup group: [UIView], _ space: CGFloat) -> ZDTLStackableSpaceItem {
+    static func space(afterGroup group: [UIView], _ space: CGFloat) -> StackableSpaceItem {
         return .init(type: .spaceAfterGroup(group, space))
     }
 
-    static func constantSpace(_ space: CGFloat) -> ZDTLStackableSpaceItem {
+    static func constantSpace(_ space: CGFloat) -> StackableSpaceItem {
         return .init(type: .constantSpace(space))
     }
 
-    static func flexibleSpace(_ flexibleSpace: ZDTLStackableFlexibleSpace = .atLeast(0)) -> ZDTLStackableSpaceItem {
+    static func flexibleSpace(_ flexibleSpace: StackableFlexibleSpace = .atLeast(0)) -> StackableSpaceItem {
         return .init(type: .flexibleSpace(flexibleSpace))
     }
 
-    static var flexibleSpace: ZDTLStackableSpaceItem {
+    static var flexibleSpace: StackableSpaceItem {
         return UIStackView.tl.flexibleSpace()
     }
 }
 
-// MARK: - ZDTLStackableSpace
+// MARK: - StackableSpace
 
-internal protocol ZDTLStackableSpace: ZDTLStackable {
-    func spaceType(for stackView: UIStackView) -> ZDTLStackableSpaceItem.SpaceType
+internal protocol StackableSpace: Stackable {
+    func spaceType(for stackView: UIStackView) -> StackableSpaceItem.SpaceType
 }
 
-extension ZDTLStackableSpace {
+extension StackableSpace {
     @MainActor
     public func configure(stackView: UIStackView) {
         let type = spaceType(for: stackView)
-        let item = ZDTLStackableSpaceItem(type: type)
+        let item = StackableSpaceItem(type: type)
         item.configure(stackView: stackView)
     }
 }
 
 // MARK: - Fixed Space Conformance
 
-extension CGFloat: ZDTLStackableSpace {
-    func spaceType(for stackView: UIStackView) -> ZDTLStackableSpaceItem.SpaceType {
+extension CGFloat: StackableSpace {
+    func spaceType(for stackView: UIStackView) -> StackableSpaceItem.SpaceType {
         return .smartSpace(self)
     }
 }
 
-extension Int: ZDTLStackableSpace {
-    func spaceType(for stackView: UIStackView) -> ZDTLStackableSpaceItem.SpaceType {
+extension Int: StackableSpace {
+    func spaceType(for stackView: UIStackView) -> StackableSpaceItem.SpaceType {
         return CGFloat(self).spaceType(for: stackView)
     }
 }
 
-extension Float: ZDTLStackableSpace {
-    func spaceType(for stackView: UIStackView) -> ZDTLStackableSpaceItem.SpaceType {
+extension Float: StackableSpace {
+    func spaceType(for stackView: UIStackView) -> StackableSpaceItem.SpaceType {
         CGFloat(self).spaceType(for: stackView)
     }
 }
 
-extension Double: ZDTLStackableSpace {
-    func spaceType(for stackView: UIStackView) -> ZDTLStackableSpaceItem.SpaceType {
+extension Double: StackableSpace {
+    func spaceType(for stackView: UIStackView) -> StackableSpaceItem.SpaceType {
         CGFloat(self).spaceType(for: stackView)
     }
 }
 
 // MARK: - Flexible Space Conformance
 
-extension ClosedRange: ZDTLStackableSpace {
-    func spaceType(for stackView: UIStackView) -> ZDTLStackableSpaceItem.SpaceType {
+extension ClosedRange: StackableSpace {
+    func spaceType(for stackView: UIStackView) -> StackableSpaceItem.SpaceType {
         switch (lowerBound, upperBound) {
         case let (lower, upper) as (CGFloat, CGFloat):
             return .flexibleSpace(.range(lower...upper))
@@ -140,8 +140,8 @@ extension ClosedRange: ZDTLStackableSpace {
     }
 }
 
-extension PartialRangeFrom: ZDTLStackableSpace {
-    func spaceType(for stackView: UIStackView) -> ZDTLStackableSpaceItem.SpaceType {
+extension PartialRangeFrom: StackableSpace {
+    func spaceType(for stackView: UIStackView) -> StackableSpaceItem.SpaceType {
         switch lowerBound {
         case let lower as CGFloat:
             return .flexibleSpace(.atLeast(lower))
@@ -157,8 +157,8 @@ extension PartialRangeFrom: ZDTLStackableSpace {
     }
 }
 
-extension PartialRangeThrough: ZDTLStackableSpace {
-    func spaceType(for stackView: UIStackView) -> ZDTLStackableSpaceItem.SpaceType {
+extension PartialRangeThrough: StackableSpace {
+    func spaceType(for stackView: UIStackView) -> StackableSpaceItem.SpaceType {
         switch upperBound {
         case let upper as CGFloat:
             return .flexibleSpace(.atMost(upper))
@@ -174,24 +174,24 @@ extension PartialRangeThrough: ZDTLStackableSpace {
     }
 }
 
-// MARK: - ZDTLStackableSpaceItem: ZDTLStackable
+// MARK: - StackableSpaceItem: Stackable
 
-extension ZDTLStackableSpaceItem: ZDTLStackable {
+extension StackableSpaceItem: Stackable {
 
     public func configure(stackView: UIStackView) {
         switch type {
 
         case let .smartSpace(space):
-            let newType: ZDTLStackableSpaceItem.SpaceType
+            let newType: StackableSpaceItem.SpaceType
             if let view = stackView.arrangedSubviews.last {
                 newType = .spaceAfter(view, space)
             } else {
                 newType = .constantSpace(space)
             }
-            ZDTLStackableSpaceItem(type: newType).configure(stackView: stackView)
+            StackableSpaceItem(type: newType).configure(stackView: stackView)
 
         case let .constantSpace(space):
-            let spacer = ZDTLStackableSpacer()
+            let spacer = StackableSpacer()
             spacer.setContentHuggingPriority(.required, for: stackView.axis)
             NSLayoutConstraint.activate([
                 spacer.dimension(along: stackView.axis).constraint(equalToConstant: space),
@@ -200,7 +200,7 @@ extension ZDTLStackableSpaceItem: ZDTLStackable {
 
         case let .spaceBefore(view, space):
             guard let view = view else { return }
-            let spacer = ZDTLStackableSpacer()
+            let spacer = StackableSpacer()
             spacer.setContentHuggingPriority(.required, for: stackView.axis)
             NSLayoutConstraint.activate([
                 spacer.dimension(along: stackView.axis).constraint(equalToConstant: space),
@@ -210,7 +210,7 @@ extension ZDTLStackableSpaceItem: ZDTLStackable {
 
         case let .spaceAfter(view, space):
             guard let view = view else { return }
-            let spacer = ZDTLStackableSpacer()
+            let spacer = StackableSpacer()
             spacer.setContentHuggingPriority(.required, for: stackView.axis)
             NSLayoutConstraint.activate([
                 spacer.dimension(along: stackView.axis).constraint(equalToConstant: space),
@@ -220,7 +220,7 @@ extension ZDTLStackableSpaceItem: ZDTLStackable {
 
         case let .spaceBetween(view1, view2, space):
             guard let view1 = view1, let view2 = view2 else { return }
-            let spacer = ZDTLStackableSpacer()
+            let spacer = StackableSpacer()
             spacer.setContentHuggingPriority(.required, for: stackView.axis)
             NSLayoutConstraint.activate([
                 spacer.dimension(along: stackView.axis).constraint(equalToConstant: space),
@@ -229,7 +229,7 @@ extension ZDTLStackableSpaceItem: ZDTLStackable {
             spacer.tl.bindVisible(toAllVisible: [view1, view2])
 
         case let .spaceAfterGroup(views, space):
-            let spacer = ZDTLStackableSpacer()
+            let spacer = StackableSpacer()
             spacer.setContentHuggingPriority(.required, for: stackView.axis)
             NSLayoutConstraint.activate([
                 spacer.dimension(along: stackView.axis).constraint(equalToConstant: space),
@@ -240,7 +240,7 @@ extension ZDTLStackableSpaceItem: ZDTLStackable {
             spacer.tl.bindVisible(toAnyVisible: views)
 
         case let .flexibleSpace(.atLeast(space)):
-            let spacer = ZDTLStackableSpacer()
+            let spacer = StackableSpacer()
             spacer.setContentHuggingPriority(.defaultLow, for: stackView.axis)
             NSLayoutConstraint.activate([
                 spacer.dimension(along: stackView.axis).constraint(greaterThanOrEqualToConstant: space),
@@ -248,7 +248,7 @@ extension ZDTLStackableSpaceItem: ZDTLStackable {
             stackView.addArrangedSubview(spacer)
 
         case let .flexibleSpace(.range(range)):
-            let spacer = ZDTLStackableSpacer()
+            let spacer = StackableSpacer()
             spacer.setContentHuggingPriority(.defaultLow, for: stackView.axis)
             let anchor = spacer.dimension(along: stackView.axis)
             NSLayoutConstraint.activate([
@@ -258,7 +258,7 @@ extension ZDTLStackableSpaceItem: ZDTLStackable {
             stackView.addArrangedSubview(spacer)
 
         case let .flexibleSpace(.atMost(space)):
-            let spacer = ZDTLStackableSpacer()
+            let spacer = StackableSpacer()
             spacer.setContentHuggingPriority(.defaultLow, for: stackView.axis)
             NSLayoutConstraint.activate([
                 spacer.dimension(along: stackView.axis).constraint(lessThanOrEqualToConstant: space),
@@ -269,7 +269,7 @@ extension ZDTLStackableSpaceItem: ZDTLStackable {
 }
 
 /// A simple, transparent view representing spacing.
-internal class ZDTLStackableSpacer: UIView {
+internal class StackableSpacer: UIView {
 
     init() {
         super.init(frame: .zero)

@@ -1,5 +1,5 @@
 //
-//  ZDTLAlignmentView.swift
+//  AlignmentView.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
@@ -12,53 +12,53 @@ import Cocoa
 import UIKit
 #endif
 
-// MARK: - ZDTLStackableAlignment
+// MARK: - StackableAlignment
 
 /// Options to specify how a view adjusts its content when its size is different than its intrinsic value.
-public struct ZDTLStackableAlignment: OptionSet, Sendable {
+public struct StackableAlignment: OptionSet, Sendable {
     public let rawValue: Int
-    public static let leading          = ZDTLStackableAlignment(rawValue: 1 << 0)
-    public static let left             = ZDTLStackableAlignment(rawValue: 1 << 1)
-    public static let centerX          = ZDTLStackableAlignment(rawValue: 1 << 2)
-    public static let right            = ZDTLStackableAlignment(rawValue: 1 << 3)
-    public static let trailing         = ZDTLStackableAlignment(rawValue: 1 << 4)
-    public static let fillHorizontal   = ZDTLStackableAlignment(rawValue: 1 << 5)
-    public static let flexHorizontal   = ZDTLStackableAlignment(rawValue: 1 << 6)
+    public static let leading          = StackableAlignment(rawValue: 1 << 0)
+    public static let left             = StackableAlignment(rawValue: 1 << 1)
+    public static let centerX          = StackableAlignment(rawValue: 1 << 2)
+    public static let right            = StackableAlignment(rawValue: 1 << 3)
+    public static let trailing         = StackableAlignment(rawValue: 1 << 4)
+    public static let fillHorizontal   = StackableAlignment(rawValue: 1 << 5)
+    public static let flexHorizontal   = StackableAlignment(rawValue: 1 << 6)
 
-    public static let top              = ZDTLStackableAlignment(rawValue: 1 << 7)
-    public static let centerY          = ZDTLStackableAlignment(rawValue: 1 << 8)
-    public static let bottom           = ZDTLStackableAlignment(rawValue: 1 << 9)
-    public static let fillVertical     = ZDTLStackableAlignment(rawValue: 1 << 10)
-    public static let flexVertical     = ZDTLStackableAlignment(rawValue: 1 << 11)
+    public static let top              = StackableAlignment(rawValue: 1 << 7)
+    public static let centerY          = StackableAlignment(rawValue: 1 << 8)
+    public static let bottom           = StackableAlignment(rawValue: 1 << 9)
+    public static let fillVertical     = StackableAlignment(rawValue: 1 << 10)
+    public static let flexVertical     = StackableAlignment(rawValue: 1 << 11)
 
-    public static let center: ZDTLStackableAlignment = [.centerX, .centerY]
+    public static let center: StackableAlignment = [.centerX, .centerY]
 
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
 
-    fileprivate static let Horizontal: ZDTLStackableAlignment = [.leading, .left, .centerX, .right, .trailing, .fillHorizontal, .flexHorizontal]
-    fileprivate static let Vertical: ZDTLStackableAlignment = [.top, .centerY, .bottom, .fillVertical, .flexVertical]
+    fileprivate static let Horizontal: StackableAlignment = [.leading, .left, .centerX, .right, .trailing, .fillHorizontal, .flexHorizontal]
+    fileprivate static let Vertical: StackableAlignment = [.top, .centerY, .bottom, .fillVertical, .flexVertical]
 }
 
 #if !os(macOS)
 
-// MARK: - ZDTLAlignmentView
+// MARK: - AlignmentView
 
 /// View wrapper that lets you specify internal alignment.
-internal final class ZDTLAlignmentView: UIView {
+internal final class AlignmentView: UIView {
 
-    required init(_ wrapped: UIView, alignment: ZDTLStackableAlignment, inset: UIEdgeInsets = .zero) {
+    required init(_ wrapped: UIView, alignment: StackableAlignment, inset: UIEdgeInsets = .zero) {
         super.init(frame: .zero)
         layoutMargins = inset
 
         addSubview(wrapped)
 
         var alignment = alignment
-        if alignment.isDisjoint(with: ZDTLStackableAlignment.Horizontal) {
+        if alignment.isDisjoint(with: StackableAlignment.Horizontal) {
             alignment.formUnion(.fillHorizontal)
         }
-        if alignment.isDisjoint(with: ZDTLStackableAlignment.Vertical) {
+        if alignment.isDisjoint(with: StackableAlignment.Vertical) {
             alignment.formUnion(.fillVertical)
         }
 

@@ -1,5 +1,5 @@
 //
-//  ZDTLStackable+Alignment.swift
+//  Stackable+Alignment.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
@@ -14,63 +14,63 @@ import UIKit
 
 #if !os(macOS)
 
-// MARK: - ZDTLStackableViewItem
+// MARK: - StackableViewItem
 
 /// Carries information about how to build a source view and any manipulations needed
 /// before adding it to a stack view.
 @MainActor
-public struct ZDTLStackableViewItem {
+public struct StackableViewItem {
 
     internal let makeView: (UIStackView) -> UIView
-    internal var alignment: ZDTLStackableAlignment = []
+    internal var alignment: StackableAlignment = []
     internal var inset: UIEdgeInsets = .zero
     internal var outsetAncestor: UIView?
     internal var marginsAncestor: UIView?
 }
 
-// MARK: - Public API: Alignment transforms on ZDTLStackableView
+// MARK: - Public API: Alignment transforms on StackableView
 
-public extension ZDTLStackableView {
+public extension StackableView {
 
-    func aligned(_ alignment: ZDTLStackableAlignment) -> ZDTLStackableViewItem {
-        if var item = self as? ZDTLStackableViewItem {
+    func aligned(_ alignment: StackableAlignment) -> StackableViewItem {
+        if var item = self as? StackableViewItem {
             item.alignment = alignment
             return item
         }
-        return ZDTLStackableViewItem(
+        return StackableViewItem(
             makeView: makeStackableView(for:),
             alignment: alignment
         )
     }
 
-    func inset(by margins: UIEdgeInsets) -> ZDTLStackableViewItem {
-        if var item = self as? ZDTLStackableViewItem {
+    func inset(by margins: UIEdgeInsets) -> StackableViewItem {
+        if var item = self as? StackableViewItem {
             item.inset = margins
             return item
         }
-        return ZDTLStackableViewItem(
+        return StackableViewItem(
             makeView: makeStackableView(for:),
             inset: margins
         )
     }
 
-    func outset(to ancestor: UIView) -> ZDTLStackableViewItem {
-        if var item = self as? ZDTLStackableViewItem {
+    func outset(to ancestor: UIView) -> StackableViewItem {
+        if var item = self as? StackableViewItem {
             item.outsetAncestor = ancestor
             return item
         }
-        return ZDTLStackableViewItem(
+        return StackableViewItem(
             makeView: makeStackableView(for:),
             outsetAncestor: ancestor
         )
     }
 
-    func margins(alignedWith ancestor: UIView) -> ZDTLStackableViewItem {
-        if var item = self as? ZDTLStackableViewItem {
+    func margins(alignedWith ancestor: UIView) -> StackableViewItem {
+        if var item = self as? StackableViewItem {
             item.marginsAncestor = ancestor
             return item
         }
-        return ZDTLStackableViewItem(
+        return StackableViewItem(
             makeView: makeStackableView(for:),
             marginsAncestor: ancestor
         )
@@ -78,35 +78,35 @@ public extension ZDTLStackableView {
 }
 
 @MainActor
-public extension Array where Element: ZDTLStackableView {
+public extension Array where Element: StackableView {
 
-    func aligned(_ alignment: ZDTLStackableAlignment) -> [ZDTLStackableViewItem] {
+    func aligned(_ alignment: StackableAlignment) -> [StackableViewItem] {
         return map { $0.aligned(alignment) }
     }
 
-    func inset(by margins: UIEdgeInsets) -> [ZDTLStackableViewItem] {
+    func inset(by margins: UIEdgeInsets) -> [StackableViewItem] {
         return map { $0.inset(by: margins) }
     }
 
-    func outset(to ancestor: UIView) -> [ZDTLStackableViewItem] {
+    func outset(to ancestor: UIView) -> [StackableViewItem] {
         return map { $0.outset(to: ancestor) }
     }
 
-    func margins(alignedWith ancestor: UIView) -> [ZDTLStackableViewItem] {
+    func margins(alignedWith ancestor: UIView) -> [StackableViewItem] {
         return map { $0.margins(alignedWith: ancestor) }
     }
 }
 
-// MARK: - ZDTLStackableViewItem: ZDTLStackableView conformance
+// MARK: - StackableViewItem: StackableView conformance
 
-extension ZDTLStackableViewItem: ZDTLStackableView {
+extension StackableViewItem: StackableView {
 
     public func makeStackableView(for stackView: UIStackView) -> UIView {
         let view = makeView(stackView)
         if alignment.isEmpty && inset == .zero {
             return view
         }
-        return ZDTLAlignmentView(view, alignment: alignment, inset: inset)
+        return AlignmentView(view, alignment: alignment, inset: inset)
     }
 
     public func configure(stackView: UIStackView) {
@@ -128,9 +128,9 @@ extension ZDTLStackableViewItem: ZDTLStackableView {
 
 // MARK: - Internal helpers
 
-internal extension ZDTLStackable {
+internal extension Stackable {
 
-    func outsetIfNecessary(view: UIView, outsetAncestor: UIView?, inset: UIEdgeInsets, stackView: UIStackView) -> ZDTLStackableView {
+    func outsetIfNecessary(view: UIView, outsetAncestor: UIView?, inset: UIEdgeInsets, stackView: UIStackView) -> StackableView {
         if outsetAncestor == nil, inset == .zero { return view }
 
         switch stackView.axis {
@@ -174,7 +174,7 @@ internal extension ZDTLStackable {
 
     func applyMarginsObservation(view: UIView, marginsAncestor: UIView?, stackView: UIStackView) {
         guard let ancestor = marginsAncestor else { return }
-        if let alignment = view as? ZDTLAlignmentView, let subview = alignment.subviews.first {
+        if let alignment = view as? AlignmentView, let subview = alignment.subviews.first {
             applyMarginsObservation(view: subview, marginsAncestor: marginsAncestor, stackView: stackView)
             return
         }

@@ -1,5 +1,5 @@
 //
-//  ZDTLStackable+Views.swift
+//  Stackable+Views.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
@@ -12,22 +12,22 @@ import Cocoa
 import UIKit
 #endif
 
-// MARK: - ZDTLStackableView Conformance
+// MARK: - StackableView Conformance
 
 #if !os(macOS)
-extension UIView: ZDTLStackableView {
+extension UIView: StackableView {
     public func makeStackableView(for stackView: UIStackView) -> UIView {
         return self
     }
 }
 
-extension UIViewController: ZDTLStackableView {
+extension UIViewController: StackableView {
     public func makeStackableView(for stackView: UIStackView) -> UIView {
         return view
     }
 }
 
-extension NSAttributedString: ZDTLStackableView {
+extension NSAttributedString: StackableView {
     public func makeStackableView(for stackView: UIStackView) -> UIView {
         let label = UILabel()
         label.setContentHuggingPriority(.required, for: stackView.axis)
@@ -37,13 +37,13 @@ extension NSAttributedString: ZDTLStackableView {
     }
 }
 
-extension String: ZDTLStackableView {
+extension String: StackableView {
     public func makeStackableView(for stackView: UIStackView) -> UIView {
         return NSAttributedString(string: self).makeStackableView(for: stackView)
     }
 }
 
-extension UIImage: ZDTLStackableView {
+extension UIImage: StackableView {
     public func makeStackableView(for stackView: UIStackView) -> UIView {
         let imageView = UIImageView(image: self)
         imageView.contentMode = .scaleAspectFit
@@ -51,7 +51,7 @@ extension UIImage: ZDTLStackableView {
     }
 }
 
-extension UILayoutGuide: ZDTLStackableView {
+extension UILayoutGuide: StackableView {
     public func makeStackableView(for stackView: UIStackView) -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

@@ -1,5 +1,5 @@
 //
-//  ZDTLAttachable.swift
+//  Attachable.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)

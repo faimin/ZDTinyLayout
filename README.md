@@ -197,6 +197,299 @@ container.tl.addComponents {
 }
 ```
 
+## Stackable (iOS-only)
+
+ZDTinyLayout includes a declarative `UIStackView` builder inspired by [Stackable](https://github.com/rightpoint/Stackable). All Stackable APIs are accessed through the `tl` namespace.
+
+> **Note**: Stackable features require `UIStackView` and are only available on iOS, tvOS, watchOS, and visionOS.
+
+### Adding Items to a Stack View
+
+Add views, strings, images, spacing, hairlines, and more to a stack view using a result builder:
+
+```swift
+let stack = UIStackView()
+stack.tl.add {
+    "Hello World!"
+    20
+    someView
+    UIStackView.tl.hairline
+    UIStackView.tl.flexibleSpace
+}
+```
+
+You can also add arrays directly:
+
+```swift
+stack.tl.add([
+    titleLabel,
+    8,
+    bodyLabel,
+    20,
+    footerView,
+])
+```
+
+#### Built-in Type Support
+
+`String`, `NSAttributedString`, and `UIImage` automatically create their respective views:
+
+```swift
+stack.tl.add {
+    "Plain String"                              // creates a UILabel
+    NSAttributedString(string: "Styled Text")   // creates a UILabel
+    UIImage(named: "icon")                      // creates a UIImageView
+}
+```
+
+`UIViewController` contributes its `view`:
+
+```swift
+stack.tl.add([
+    myViewController,   // same as adding myViewController.view
+    actionButton,
+])
+```
+
+### Smart Spacing
+
+Numeric literals inside `tl.add` create spaces that track the visibility of the preceding view:
+
+```swift
+stack.tl.add {
+    headerView
+    16          // visible when headerView is visible
+    contentView
+    20          // visible when contentView is visible
+}
+```
+
+Advanced spacing options via `UIStackView.tl.*`:
+
+| API | Description |
+|-----|-------------|
+| `.space(_:)` | Smart space that coalesces to `.spaceAfter` or `.constantSpace` |
+| `.constantSpace(_:)` | Always-visible spacer |
+| `.flexibleSpace(_:)` | Flexible spacer (low hugging priority) |
+| `.space(after:, _:)` | Tracks visibility of a specific view |
+| `.space(before:, _:)` | Tracks visibility of a specific view |
+| `.spaceBetween(_, _, _)` | Visible when both views are visible |
+| `.space(afterGroup:, _:)` | Visible when any member of a group is visible |
+| `.flexibleSpace` | Flexible spacer with no minimum |
+
+Flexible ranges:
+
+```swift
+stack.tl.add {
+    headerView
+    10...20        // closed range: 10pt ≤ space ≤ 20pt
+    contentView
+    10...          // partial range: space ≥ 10pt
+    footerView
+    ...20          // partial range: space ≤ 20pt
+}
+```
+
+Flexible space factory methods:
+
+```swift
+stack.tl.add {
+    viewA
+    UIStackView.tl.flexibleSpace(.atLeast(20))    // ≥ 20pt
+    viewB
+    UIStackView.tl.flexibleSpace(.atMost(20))     // ≤ 20pt
+    viewC
+    UIStackView.tl.flexibleSpace(.range(10...20)) // 10pt…20pt
+    viewD
+    UIStackView.tl.flexibleSpace                  // ≥ 0pt, no maximum
+}
+```
+
+#### Advanced Spaces
+
+Space after a group (visible when any member of the group is visible):
+
+```swift
+let sectionCells: [UIView] = [cell1, cell2, cell3]
+stack.tl.add {
+    sectionCells
+    UIStackView.tl.space(afterGroup: sectionCells, 20)
+    nextSection
+}
+```
+
+### Hairlines
+
+Add separator lines that track view visibility:
+
+```swift
+stack.tl.add {
+    UIStackView.tl.hairline                 // simple hairline
+    UIStackView.tl.hairline(after: view)    // after a specific view
+    UIStackView.tl.hairline(before: view)   // before a specific view
+    UIStackView.tl.hairline(around: view)   // above and below
+}
+```
+
+Hairlines between views in an array:
+
+```swift
+let cells: [UIView] = [cell1, cell2, cell3]
+
+stack.tl.add {
+    // Hairlines between adjacent visible cells
+    UIStackView.tl.hairlines(between: cells)
+
+    // Hairlines after each visible cell
+    UIStackView.tl.hairlines(after: cells)
+
+    // Hairlines above the first and below each visible cell
+    UIStackView.tl.hairlines(around: cells)
+}
+```
+
+#### Hairline Alignment
+
+Insets can be positive (padding) or negative (outset):
+
+```swift
+UIStackView.tl.hairline
+    .inset(by: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))   // padded
+
+UIStackView.tl.hairline
+    .inset(by: UIEdgeInsets(top: 0, left: -10, bottom: 0, right: -10)) // outset
+
+UIStackView.tl.hairline
+    .outset(to: ancestorView)  // pin transverse-axis edges to an ancestor
+```
+
+Customize hairlines with modifier chaining:
+
+```swift
+UIStackView.tl.hairline
+    .color(.lightGray)
+    .thickness(2)
+    .inset(by: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+```
+
+Global and per-instance defaults override order: per-hairline > per-instance > global:
+
+```swift
+UIStackView.tl.hairlineColor = .separator    // global
+UIStackView.tl.hairlineThickness = 1.0       // global
+
+stackView.tl.hairlineColor = .red            // per-instance override
+stackView.tl.hairlineThickness = 2           // per-instance override
+```
+
+#### Hairline Provider
+
+Supply a custom hairline factory for arbitrary styling:
+
+```swift
+stackView.tl.hairlineProvider = { stackView in
+    let customView = UIView()
+    customView.backgroundColor = .systemRed
+    // apply any custom styling…
+    return customView
+}
+
+// Global default for all stack views:
+UIStackView.tl.hairlineProvider = { … }
+```
+
+### Alignment & Insets
+
+Apply alignment and insets to any `StackableView` (UIView, String, UIImage, etc.):
+
+```swift
+stack.tl.add {
+    titleLabel
+        .aligned(.centerX)
+    avatarView
+        .inset(by: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16))
+    // Transforms are composable:
+    caption
+        .inset(by: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
+        .aligned(.right)
+    heroImage
+        .outset(to: container)               // pin transverse edges to ancestor
+        .margins(alignedWith: container)      // align layout margins with ancestor
+}
+```
+
+Batch array alignment:
+
+```swift
+[cell1, cell2, cell3]
+    .aligned(.fillHorizontal)
+    .inset(by: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
+```
+
+### ScrollingStackView
+
+A scroll view containing a vertical stack view that matches the scroll view's height at minimum:
+
+```swift
+let scrollView = ZDTLScrollingStackView()
+scrollView.add {
+    "Section Header"
+    16
+    UIStackView.tl.hairline
+    8
+    contentBody
+    UIStackView.tl.flexibleSpace
+}
+```
+
+### VStack / HStack / Spacer
+
+SwiftUI-style convenience builders:
+
+```swift
+let vStack = ZDTLStackUI.VStack(spacing: 8) {
+    headerLabel
+    bodyLabel
+    Spacer()
+}
+
+let hStack = ZDTLStackUI.HStack(alignment: .center, spacing: 12) {
+    iconView
+    textLabel
+    ZDTLStackUI.Spacer(minWidth: 20)
+    badgeLabel
+}
+```
+
+### View Modifiers
+
+Chain modifiers directly on `View.tl`:
+
+```swift
+myView.tl
+    .width(200)
+    .height(44)
+
+// or return the view for non-chaining use:
+let configuredView = myView.tl.width(200)
+
+// StackView modifiers:
+stackView.tl
+    .axis(.vertical)
+    .spacing(8)
+    .distribution(.fillEqually)
+```
+
+### Visibility Binding
+
+Bind a view's `isHidden` to another view:
+
+```swift
+spacerView.tl.bindVisible(to: someView)           // mirrors isHidden
+spacerView.tl.bindVisible(toAllVisible: [v1, v2]) // hidden if any is hidden
+spacerView.tl.bindVisible(toAnyVisible: [v1, v2]) // hidden if all are hidden
+```
+
 ## Priority
 
 The `~` is used to specify priority of the constraint resulting from any ZDTinyLayout expression:

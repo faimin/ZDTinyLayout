@@ -1,5 +1,5 @@
 //
-//  ZDTLStackUI.swift
+//  StackUI.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
@@ -13,14 +13,14 @@ import UIKit
 
 /// Convenience builders for creating and populating stack views with a SwiftUI-like syntax.
 @MainActor
-public struct ZDTLStackUI {
+public struct StackUI {
 
     @discardableResult
     public static func VStack(
         distribution: UIStackView.Distribution = .fill,
         alignment: UIStackView.Alignment = .fill,
         spacing: CGFloat = 0,
-        @ZDTLStackableBuilder _ stackablesBlock: () -> [any ZDTLStackable]
+        @StackableBuilder _ stackablesBlock: () -> [any Stackable]
     ) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -38,7 +38,7 @@ public struct ZDTLStackUI {
         distribution: UIStackView.Distribution = .fill,
         alignment: UIStackView.Alignment = .fill,
         spacing: CGFloat = 0,
-        @ZDTLStackableBuilder _ stackablesBlock: () -> [any ZDTLStackable]
+        @StackableBuilder _ stackablesBlock: () -> [any Stackable]
     ) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .horizontal

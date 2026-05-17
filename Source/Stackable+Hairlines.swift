@@ -1,5 +1,5 @@
 //
-//  ZDTLStackable+Hairlines.swift
+//  Stackable+Hairlines.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
@@ -14,12 +14,12 @@ import UIKit
 
 #if !os(macOS)
 
-// MARK: - ZDTLStackableHairline
+// MARK: - StackableHairline
 
 /// Carries information about where to build a hairline, plus any manipulations
 /// needed before adding it to a stack view.
 @MainActor
-public struct ZDTLStackableHairline {
+public struct StackableHairline {
 
     internal enum HairlineType {
         case next
@@ -40,36 +40,36 @@ public struct ZDTLStackableHairline {
 
 public extension ZDTinyLayoutNamespace where Base: UIStackView {
 
-    static var hairline: ZDTLStackableHairline {
+    static var hairline: StackableHairline {
         return .init(type: .next)
     }
 
-    static func hairline(after view: UIView) -> ZDTLStackableHairline {
+    static func hairline(after view: UIView) -> StackableHairline {
         return .init(type: .after(view))
     }
 
-    static func hairlineBetween(_ view1: UIView?, _ view2: UIView?) -> ZDTLStackableHairline {
+    static func hairlineBetween(_ view1: UIView?, _ view2: UIView?) -> StackableHairline {
         return .init(type: .between(view1, view2))
     }
 
-    static func hairline(before view: UIView?) -> ZDTLStackableHairline {
+    static func hairline(before view: UIView?) -> StackableHairline {
         return .init(type: .before(view))
     }
 
-    static func hairline(around view: UIView?) -> ZDTLStackableHairline {
+    static func hairline(around view: UIView?) -> StackableHairline {
         return .init(type: .around(view))
     }
 
-    static func hairlines(between views: [UIView]) -> [ZDTLStackableHairline] {
+    static func hairlines(between views: [UIView]) -> [StackableHairline] {
         let pairs = zip(views, views.dropFirst())
         return pairs.map { UIStackView.tl.hairlineBetween($0.0, $0.1) }
     }
 
-    static func hairlines(after views: [UIView]) -> [ZDTLStackableHairline] {
+    static func hairlines(after views: [UIView]) -> [StackableHairline] {
         return views.map { UIStackView.tl.hairline(after: $0) }
     }
 
-    static func hairlines(around views: [UIView]) -> [ZDTLStackableHairline] {
+    static func hairlines(around views: [UIView]) -> [StackableHairline] {
         return views.map { $0 == views.first
             ? UIStackView.tl.hairline(around: $0)
             : UIStackView.tl.hairline(after: $0)
@@ -79,27 +79,27 @@ public extension ZDTinyLayoutNamespace where Base: UIStackView {
 
 // MARK: - Hairline modifiers
 
-public extension ZDTLStackableHairline {
+public extension StackableHairline {
 
-    func inset(by margins: UIEdgeInsets) -> ZDTLStackableHairline {
+    func inset(by margins: UIEdgeInsets) -> StackableHairline {
         var hairline = self
         hairline.inset = margins
         return hairline
     }
 
-    func outset(to ancestor: UIView) -> ZDTLStackableHairline {
+    func outset(to ancestor: UIView) -> StackableHairline {
         var hairline = self
         hairline.outsetAncestor = ancestor
         return hairline
     }
 
-    func thickness(_ thickness: CGFloat) -> ZDTLStackableHairline {
+    func thickness(_ thickness: CGFloat) -> StackableHairline {
         var hairline = self
         hairline.thicknessOverride = thickness
         return hairline
     }
 
-    func color(_ color: UIColor) -> ZDTLStackableHairline {
+    func color(_ color: UIColor) -> StackableHairline {
         var hairline = self
         hairline.colorOverride = color
         return hairline
@@ -107,7 +107,7 @@ public extension ZDTLStackableHairline {
 }
 
 @MainActor
-public extension Array where Element == ZDTLStackableHairline {
+public extension Array where Element == StackableHairline {
 
     func inset(by margins: UIEdgeInsets) -> Self {
         return map { $0.inset(by: margins) }
@@ -126,9 +126,9 @@ public extension Array where Element == ZDTLStackableHairline {
     }
 }
 
-// MARK: - ZDTLStackableHairlineView
+// MARK: - StackableHairlineView
 
-internal final class ZDTLStackableHairlineView: UIView {
+internal final class StackableHairlineView: UIView {
 
     init(stackAxis axis: NSLayoutConstraint.Axis, thickness: CGFloat, color: UIColor) {
         super.init(frame: .zero)
@@ -150,9 +150,9 @@ internal final class ZDTLStackableHairlineView: UIView {
     }
 }
 
-// MARK: - ZDTLStackableHairline: ZDTLStackable
+// MARK: - StackableHairline: Stackable
 
-extension ZDTLStackableHairline: ZDTLStackable {
+extension StackableHairline: Stackable {
 
     public func configure(stackView: UIStackView) {
         if let view = hairlineBeforeView {
@@ -187,7 +187,7 @@ extension ZDTLStackableHairline: ZDTLStackable {
     private func makeHairline(stackView: UIStackView) -> UIView {
         let hairline = stackView.tl.hairlineProvider?(stackView)
             ?? UIStackView.tl.hairlineProvider?(stackView)
-            ?? ZDTLStackableHairlineView(
+            ?? StackableHairlineView(
                 stackAxis: stackView.axis,
                 thickness: thicknessOverride
                     ?? stackView.tl.hairlineThickness
@@ -237,7 +237,7 @@ extension ZDTLStackableHairline: ZDTLStackable {
 
 // MARK: - Hairline provider type
 
-public typealias ZDTLStackableHairlineProvider = (UIStackView) -> UIView
+public typealias StackableHairlineProvider = (UIStackView) -> UIView
 
 // MARK: - Associated properties for UIStackView hairline config
 
@@ -268,8 +268,8 @@ public extension ZDTinyLayoutNamespace where Base: UIStackView {
         set { objc_setAssociatedObject(base, &UIStackView.AssociatedKeys.hairlineThickness, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    var hairlineProvider: ZDTLStackableHairlineProvider? {
-        get { return objc_getAssociatedObject(base, &UIStackView.AssociatedKeys.hairlineProvider) as? ZDTLStackableHairlineProvider }
+    var hairlineProvider: StackableHairlineProvider? {
+        get { return objc_getAssociatedObject(base, &UIStackView.AssociatedKeys.hairlineProvider) as? StackableHairlineProvider }
         set { objc_setAssociatedObject(base, &UIStackView.AssociatedKeys.hairlineProvider, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
@@ -283,8 +283,8 @@ public extension ZDTinyLayoutNamespace where Base: UIStackView {
         set { objc_setAssociatedObject(self, &UIStackView.AssociatedKeys.hairlineThickness, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    static var hairlineProvider: ZDTLStackableHairlineProvider? {
-        get { return objc_getAssociatedObject(self, &UIStackView.AssociatedKeys.hairlineProvider) as? ZDTLStackableHairlineProvider }
+    static var hairlineProvider: StackableHairlineProvider? {
+        get { return objc_getAssociatedObject(self, &UIStackView.AssociatedKeys.hairlineProvider) as? StackableHairlineProvider }
         set { objc_setAssociatedObject(self, &UIStackView.AssociatedKeys.hairlineProvider, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 }

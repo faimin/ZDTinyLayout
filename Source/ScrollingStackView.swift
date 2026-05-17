@@ -1,5 +1,5 @@
 //
-//  ZDTLScrollingStackView.swift
+//  ScrollingStackView.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
@@ -13,7 +13,7 @@ import UIKit
 
 /// A stack view in a scroll view whose content height prefers to be at least the
 /// frame height of the scroll view. If content grows beyond the frame, scrolling is enabled.
-open class ZDTLScrollingStackView: UIScrollView {
+open class ScrollingStackView: UIScrollView {
 
     open override var layoutMargins: UIEdgeInsets {
         set { contentView.layoutMargins = newValue }
@@ -89,20 +89,20 @@ open class ZDTLScrollingStackView: UIScrollView {
 
 // MARK: - Convenience add methods
 
-public extension ZDTLScrollingStackView {
+public extension ScrollingStackView {
 
-    func add(_ stackable: any ZDTLStackable) {
+    func add(_ stackable: any Stackable) {
         stackView.tl.add(stackable)
     }
 
     @discardableResult
-    func add(_ stackables: [any ZDTLStackable]) -> Self {
+    func add(_ stackables: [any Stackable]) -> Self {
         stackView.tl.add(stackables)
         return self
     }
 
     @discardableResult
-    func add(@ZDTLStackableBuilder _ stackablesBlock: () -> [any ZDTLStackable]) -> Self {
+    func add(@StackableBuilder _ stackablesBlock: () -> [any Stackable]) -> Self {
         stackView.tl.add(stackablesBlock())
         return self
     }

@@ -1,5 +1,5 @@
 //
-//  ZDTLView+BindVisible.swift
+//  View+BindVisible.swift
 //  ZDTinyLayout
 //
 //  Adapted from Stackable (https://github.com/rightpoint/Stackable)
