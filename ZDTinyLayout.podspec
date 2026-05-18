@@ -8,11 +8,12 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/faimin/ZDTinyLayout"
   s.license          = 'MIT'
   s.author           = {
-	"Rob Visentin" => "jvisenti@gmail.com",
-	"Zero.D.Saber" => "fuxianchao@gmail.com"
+    "Rob Visentin" => "jvisenti@gmail.com",
+    "jclark@rightpoint.com" => "jclark@rightpoint.com",
+    "Zero.D.Saber" => "fuxianchao@gmail.com"
   }
   s.source           = { :git => "https://github.com/faimin/ZDTinyLayout.git", :tag => s.version.to_s }
-  s.swift_versions    = ['5']
+  s.swift_versions    = ['6']
 
   s.ios.deployment_target = '12.0'
   s.tvos.deployment_target = '12.0'

@@ -16,21 +16,21 @@ let package = Package(
         .library(
             name: "ZDTinyLayout",
             targets: ["ZDTinyLayout"]
-		),
+        )
     ],
     targets: [
         .target(
             name: "ZDTinyLayout",
             dependencies: [],
             path: "Source",
-			resources: [
-				.process("Resource/PrivacyInfo.xcprivacy")
-			]
-		),
+            resources: [
+                .process("Resource/PrivacyInfo.xcprivacy")
+            ]
+        ),
         .testTarget(
             name: "ZDTinyLayoutTests",
             dependencies: ["ZDTinyLayout"],
             path: "ZDTinyLayoutTests"
-		),
+        ),
     ]
 )
