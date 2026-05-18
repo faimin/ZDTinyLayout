@@ -12,7 +12,6 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - The library has also been updated to Swift 6.0 with extensive @mainactor annotations for concurrency safety. Reviewers pointed out critical technical issues with Objective-C associated objects, specifically the inability to store closures directly and the incorrect use of struct metatypes as keys. 
 - Additional feedback suggests removing redundant result builder methods, deleting commented-out code, and replacing deprecated system colors.
 - Raised minimum supported platforms to iOS 13, macOS 10.15, tvOS 13, and watchOS 6.
-- Replaced internal KVO observations with Combine publishers for visibility and margin binding.
 
 ### Fixed
 - Fixed Swift 6 concurrency diagnostics in visibility and alignment observation code.

@@ -11,44 +11,40 @@ import Cocoa
 #else
 import UIKit
 #endif
-import Combine
 
 // MARK: - Bind Visible (private)
 
-extension AnyCancellable: Attachable {}
+extension NSKeyValueObservation: Attachable {}
 
 private extension View {
 
     func bindVisible(to view: View) {
-        let isHiddenObservation = view.publisher(for: \.isHidden, options: [.initial])
-            .sink { [weak self] isHidden in
-                MainActor.assumeIsolated {
-                    self?.isHidden = isHidden
-                }
+        let isHiddenObservation = view.observe(\.isHidden, options: .initial) { [weak self, weak view] _, _ in
+            MainActor.assumeIsolated {
+                self?.isHidden = view?.isHidden ?? true
             }
+        }
         isHiddenObservation.attach(to: self)
     }
 
     func bindVisible(toAllVisible views: [View]) {
         views.forEach { view in
-            let isHiddenObservation = view.publisher(for: \.isHidden, options: [.initial])
-                .sink { [weak self] _ in
-                    MainActor.assumeIsolated {
-                        self?.isHidden = views.contains { $0.isHidden }
-                    }
+            let isHiddenObservation = view.observe(\.isHidden, options: .initial) { [weak self] _, _ in
+                MainActor.assumeIsolated {
+                    self?.isHidden = views.contains { $0.isHidden }
                 }
+            }
             isHiddenObservation.attach(to: self)
         }
     }
 
     func bindVisible(toAnyVisible views: [View]) {
         views.forEach { view in
-            let isHiddenObservation = view.publisher(for: \.isHidden, options: [.initial])
-                .sink { [weak self] _ in
-                    MainActor.assumeIsolated {
-                        self?.isHidden = views.allSatisfy { $0.isHidden }
-                    }
+            let isHiddenObservation = view.observe(\.isHidden, options: .initial) { [weak self] _, _ in
+                MainActor.assumeIsolated {
+                    self?.isHidden = views.allSatisfy { $0.isHidden }
                 }
+            }
             isHiddenObservation.attach(to: self)
         }
     }
