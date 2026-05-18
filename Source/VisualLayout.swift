@@ -74,11 +74,11 @@ public struct VisualLayoutArrayItems: ExpressibleByArrayLiteral {
 	}
 }
 
-extension View: @preconcurrency VisualLayoutArrayElementConvertible {
+extension View: @MainActor VisualLayoutArrayElementConvertible {
 	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
 }
 
-extension LayoutGuide: @preconcurrency VisualLayoutArrayElementConvertible {
+extension LayoutGuide: @MainActor VisualLayoutArrayElementConvertible {
 	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
 }
 
