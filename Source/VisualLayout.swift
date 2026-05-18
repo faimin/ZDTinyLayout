@@ -78,6 +78,7 @@ extension View: @MainActor VisualLayoutArrayElementConvertible {
 	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
 }
 
+@MainActor
 extension LayoutGuide: @MainActor VisualLayoutArrayElementConvertible {
 	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
 }
