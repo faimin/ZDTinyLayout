@@ -28,12 +28,19 @@ open class ScrollingStackView: UIScrollView {
     }()
 
     override open func touchesShouldCancel(in view: UIView) -> Bool {
+        #if os(tvOS)
+        if view is UIControl
+            && !(view is UITextInput) {
+            return true
+        }
+        #else
         if view is UIControl
             && !(view is UITextInput)
             && !(view is UISlider)
             && !(view is UISwitch) {
             return true
         }
+        #endif
         return super.touchesShouldCancel(in: view)
     }
 

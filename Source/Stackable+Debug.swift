@@ -82,7 +82,7 @@ private extension UIView {
         let view = DebugView(.init(
             shape: .outline,
             lineStyle: .solid,
-            color: .groupTableViewBackground,
+            color: .systemPink,
             lineWidth: 2
         ))
         view.accessibilityIdentifier = UIStackView.tl.axID.debug.outline
