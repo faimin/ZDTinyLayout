@@ -32,11 +32,12 @@ import UIKit
 
 // MARK: - VisualLayoutAnchorable
 
-/// `VisualLayoutView` and `VisualLayoutGuide` are declared in `Internal.swift`
+/// `View` and `LayoutGuide` are declared in `Internal.swift`
 /// and share the same platform mapping as the core `View`/`LayoutGuide` aliases.
 
 /// A type that can participate in a visual layout row — either a view or a layout guide.
 /// Exposes the layout anchors needed to build horizontal and vertical constraints.
+@MainActor
 public protocol VisualLayoutAnchorable: AnyObject {
 	var leadingAnchor: NSLayoutXAxisAnchor { get }
 	var trailingAnchor: NSLayoutXAxisAnchor { get }
@@ -46,8 +47,8 @@ public protocol VisualLayoutAnchorable: AnyObject {
 	var heightAnchor: NSLayoutDimension { get }
 }
 
-extension VisualLayoutView: VisualLayoutAnchorable {}
-extension VisualLayoutGuide: VisualLayoutAnchorable {}
+extension View: @MainActor VisualLayoutAnchorable {}
+extension LayoutGuide: @MainActor VisualLayoutAnchorable {}
 
 // MARK: - Mixed Array Items
 
@@ -73,11 +74,12 @@ public struct VisualLayoutArrayItems: ExpressibleByArrayLiteral {
 	}
 }
 
-extension VisualLayoutView: VisualLayoutArrayElementConvertible {
+extension View: @MainActor VisualLayoutArrayElementConvertible {
 	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
 }
 
-extension VisualLayoutGuide: VisualLayoutArrayElementConvertible {
+@MainActor
+extension LayoutGuide: @MainActor VisualLayoutArrayElementConvertible {
 	public var visualLayoutArrayToken: VisualLayoutArrayToken { .anchor(self) }
 }
 
@@ -240,7 +242,7 @@ public enum VisualLayoutBuilder {
 
 // MARK: - layout — tl namespace overloads
 
-public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
+public extension ZDTinyLayoutNamespace where Base: View {
     /// Builds vertical layout constraints in `base` using an ASCII-style DSL.
     ///
     /// Numeric/flexible spacing items control the vertical gaps between rows.
@@ -283,7 +285,7 @@ public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
                 guard let first = row.views.first else { continue }
                 laidOutAtLeastOneRow = true
                 row.views.forEach { element in
-                    if let v = element as? VisualLayoutView {
+                    if let v = element as? View {
                         if let superview = v.superview {
                             assert(
                                 superview === base,
@@ -293,7 +295,7 @@ public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
                             base.addSubview(v)
                         }
                         v.translatesAutoresizingMaskIntoConstraints = false
-                    } else if let g = element as? VisualLayoutGuide {
+                    } else if let g = element as? LayoutGuide {
                         if let owningView = g.owningView {
                             assert(
                                 owningView === base,
@@ -401,6 +403,7 @@ public extension ZDTinyLayoutNamespace where Base: VisualLayoutView {
 
 // MARK: - Private Constraint Helpers
 
+@MainActor
 private func topConstraint(
 	from anchor: NSLayoutYAxisAnchor,
 	to prevAnchor: NSLayoutYAxisAnchor,
@@ -422,6 +425,7 @@ private func topConstraint(
 	return anchor.constraint(equalTo: prevAnchor, constant: 0)
 }
 
+@MainActor
 private func bottomConstraint(
 	from bottomAnchor: NSLayoutYAxisAnchor,
 	to prevAnchor: NSLayoutYAxisAnchor,
@@ -443,6 +447,7 @@ private func bottomConstraint(
 	return bottomAnchor.constraint(equalTo: prevAnchor, constant: 0)
 }
 
+@MainActor
 private func heightConstraint(
 	for element: any VisualLayoutAnchorable,
 	value: CGFloat,

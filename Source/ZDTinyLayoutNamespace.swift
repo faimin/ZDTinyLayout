@@ -14,6 +14,7 @@ import UIKit
 // MARK: - tl namespace
 
 /// Namespace proxy for visual layout APIs.
+@MainActor
 public struct ZDTinyLayoutNamespace<Base> {
 	internal let base: Base
 	internal init(base: Base) {
@@ -22,6 +23,7 @@ public struct ZDTinyLayoutNamespace<Base> {
 }
 
 /// Marker protocol for `tl` namespace support.
+@MainActor
 public protocol ZDTinyLayoutNamespaceCompatible: AnyObject {}
 
 extension NSObject: ZDTinyLayoutNamespaceCompatible {}

@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,31 +6,31 @@ import PackageDescription
 let package = Package(
     name: "ZDTinyLayout",
     platforms: [
-        .iOS(.v9),
-        .macOS(.v10_11),
-        .tvOS(.v9),
-        .watchOS(.v7),
+        .iOS(.v13),
+        .macOS(.v10_15),
+        .tvOS(.v13),
+        .watchOS(.v6),
         .visionOS(.v1),
     ],
     products: [
         .library(
             name: "ZDTinyLayout",
             targets: ["ZDTinyLayout"]
-		),
+        )
     ],
     targets: [
         .target(
             name: "ZDTinyLayout",
             dependencies: [],
             path: "Source",
-			resources: [
-				.process("Resource/PrivacyInfo.xcprivacy")
-			]
-		),
+            resources: [
+                .process("Resource/PrivacyInfo.xcprivacy")
+            ]
+        ),
         .testTarget(
             name: "ZDTinyLayoutTests",
             dependencies: ["ZDTinyLayout"],
             path: "ZDTinyLayoutTests"
-		),
+        ),
     ]
 )

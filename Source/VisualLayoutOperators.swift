@@ -50,6 +50,7 @@ infix operator -- : AdditionPrecedence
 // MARK: - Postfix | — trailing, no margin
 
 /// Pins the view or guide's trailing edge to the container with zero margin.
+@MainActor
 @discardableResult
 public postfix func | (element: any VisualLayoutAnchorable) -> VisualRow {
 	VisualRow(views: [element], trailingMargin: 0)
@@ -58,44 +59,51 @@ public postfix func | (element: any VisualLayoutAnchorable) -> VisualRow {
 /// Trailing-margin carrier for integer literals in `chain -- N|` expressions.
 /// Swift can parse the tail as `N|` before `--` binds, so this empty row carries
 /// the trailing margin and is merged by `func -- (VisualRowChain, VisualRow)`.
+@MainActor
 @discardableResult
 public postfix func | (trailing: Int) -> VisualRow {
 	VisualRow(views: [], trailingMargin: CGFloat(trailing))
 }
 
 /// Trailing-margin carrier for floating-point literals in `chain -- N.0|` expressions.
+@MainActor
 @discardableResult
 public postfix func | (trailing: Double) -> VisualRow {
 	VisualRow(views: [], trailingMargin: CGFloat(trailing))
 }
 
 /// Trailing-margin carrier for float values in `chain -- value|` expressions.
+@MainActor
 @discardableResult
 public postfix func | (trailing: Float) -> VisualRow {
 	VisualRow(views: [], trailingMargin: CGFloat(trailing))
 }
 
 /// Trailing-margin carrier for `CGFloat` values in `chain -- value|` expressions.
+@MainActor
 @discardableResult
 public postfix func | (trailing: CGFloat) -> VisualRow {
 	VisualRow(views: [], trailingMargin: trailing)
 }
 
 /// Pins the last view's trailing edge to the container with zero margin.
+@MainActor
 @discardableResult
-public postfix func | (views: [VisualLayoutView]) -> VisualRow {
+public postfix func | (views: [View]) -> VisualRow {
 	VisualRow(views: views, trailingMargin: 0)
 }
 
 /// Pins the last guide's trailing edge to the container with zero margin.
+@MainActor
 @discardableResult
-public postfix func | (guides: [VisualLayoutGuide]) -> VisualRow {
+public postfix func | (guides: [LayoutGuide]) -> VisualRow {
 	VisualRow(views: guides, trailingMargin: 0)
 }
 
 /// Pins a mixed array's trailing edge to the container with zero margin.
 /// Supports arrays containing views/layout guides and numeric spacing values:
 /// `|--[view1, 10, view2, 50.0, view3]--|`
+@MainActor
 @discardableResult
 public postfix func | (items: VisualLayoutArrayItems) -> VisualRow {
 	rowFromMixedArray(items, trailingMargin: 0)
@@ -121,6 +129,7 @@ public prefix func | (margin: Double) -> CGFloat { CGFloat(margin) }
 public prefix func | (margin: Float) -> CGFloat { CGFloat(margin) }
 
 /// Pins the row's first view's leading edge to the container with zero margin.
+@MainActor
 @discardableResult
 public prefix func | (row: VisualRow) -> VisualRow {
 	var r = row
@@ -129,6 +138,7 @@ public prefix func | (row: VisualRow) -> VisualRow {
 }
 
 /// Opens a `--` chain with zero leading margin: `|element -- spacing -- element|`.
+@MainActor
 @discardableResult
 public prefix func | (element: any VisualLayoutAnchorable) -> VisualRowChain {
 	VisualRowChain(views: [element], spacings: [], pendingSpacing: nil, leadingMargin: 0)
@@ -146,6 +156,7 @@ public prefix func |-- (margin: Float) -> CGFloat { CGFloat(margin) }
 
 /// Pins the row's first view's leading edge to the container with zero margin.
 /// Semantically identical to `prefix |`; use `|--` when pairing with the `--|` closing fence.
+@MainActor
 @discardableResult
 public prefix func |-- (row: VisualRow) -> VisualRow {
 	var r = row
@@ -155,6 +166,7 @@ public prefix func |-- (row: VisualRow) -> VisualRow {
 
 /// Opens a `--` chain with zero leading margin: `|--element -- spacing -- element--|`.
 /// Semantically identical to `prefix |`; use `|--` when pairing with the `--|` closing fence.
+@MainActor
 @discardableResult
 public prefix func |-- (element: any VisualLayoutAnchorable) -> VisualRowChain {
 	VisualRowChain(views: [element], spacings: [], pendingSpacing: nil, leadingMargin: 0)
@@ -163,6 +175,7 @@ public prefix func |-- (element: any VisualLayoutAnchorable) -> VisualRowChain {
 // MARK: - Infix /=/ — height
 
 /// Sets the height of all views in the row to `rhs` points.
+@MainActor
 @discardableResult
 public func /=/ (lhs: VisualRow, rhs: CGFloat) -> VisualRow {
 	var r = lhs
@@ -172,18 +185,21 @@ public func /=/ (lhs: VisualRow, rhs: CGFloat) -> VisualRow {
 }
 
 /// Integer overload for height assignment: `row /=/ 44`.
+@MainActor
 @discardableResult
 public func /=/ (lhs: VisualRow, rhs: Int) -> VisualRow {
 	lhs /=/ CGFloat(rhs)
 }
 
 /// Double overload for height assignment: `row /=/ 44.0`.
+@MainActor
 @discardableResult
 public func /=/ (lhs: VisualRow, rhs: Double) -> VisualRow {
 	lhs /=/ CGFloat(rhs)
 }
 
 /// Float overload for height assignment: `row /=/ (44 as Float)`.
+@MainActor
 @discardableResult
 public func /=/ (lhs: VisualRow, rhs: Float) -> VisualRow {
 	lhs /=/ CGFloat(rhs)
@@ -193,6 +209,7 @@ public func /=/ (lhs: VisualRow, rhs: Float) -> VisualRow {
 
 /// Sets the constraint priority for the height set by `/=/`.
 /// Syntax: `|--view--| /=/ 44 ~ .high`
+@MainActor
 @discardableResult
 public func ~ (lhs: VisualRow, rhs: Priority) -> VisualRow {
 	var r = lhs
@@ -224,12 +241,14 @@ public func ~ (lhs: VisualRow, rhs: Priority) -> VisualRow {
 
 /// Starts a chain with a **custom leading margin**: `spacing -- element`.
 /// The `CGFloat` becomes the distance from the container's leading edge to `element`.
+@MainActor
 public func -- (lhs: CGFloat, rhs: any VisualLayoutAnchorable) -> VisualRowChain {
 	VisualRowChain(views: [rhs], spacings: [], pendingSpacing: nil, leadingMargin: lhs)
 }
 
 /// Applies a custom leading margin to an already-closed row:
 /// `|--8--view--|` parses as `8 -- (view--|)`.
+@MainActor
 public func -- (lhs: CGFloat, rhs: VisualRow) -> VisualRow {
 	var row = rhs
 	row.leadingMargin = lhs
@@ -237,125 +256,149 @@ public func -- (lhs: CGFloat, rhs: VisualRow) -> VisualRow {
 }
 
 /// Integer overload for custom leading margin: `spacing -- element`.
+@MainActor
 public func -- (lhs: Int, rhs: any VisualLayoutAnchorable) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Double overload for custom leading margin: `spacing -- element`.
+@MainActor
 public func -- (lhs: Double, rhs: any VisualLayoutAnchorable) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Float overload for custom leading margin: `spacing -- element`.
+@MainActor
 public func -- (lhs: Float, rhs: any VisualLayoutAnchorable) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Integer overload for leading margin + already-closed row.
+@MainActor
 public func -- (lhs: Int, rhs: VisualRow) -> VisualRow {
 	CGFloat(lhs) -- rhs
 }
 
 /// Double overload for leading margin + already-closed row.
+@MainActor
 public func -- (lhs: Double, rhs: VisualRow) -> VisualRow {
 	CGFloat(lhs) -- rhs
 }
 
 /// Float overload for leading margin + already-closed row.
+@MainActor
 public func -- (lhs: Float, rhs: VisualRow) -> VisualRow {
 	CGFloat(lhs) -- rhs
 }
 
 /// Starts a chain with a **custom leading margin** and an array of views: `spacing -- [view, view]`.
-public func -- (lhs: CGFloat, rhs: [VisualLayoutView]) -> VisualRowChain {
+@MainActor
+public func -- (lhs: CGFloat, rhs: [View]) -> VisualRowChain {
 	let spacings = Array(repeating: CGFloat(0), count: max(0, rhs.count - 1))
 	return VisualRowChain(views: rhs, spacings: spacings, pendingSpacing: nil, leadingMargin: lhs)
 }
 
 /// Integer overload for custom leading margin with view arrays: `spacing -- [view, view]`.
-public func -- (lhs: Int, rhs: [VisualLayoutView]) -> VisualRowChain {
+@MainActor
+public func -- (lhs: Int, rhs: [View]) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Double overload for custom leading margin with view arrays: `spacing -- [view, view]`.
-public func -- (lhs: Double, rhs: [VisualLayoutView]) -> VisualRowChain {
+@MainActor
+public func -- (lhs: Double, rhs: [View]) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Float overload for custom leading margin with view arrays: `spacing -- [view, view]`.
-public func -- (lhs: Float, rhs: [VisualLayoutView]) -> VisualRowChain {
+@MainActor
+public func -- (lhs: Float, rhs: [View]) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Starts a chain with a **custom leading margin** and an array of guides: `spacing -- [guide, guide]`.
-public func -- (lhs: CGFloat, rhs: [VisualLayoutGuide]) -> VisualRowChain {
+@MainActor
+public func -- (lhs: CGFloat, rhs: [LayoutGuide]) -> VisualRowChain {
 	let spacings = Array(repeating: CGFloat(0), count: max(0, rhs.count - 1))
 	return VisualRowChain(views: rhs, spacings: spacings, pendingSpacing: nil, leadingMargin: lhs)
 }
 
 /// Starts a chain with a **custom leading margin** and a mixed array of views/guides and spacings:
 /// `spacing -- [view1, 10, view2, 50.0, view3]`.
+@MainActor
 public func -- (lhs: CGFloat, rhs: VisualLayoutArrayItems) -> VisualRowChain {
 	let parsed = parseMixedArrayItems(rhs)
 	return VisualRowChain(views: parsed.views, spacings: parsed.spacings, pendingSpacing: nil, leadingMargin: lhs)
 }
 
 /// Integer overload for custom leading margin with guide arrays: `spacing -- [guide, guide]`.
-public func -- (lhs: Int, rhs: [VisualLayoutGuide]) -> VisualRowChain {
+@MainActor
+public func -- (lhs: Int, rhs: [LayoutGuide]) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Double overload for custom leading margin with guide arrays: `spacing -- [guide, guide]`.
-public func -- (lhs: Double, rhs: [VisualLayoutGuide]) -> VisualRowChain {
+@MainActor
+public func -- (lhs: Double, rhs: [LayoutGuide]) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Float overload for custom leading margin with guide arrays: `spacing -- [guide, guide]`.
-public func -- (lhs: Float, rhs: [VisualLayoutGuide]) -> VisualRowChain {
+@MainActor
+public func -- (lhs: Float, rhs: [LayoutGuide]) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Integer overload for custom leading margin with mixed arrays.
+@MainActor
 public func -- (lhs: Int, rhs: VisualLayoutArrayItems) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Double overload for custom leading margin with mixed arrays.
+@MainActor
 public func -- (lhs: Double, rhs: VisualLayoutArrayItems) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Float overload for custom leading margin with mixed arrays.
+@MainActor
 public func -- (lhs: Float, rhs: VisualLayoutArrayItems) -> VisualRowChain {
 	CGFloat(lhs) -- rhs
 }
 
 /// Starts a chain: `element -- spacing` stores the element with a pending inter-element gap.
+@MainActor
 public func -- (lhs: any VisualLayoutAnchorable, rhs: CGFloat) -> VisualRowChain {
 	VisualRowChain(views: [lhs], spacings: [], pendingSpacing: rhs)
 }
 
 /// Integer overload for pending inter-element spacing: `element -- spacing`.
+@MainActor
 public func -- (lhs: any VisualLayoutAnchorable, rhs: Int) -> VisualRowChain {
 	lhs -- CGFloat(rhs)
 }
 
 /// Double overload for pending inter-element spacing: `element -- spacing`.
+@MainActor
 public func -- (lhs: any VisualLayoutAnchorable, rhs: Double) -> VisualRowChain {
 	lhs -- CGFloat(rhs)
 }
 
 /// Float overload for pending inter-element spacing: `element -- spacing`.
+@MainActor
 public func -- (lhs: any VisualLayoutAnchorable, rhs: Float) -> VisualRowChain {
 	lhs -- CGFloat(rhs)
 }
 
 /// Starts a chain: `element -- element` defaults the gap to 0 unless explicitly set.
+@MainActor
 public func -- (lhs: any VisualLayoutAnchorable, rhs: any VisualLayoutAnchorable) -> VisualRowChain {
 	VisualRowChain(views: [lhs, rhs], spacings: [0], pendingSpacing: nil)
 }
 
 /// Sets a new pending spacing on an existing chain: `chain -- spacing`.
+@MainActor
 public func -- (lhs: VisualRowChain, rhs: CGFloat) -> VisualRowChain {
 	var chain = lhs
 	chain.pendingSpacing = rhs
@@ -363,21 +406,25 @@ public func -- (lhs: VisualRowChain, rhs: CGFloat) -> VisualRowChain {
 }
 
 /// Integer overload for pending spacing on an existing chain: `chain -- spacing`.
+@MainActor
 public func -- (lhs: VisualRowChain, rhs: Int) -> VisualRowChain {
 	lhs -- CGFloat(rhs)
 }
 
 /// Double overload for pending spacing on an existing chain: `chain -- spacing`.
+@MainActor
 public func -- (lhs: VisualRowChain, rhs: Double) -> VisualRowChain {
 	lhs -- CGFloat(rhs)
 }
 
 /// Float overload for pending spacing on an existing chain: `chain -- spacing`.
+@MainActor
 public func -- (lhs: VisualRowChain, rhs: Float) -> VisualRowChain {
 	lhs -- CGFloat(rhs)
 }
 
 /// Appends an element to a chain, consuming the pending spacing (or 0).
+@MainActor
 public func -- (lhs: VisualRowChain, rhs: any VisualLayoutAnchorable) -> VisualRowChain {
 	var chain = lhs
 	chain.spacings.append(lhs.pendingSpacing ?? 0)
@@ -388,7 +435,8 @@ public func -- (lhs: VisualRowChain, rhs: any VisualLayoutAnchorable) -> VisualR
 
 /// Appends an array of views to a chain. The first view consumes the pending spacing;
 /// subsequent views default to 0 spacing.
-public func -- (lhs: VisualRowChain, rhs: [VisualLayoutView]) -> VisualRowChain {
+@MainActor
+public func -- (lhs: VisualRowChain, rhs: [View]) -> VisualRowChain {
 	var chain = lhs
 	for (i, view) in rhs.enumerated() {
 		chain.spacings.append(i == 0 ? (lhs.pendingSpacing ?? 0) : 0)
@@ -400,7 +448,8 @@ public func -- (lhs: VisualRowChain, rhs: [VisualLayoutView]) -> VisualRowChain 
 
 /// Appends an array of guides to a chain. The first guide consumes the pending spacing;
 /// subsequent guides default to 0 spacing.
-public func -- (lhs: VisualRowChain, rhs: [VisualLayoutGuide]) -> VisualRowChain {
+@MainActor
+public func -- (lhs: VisualRowChain, rhs: [LayoutGuide]) -> VisualRowChain {
 	var chain = lhs
 	for (i, guide) in rhs.enumerated() {
 		chain.spacings.append(i == 0 ? (lhs.pendingSpacing ?? 0) : 0)
@@ -417,6 +466,7 @@ public func -- (lhs: VisualRowChain, rhs: [VisualLayoutGuide]) -> VisualRowChain
 /// - `|-- a` fires next (prefix on element) → `VisualRowChain([a], leading: 0)`
 /// - `chain -- 20` → sets pending spacing
 /// - `chain -- VisualRow(b)` → this overload: merges chain + row into final `VisualRow`
+@MainActor
 public func -- (lhs: VisualRowChain, rhs: VisualRow) -> VisualRow {
 	// An empty-view rhs is a trailing-margin carrier produced by `N--|` parse.
 	// Just close the chain with rhs.trailingMargin, discarding the pending spacing.
@@ -435,6 +485,7 @@ public func -- (lhs: VisualRowChain, rhs: VisualRow) -> VisualRow {
 /// - If the chain ends with a pending spacing (`chain -- number |`), that value becomes
 ///   the trailing margin: e.g. `20--a--3--b--5|` → leading=20, spacing=3, trailing=5.
 /// - Otherwise trailing margin is 0.
+@MainActor
 @discardableResult
 public postfix func | (chain: VisualRowChain) -> VisualRow {
 	VisualRow(chain: chain, leadingMargin: chain.leadingMargin, trailingMargin: chain.pendingSpacing ?? 0)
@@ -443,26 +494,30 @@ public postfix func | (chain: VisualRowChain) -> VisualRow {
 // MARK: - Postfix --| for element/array — trailing, zero margin
 
 /// Pins the view or guide's trailing edge to the container with zero margin.
+@MainActor
 @discardableResult
 public postfix func --| (element: any VisualLayoutAnchorable) -> VisualRow {
 	VisualRow(views: [element], trailingMargin: 0)
 }
 
 /// Pins the last view's trailing edge to the container with zero margin.
+@MainActor
 @discardableResult
-public postfix func --| (views: [VisualLayoutView]) -> VisualRow {
+public postfix func --| (views: [View]) -> VisualRow {
 	VisualRow(views: views, trailingMargin: 0)
 }
 
 /// Pins the last guide's trailing edge to the container with zero margin.
+@MainActor
 @discardableResult
-public postfix func --| (guides: [VisualLayoutGuide]) -> VisualRow {
+public postfix func --| (guides: [LayoutGuide]) -> VisualRow {
 	VisualRow(views: guides, trailingMargin: 0)
 }
 
 /// Pins a mixed array's trailing edge to the container with zero margin.
 /// Supports arrays containing views/layout guides and numeric spacing values:
 /// `|--[view1, 10, view2, 50.0, view3]--|`
+@MainActor
 @discardableResult
 public postfix func --| (items: VisualLayoutArrayItems) -> VisualRow {
 	rowFromMixedArray(items, trailingMargin: 0)
@@ -472,24 +527,28 @@ public postfix func --| (items: VisualLayoutArrayItems) -> VisualRow {
 /// Swift applies `--|` to the literal before `--` can consume it;
 /// the resulting empty-view row carries the trailing margin and is merged
 /// by the `func -- (VisualRowChain, VisualRow)` overload.
+@MainActor
 @discardableResult
 public postfix func --| (trailing: Int) -> VisualRow {
 	VisualRow(views: [], trailingMargin: CGFloat(trailing))
 }
 
 /// Trailing-margin carrier for floating-point literals in `chain -- N.0--|` expressions.
+@MainActor
 @discardableResult
 public postfix func --| (trailing: Double) -> VisualRow {
 	VisualRow(views: [], trailingMargin: CGFloat(trailing))
 }
 
 /// Trailing-margin carrier for float values in `chain -- value--|` expressions.
+@MainActor
 @discardableResult
 public postfix func --| (trailing: Float) -> VisualRow {
 	VisualRow(views: [], trailingMargin: CGFloat(trailing))
 }
 
 /// Trailing-margin carrier for `CGFloat` values in `chain -- value--|` expressions.
+@MainActor
 @discardableResult
 public postfix func --| (trailing: CGFloat) -> VisualRow {
 	VisualRow(views: [], trailingMargin: trailing)
@@ -501,6 +560,7 @@ public postfix func --| (trailing: CGFloat) -> VisualRow {
 /// - If the chain ends with a pending spacing (`chain -- number --|`), that value becomes
 ///   the trailing margin: e.g. `|--16 -- a -- 16--|` → leading=16, trailing=16.
 /// - Otherwise trailing margin is 0.
+@MainActor
 @discardableResult
 public postfix func --| (chain: VisualRowChain) -> VisualRow {
 	VisualRow(chain: chain, leadingMargin: chain.leadingMargin, trailingMargin: chain.pendingSpacing ?? 0)
@@ -508,6 +568,7 @@ public postfix func --| (chain: VisualRowChain) -> VisualRow {
 
 // MARK: - Mixed Array Parsing
 
+@MainActor
 private func rowFromMixedArray(_ items: VisualLayoutArrayItems, trailingMargin: CGFloat) -> VisualRow {
 	let parsed = parseMixedArrayItems(items)
 	var row = VisualRow(views: parsed.views, trailingMargin: trailingMargin)
@@ -515,6 +576,7 @@ private func rowFromMixedArray(_ items: VisualLayoutArrayItems, trailingMargin: 
 	return row
 }
 
+@MainActor
 private func parseMixedArrayItems(_ items: VisualLayoutArrayItems) -> (views: [any VisualLayoutAnchorable], spacings: [CGFloat]) {
 	var views: [any VisualLayoutAnchorable] = []
 	var spacings: [CGFloat] = []

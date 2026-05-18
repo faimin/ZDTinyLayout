@@ -32,6 +32,7 @@ import Cocoa
 import UIKit
 #endif
 
+@MainActor
 public protocol AnchorGroupProvider {
 	
 	var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> { get }
@@ -49,7 +50,7 @@ extension AnchorGroupProvider {
 	
 }
 
-extension View: AnchorGroupProvider {
+extension View: @MainActor AnchorGroupProvider {
 	
 	public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
 		return AnchorPair(first: leadingAnchor, second: trailingAnchor)
@@ -69,7 +70,7 @@ extension View: AnchorGroupProvider {
 	
 }
 
-extension ViewController: AnchorGroupProvider {
+extension ViewController: @MainActor AnchorGroupProvider {
 	
 	@available(*, deprecated, message: "Do not set constraints directly on a UIViewController; set them on its root UIView.")
 	public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
@@ -106,7 +107,7 @@ extension ViewController: AnchorGroupProvider {
 	
 }
 
-extension LayoutGuide: AnchorGroupProvider {
+extension LayoutGuide: @MainActor AnchorGroupProvider {
 	
 	public var horizontalAnchors: AnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
 		return AnchorPair(first: leadingAnchor, second: trailingAnchor)
