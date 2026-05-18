@@ -19,7 +19,7 @@ protocol Attachable {
 @MainActor private var strongKey: Void?
 @MainActor private var weakKey: Void?
 
-extension Attachable where Self: NSObject {
+extension Attachable where Self: AnyObject {
 
     func attach(to child: AnyObject) {
         addStrongReference(from: child, to: self)

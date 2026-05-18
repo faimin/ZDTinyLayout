@@ -11,6 +11,7 @@ import Cocoa
 #else
 import UIKit
 #endif
+import Combine
 
 #if !os(macOS)
 
@@ -179,31 +180,35 @@ internal extension Stackable {
             return
         }
 
-        let observation = ancestor.observe(\.frame, options: [.initial, .new]) { [weak view, weak stackView] _ancestor, _ in
-            guard let view = view,
-                  let stackView = stackView
-            else { return }
+        let observation = ancestor.publisher(for: \.frame, options: [.initial, .new])
+            .sink { [weak view, weak stackView, weak ancestor] _ in
+                MainActor.assumeIsolated {
+                    guard let view = view,
+                          let stackView = stackView,
+                          let ancestor = ancestor
+                    else { return }
 
-            let bounds = view.bounds
-            let ancestorBounds = view.convert(_ancestor.bounds, to: view)
+                    let bounds = view.bounds
+                    let ancestorBounds = view.convert(ancestor.bounds, to: view)
 
-            switch stackView.axis {
-            case .horizontal:
-                let top = (ancestorBounds.minY - bounds.minY) + _ancestor.layoutMargins.top
-                let bottom = (bounds.maxY - ancestorBounds.maxY) + _ancestor.layoutMargins.bottom
-                view.layoutMargins.top = top
-                view.layoutMargins.bottom = bottom
+                    switch stackView.axis {
+                    case .horizontal:
+                        let top = (ancestorBounds.minY - bounds.minY) + ancestor.layoutMargins.top
+                        let bottom = (bounds.maxY - ancestorBounds.maxY) + ancestor.layoutMargins.bottom
+                        view.layoutMargins.top = top
+                        view.layoutMargins.bottom = bottom
 
-            case .vertical:
-                let left = (ancestorBounds.minX - bounds.minX) + _ancestor.layoutMargins.left
-                let right = (bounds.maxX - ancestorBounds.maxX) + _ancestor.layoutMargins.right
-                view.layoutMargins.left = left
-                view.layoutMargins.right = right
+                    case .vertical:
+                        let left = (ancestorBounds.minX - bounds.minX) + ancestor.layoutMargins.left
+                        let right = (bounds.maxX - ancestorBounds.maxX) + ancestor.layoutMargins.right
+                        view.layoutMargins.left = left
+                        view.layoutMargins.right = right
 
-            @unknown default:
-                debugPrint("Unsupported stackView axis: \(stackView.axis)")
+                    @unknown default:
+                        debugPrint("Unsupported stackView axis: \(stackView.axis)")
+                    }
+                }
             }
-        }
         observation.attach(to: view)
     }
 }
