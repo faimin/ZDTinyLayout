@@ -265,6 +265,7 @@ internal extension EdgeAnchors {
 
 // MARK: - ConstraintBuilder
 
+@MainActor
 internal struct ConstraintBuilder {
 	
 	typealias Horizontal = @MainActor (NSLayoutXAxisAnchor, LayoutExpression<NSLayoutXAxisAnchor, CGFloat>) -> NSLayoutConstraint

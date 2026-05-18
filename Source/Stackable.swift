@@ -121,8 +121,7 @@ extension ZDTinyLayoutNamespace where Base: UIStackView {
 
 // MARK: - Array Conformance
 
-@MainActor
-extension Array: Stackable where Element: Stackable {
+extension Array: @MainActor Stackable where Element: Stackable {
     public func configure(stackView: UIStackView) {
         forEach { $0.configure(stackView: stackView) }
     }
@@ -130,8 +129,7 @@ extension Array: Stackable where Element: Stackable {
 
 // MARK: - Optional Conformance
 
-@MainActor
-extension Optional: Stackable where Wrapped: Stackable {
+extension Optional: @MainActor Stackable where Wrapped: Stackable {
     public func configure(stackView: UIStackView) {
         map { $0.configure(stackView: stackView) }
     }

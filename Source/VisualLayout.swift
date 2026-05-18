@@ -47,8 +47,8 @@ public protocol VisualLayoutAnchorable: AnyObject {
 	var heightAnchor: NSLayoutDimension { get }
 }
 
-extension View: VisualLayoutAnchorable {}
-extension LayoutGuide: VisualLayoutAnchorable {}
+extension View: @MainActor VisualLayoutAnchorable {}
+extension LayoutGuide: @MainActor VisualLayoutAnchorable {}
 
 // MARK: - Mixed Array Items
 

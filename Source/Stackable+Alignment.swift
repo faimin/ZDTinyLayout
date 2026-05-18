@@ -100,7 +100,7 @@ public extension Array where Element: StackableView {
 
 // MARK: - StackableViewItem: StackableView conformance
 
-extension StackableViewItem: StackableView {
+extension StackableViewItem: @MainActor StackableView {
 
     public func makeStackableView(for stackView: UIStackView) -> UIView {
         let view = makeView(stackView)

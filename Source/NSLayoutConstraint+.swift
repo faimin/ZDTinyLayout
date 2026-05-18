@@ -55,8 +55,6 @@ public struct ZDTinyLayoutConstraintBuilder {
     }
 }
 
-
-@MainActor
 public extension ZDTinyLayoutNamespace where Base: NSLayoutConstraint {
     /// Activates all constraints produced by the builder block.
     ///
