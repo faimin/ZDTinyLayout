@@ -62,22 +62,24 @@ internal final class AlignmentView: UIView {
             alignment.formUnion(.fillVertical)
         }
 
-        if alignment.contains(.leading) { wrapped.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor).isActive = true }
-        if alignment.contains(.left) { wrapped.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor).isActive = true }
-        if alignment.contains(.centerX) { wrapped.centerXAnchor.constraint(equalTo: layoutMarginsGuide.centerXAnchor).isActive = true }
-        if alignment.contains(.right) { wrapped.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor).isActive = true }
-        if alignment.contains(.trailing) { wrapped.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor).isActive = true }
         if alignment.contains(.fillHorizontal) {
             wrapped.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor).isActive = true
             wrapped.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor).isActive = true
+        } else {
+            if alignment.contains(.leading) { wrapped.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor).isActive = true }
+            if alignment.contains(.left) { wrapped.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor).isActive = true }
+            if alignment.contains(.centerX) { wrapped.centerXAnchor.constraint(equalTo: layoutMarginsGuide.centerXAnchor).isActive = true }
+            if alignment.contains(.right) { wrapped.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor).isActive = true }
+            if alignment.contains(.trailing) { wrapped.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor).isActive = true }
         }
 
-        if alignment.contains(.top) { wrapped.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor).isActive = true }
-        if alignment.contains(.centerY) { wrapped.centerYAnchor.constraint(equalTo: layoutMarginsGuide.centerYAnchor).isActive = true }
-        if alignment.contains(.bottom) { wrapped.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor).isActive = true }
         if alignment.contains(.fillVertical) {
             wrapped.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor).isActive = true
             wrapped.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor).isActive = true
+        } else {
+            if alignment.contains(.top) { wrapped.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor).isActive = true }
+            if alignment.contains(.centerY) { wrapped.centerYAnchor.constraint(equalTo: layoutMarginsGuide.centerYAnchor).isActive = true }
+            if alignment.contains(.bottom) { wrapped.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor).isActive = true }
         }
 
         translatesAutoresizingMaskIntoConstraints = false
